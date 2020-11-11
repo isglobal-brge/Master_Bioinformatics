@@ -26,7 +26,7 @@ This bookdown is the supplementary material for different courses on Bioinformat
 
 The contents include:
 
-- Chapter II: Bioconductor 
+- Chapter I: Bioconductor 
      + Section 1: Overview
      + Section 2: Infrastructures
      + Section 3: Annotation
