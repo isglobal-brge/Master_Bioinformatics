@@ -3,10 +3,10 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">Aprendizaje Automático 1</a></li>
+        <li><a href="./">Bioinformatics</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/isglobal-brge/Aprendizaje_Automatico_1/tree/master/docs%s
+    edit: https://github.com/isglobal-brge/Master_Bioinformatics/tree/master/docs%s
     download: ["pdf", "epub"]
 bookdown::pdf_book:
   includes:
