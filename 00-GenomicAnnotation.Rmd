@@ -1,0 +1,648 @@
+
+
+
+# Bioconductor
+
+This chapter offers a summary of the main data structures that are implemented in [Bioconductor](https://bioconductor.org/) for dealing with genomic, transcriptomic and epigenomic data data.  `Omic` data is typically composed of three datasets: one containing the actual high-dimensional data of omic variables per individuals, annotation data that specifies the characteristics of the variables and phenotypic information that encodes the subject's traits of interest, covariates and sampling characteristics. For instance, transcriptomic data is stored in a `ExpressionSet` object, which is a data structure that contains the transcription values of individuals at each transcription probe, the genomic information for the transcription probes and the phenotypes of the individuals. Specific data is accessed, processed and analyzed with specific functions from diverse packages, conceived as methods acting on the `ExpressionSet` object. The aim of this chapter is then to introduce the specific omic objects available in Bioconductor. In the following chapters, we will introduce the packages that have been implemented to process and analyze these objects. We finish the chapter by illustrating how to perform genomic annotation which is crucial for interpreting results. 
+
+
+Some of the data we are working with are available at our repository called `brgedata`. Therefore, I would recommend to install it just executing:
+
+```{r install_brgedata, eval=FALSE}
+BiocManager::install("isglobal-brge/brgedata")
+```
+
+## Bioconductor's overview
+
+[Bioconductor](https://bioconductor.org/): Analysis and comprehension of high-throughput
+genomic data
+
+- Statistical analysis: large data, technological artifacts, designed
+  experiments; rigorous
+- Comprehension: biological context, visualization, reproducibility
+- High-throughput
+    - Sequencing: RNASeq, ChIPSeq, variants, copy number, ...
+    - Microarrays: expression, SNP, ...
+    - Flow cytometry, proteomics, images, ...
+
+Packages, vignettes, work flows
+
+- 1974 software packages (Nov'20); also...
+    - 'Annotation' packages -- static data bases of identifier maps,
+      gene models, pathways, etc; e.g., [TxDb.Hsapiens.UCSC.hg19.knownGene][]
+    - 'Experiment packages -- data sets used to illustrate software
+      functionality, e.g., [airway][]
+- Discover and navigate via [biocViews][]
+- Package 'landing page'
+    - Title, author / maintainer, short description, citation,
+      installation instructions, ..., download statistics
+- All user-visible functions have help pages, most with runnable
+  examples
+- 'Vignettes' an important feature in Bioconductor -- narrative
+  documents illustrating how to use the package, with integrated code
+- 'Release' (every six months) and 'devel' branches
+- [Support site](https://support.bioconductor.org);
+  [videos](https://www.youtube.com/user/bioconductor);
+  [recent courses](https://bioconductor.org/help/course-materials/).
+- [Common Workflows](https://bioconductor.org/packages/release/BiocViews.html#___Workflow)  
+
+Package installation and use
+
+- A package needs to be installed once, using the instructions on the
+  package landing page (e.g., [DESeq2][]).
+
+    ```{r install, eval=FALSE}
+    source("https://bioconductor.org/biocLite.R")
+    biocLite(c("DESeq2", "org.Hs.eg.db"))
+    ```
+    
+-  **NEW** functions have been created
+    
+    ```{r install_2, eval=FALSE}
+    require(BiocManager)
+    install("DESeq2")
+    
+    # or
+    
+    BiocManager::install("DESeq2")
+    ```
+
+older versions can be installed by
+
+    ```{r install_old, eval=FALSE}
+    BiocManager::install("DESeq2", version = "3.8")
+    ```
+
+- `biocLite()` and `install()` install _Bioconductor_ and [CRAN][] 
+
+- Github packages can be install by
+
+    ```{r install_github, eval=FALSE}
+    devtools::install_github("isglobal-brge/SNPassoc")
+    ```
+
+- Once installed, the package can be loaded into an R session
+
+    ```{r require}
+    library(GenomicRanges)
+    ```
+
+    and the help system queried interactively, as outlined above:
+
+    ```{r help-bioc, eval=FALSE}
+    help(package="GenomicRanges")
+    vignette(package="GenomicRanges")
+    vignette(package="GenomicRanges", "GenomicRangesHOWTOs")
+    ?GRanges
+    ```
+
+
+## Bioconductor infrastructures
+
+
+### `snpMatrix`
+
+SNP array data can be stored in different formats. [PLINK binary format](http://www.cog-genomics.org/plink2) is a common and efficient system to store and analyze genotype data. It was developed to analyze data with PLINK software [@purcell2007plink] but its efficiency in storing data in binary files has made it one of the standard formats for other software packages, including some in Bioconductor. PLINK stores SNP genomic data, annotation and phenotype information in three different files with extensions `.bed`, `.bim` and `.fam`:
+
+- binary BED file: Contains the genomic SNP data, whose values are encoded in two bits (Homozygous normal 00, Heterozygous 10, Homozygous variant 11, missing 01). 
+-  text BIM file: Contains SNPs annotations. Each row is a SNP and contains six columns: chromosome, SNP name, position in morgans, base-pair coordinates, allele 1 (reference nucleotide), allele 2 (alternative nucleotide).
+- text FAM file: Contains the subject's information. Each row is an individual and contains six variables: the Family identifier (ID), Individual ID, Paternal ID, Maternal ID, Sex (1=male; 2=female; other=unknown), phenotypes. Covariates can be added in additional columns. 
+
+PLINK data can be loaded into R with the `read.plink()` function from `snpStats` Bioconductor's package. The function requires the full path for the BED, BIM and FAM files, or only their name when the working directory of R contains the PLINK files. 
+
+
+```{r load_plink, eval=FALSE}
+library(snpStats)
+ob.plink <- read.plink(bed = "obesity.bed", 
+                       bim = "obesity.bim", 
+                       fam = "obesity.fam")
+```
+
+In case of having the three files with the same name (i.e. obesity.fam, obesity.bim and obesity.bed) the following simplification may be convenient:
+
+```{r read_plink2, eval=FALSE} 
+snps <- read.plink("obesity") 
+```
+
+Let us assume we have our PLINK data in folder called "data" at our working directory. Therefore, they can also be loaded by
+
+```{r read_plink3}
+library(snpStats)
+path <- "data"
+snps <- read.plink(file.path(path, "obesity"))
+names(snps)
+```
+
+The `read.plink()` function returns a list with the three fields `genotypes`, `fam` and `map` that correspond to the three uploaded files. The `genotypes` field contains the genotype data stored in a `snpMatrix` object (individuals in rows and SNPs in columns). 
+
+```{r genotypes}
+geno <- snps$genotypes
+geno
+```
+
+Genotypes are encoded as raw variables for storage efficiency. While individual values can be extracted with array syntax, manipulation of data is usually performed by methods that act on the complete object. The `fam` field contains the individual's information in a `data.frame` object:
+
+```{r individuals}
+individuals <- snps$fam
+head(individuals)
+```
+
+The `map` field contains the SNPs annotation in a `data.frame`:
+
+```{r annotation}
+annotation <- snps$map
+head(annotation)
+```
+
+Subsetting SNP data requires at least two different operations. For instance, if we are interested in extracting the SNPs of chromosome 1, we need to select those variants in `annotation` that are located in chromosome 1 and then subset the `snpMatrix` object as a typical matrix.
+
+```{r subset_snps}
+annotationChr1 <- annotation[annotation$chromosome == "1" & 
+                               !is.na(annotation$chromosome), ]
+genoChr1 <- geno[, rownames(annotationChr1)]
+genoChr1
+```
+
+Subsetting samples follow a similar pattern. Suppose we want to select the genotypes of the control individuals. Case-control status is often encoded in the FAM file and therefore uploaded in the `fam` field. In our example, controls are coded with 1 and cases with 2 in the variable "affected" of individuals. Therefore, the genotypes of the control samples are extracted by 
+
+```{r select_controls}
+individualsCtrl <- individuals[individuals$affected == 1, ]
+genoCtrl <- geno[rownames(individualsCtrl), ]
+genoCtrl
+```
+
+### `ExpressionSet`
+
+`ExpressionSet`was one of the first implementations of Bioconductor to manage *omic* experiments. Although its use is discouraged in Bioconductor's guidelines for the development of current and future packages, most publicly available data is available in this structure while future packages are still required to be able to upload and operate with it. The GEO repository contains thousands of transcriptomic experiments that are available in `ExpressionSet` format. Data available in [GEO repository](https://www.ncbi.nlm.nih.gov/geo/) can be donwloaded into R as an `ExpressionSet` using `GEOquery` package. Let us donwload the experiment with accession number GSE63061 from the GEO website
+
+```{r genoquerych3}
+library(GEOquery)
+gsm.expr <- getGEO("GSE63061", destdir = ".")[[1]]
+gsm.expr <- gsm.expr
+```
+ 
+`gsm.expr` is an object of class `ExpressionSet` that has three main slots. Transcriptomic data is stored in the `assayData` slot, phenotypes are in `phenoData` and probe annotation in `featuredData`. There are three other slots `protocolData`, `experimentData` and `annotation` that specify equipment-generated information about protocols, resulting publications and the platform on which the samples were assayed. Methods are implemented to extract the data from each slot of the object. For instance `exprs` extracts the transcriptomic data in a matrix where subjects are columns and probes are rows
+
+```{r exprgetdatach3}
+expr <- exprs(gsm.expr)
+dim(expr)
+expr[1:5,1:5]
+``` 
+
+`phenoData()` retrieves the subjects' phenotypes in an  `AnnotatedDataFrame` object  which is converted to a data.frame by the function `pData()`    
+
+```{r phenogetdatach3}
+#get phenotype data
+pheno <- phenoData(gsm.expr)
+pheno
+phenoDataFrame <- pData(gsm.expr)
+phenoDataFrame[1:5,1:4]
+
+#Alzheimer's case control variable
+summary(phenoDataFrame$characteristics_ch1)
+```
+
+Finally the `fData()` function gets the probes' annotationin a data.frame 
+
+```{r fDatagetdatach3}
+probes <- fData(gsm.expr)
+probes[1:5, 1:5]
+```
+
+### `SummarizedExperiment`
+
+The `SummarizedExperiment` class is a comprehensive data structure that can be used to store expression and methylation data from microarrays or read counts from RNA-seq experiments, among others. A `SummarizedExperiment` object contains slots for one or more \emph{omic} datasets, feature annotation\index{subjectindex}{Annotation} (e.g. genes, transcripts, SNPs, CpGs), individual phenotypes and experimental details, such as laboratory and experimental protocols. In a `SummarizedExperiment`, the rows of *omic* data are features and columns are subjects. 
+
+![SummarizedExperiment](figures/sumExp.svg)
+
+
+Information is coordinated across the object's slots. For instance, subsetting samples in the assay matrix automatically subsets them in the phenotype metadata. A `SummarizedExperiment`object is easily manipulated and constitutes the input and output of many of Bioconductor's methods. 
+
+Data is retrieved from a `SummarizedExperiment` by using specific methods or accessors. We illustrate the functions with  `brge_methy` which includes real methylation data and is available from the Bioconductor's  `brgedata` package. The data is made available by loading of the package
+
+```{r summexp_example}
+library(brgedata)
+brge_methy
+extends("GenomicRatioSet")
+```
+
+The function `extends()` shows that the data has been encoded in  an object of `GenomicRatioSet` class, which is an extension of the more primitive classes `RangedSummarizedExperiment` and `SummarizedExperiment`. `brge_methy` illustrates a typical object within Bioconductor's framework, as it is a structure that inherits different types of classes in an established hierarchy. For each class, there are specific methods which are properly inherited across classes. For instance, in our example, `SummarizedExperiment` is `brge_methy`'s most primitive *omic* class and, therefore, all the methods of `SummarizedExperiment` apply to it. In particular, the methylation data that is stored in the object can be extracted with the function `assay()`
+
+```{r get_assays}
+betas <- assay(brge_methy)
+betas[1:5, 1:4]
+```
+
+The assay slot of a `SummarizedExperiment` object can contain any type of data (i.e. numeric, character, factor...), structure or large on-disk representations, such as a HDF5Array. Feature annotation data is accessed with the function `rowData()`:
+
+```{r get_features}
+rowData(brge_methy)[,2:5]
+```
+
+which returns a data.frame object. In our example, it contains the sequences and the genes associated with the CpG probes, among other information. 
+
+
+### `Genomic Ranges (GRanges)`
+
+The Bioconductor's package `GenomicRanges` aims to represent and manipulate the genomic annotation of molecular *omic* data under a reference genome. It contains functions to select specific regions and perform operations with them [@lawrence2013software]. Objects of `GRanges` class are important to annotate and manipulate genomic, transcriptomic and methylomic data. In particular, they are used in conjunction with `SummarizedExperiment`, within the `RangedSummarizedExperiment` class that is explained in the following section. 
+
+Annotation data refers to the characteristics of the variables in the high-dimensional data set. In particular for *omic* data relative to DNA structure and function, each variable may be given a location in a reference genome. While not two genomes are identical, the construction of a reference genome allows the mapping of specific characteristics of individual genomes to a common ground where they can be compared. The reference genome defines a coordinate system: “chromosome id” and “position along the chromosome”. For instance, a position such as chr10:4567-5671 would represent the 4567th to the 5671st base pair on the reference's chromosome 10.
+
+The main functionalities implemented `GenomicRanges` are methods on `GRanges` objects. Objects are created by the function `GRanges`, minimum requirements are the genomic positions given by the chromosome `seqnames` and base pair coordinates  `ranges`. Other metadata (e.g. variables) can be added to provide further information about each segment. 
+
+We illustrate `GenomicRanges` creating 8 segments on either chr1 or chr2, each with defined start and end points. We add strand information, passed through the argument `strand`, to indicate the direction of each sequence. We also add a hypothetical variable `disease` that indicates whether asthma or obesity have been associated with each interval
+
+```{r createGR}
+library(GenomicRanges)
+gr <- GRanges(seqnames=c(rep("chr1", 4), rep("chr2", 4)),
+              ranges = IRanges(start = c(1000, 1800, 5300, 7900,
+                                         1300, 2100, 3400, 6700),
+                               end =c(2200, 3900, 5400, 8100,
+                                      2600, 3300, 4460, 6850)),
+              strand = rep(c("+", "-"), 4),
+              disease = c(rep("Asthma",4), rep("Obesity",4)))
+gr
+```
+
+`gr` is our constructed object of class `GRanges`. The \Rclass{GRanges} object responds to the usual array and subset extraction given by squared parentheses
+
+```{r gr1}
+gr[1]
+```
+
+However, there are also specific functions to access and modify information. For instance, `seqnames()` extract the chromosomes defined in our examples, whose first element can be redefined accordingly:
+
+```{r gr2}
+seqnames(gr)
+seqnames(gr)[1] <- "chr2"
+gr
+``` 
+
+This is important to annotation using different system. NCBI encodes chromosomes as 1, 2, 3, ...; while UCSC uses chr1, chr2, ... The chromosome style can be changed using
+
+```{r gr2a}
+seqlevelsStyle(gr) <- "NCBI"
+gr
+``` 
+
+Let's us write back the UCSC style
+
+```{r gr2b}
+seqlevelsStyle(gr) <- "UCSC"
+gr
+``` 
+
+
+Additional information can be added to the current object as a new field of a list
+
+```{r gr3}
+gr$gene_id <- paste0("Gene", 1:8)
+gr
+```
+
+`GenomicRanges` provides different methods to perform arithmetic with the ranges, see `?GRanges` for a full list. For instance, with `shift()` an interval is moved a given base-pair distance and with `flank()` the interval is stretched  
+
+```{r gr4}
+#shift: move all intervals 10 base pair towards the end
+shift(gr, 10)
+
+#shift: move each intervals individually
+shift(gr, seq(10,100, length=8))
+
+#flank:  recover regions next to the input set. 
+#        For a 50 base stretch upstream (negative value for
+#        downstream)
+flank(gr, 50)
+```
+
+`GenomicRanges` also includes methods for aggregating and summarizing `GRanges`objects. The functions `reduce()`, `disjoint()` and `coverage()` are most useful. `disjoin()`, for instance, reduces the intervals into the smallest set of unique, non-overlapping pieces that make up the original object. It is strand-specific by default, but this can be avoided with `ignore.strand=TRUE`.
+
+```{r gr5}
+disjoin(gr, ignore.strand=TRUE)
+```
+
+`reduce()` creates the smallest range set of unique, non-overlapping intervals. Strand information is also taken into account by default and can also be turned off
+
+```{r gr6}
+reduce(gr, ignore.strand=TRUE)
+```
+
+`coverage()` summarizes the times each base is covered by an interval
+
+```{r gr7}
+coverage(gr)
+```
+
+It is also possible to perform operations between two different `GRanges` objects. For instance, one may be interested in knowing the intervals that overlap with a targeted region:
+
+```{r gr8}
+target <- GRanges(seqnames="chr1", 
+                  range=IRanges(start=1200, 4000))
+target
+gr.ov <- findOverlaps(target, gr)
+gr.ov
+```
+
+To recover the overlapping intervals between `gr` and `target` we can run
+
+```{r gr9}
+gr[subjectHits(gr.ov)]
+``` 
+
+or
+
+```{r gr10}
+subsetByOverlaps(gr, target)
+```
+
+Other operations can be found [here](https://bioconductor.org/help/course-materials/2014/SeattleFeb2014/). 
+
+### `RangedSummarizedExperiment`
+
+`SummarizedExperiment` is extended to `RangedSummarizedExperiment`, a child class that contains the annotation data of the features in a `GenomicRanges` object. In our epigenomic example, the second most primitive class of `brge_methy` object with *omic* functionality, after `SummarizedExperiment`, is `RangedSummarizedExperiment`. Annotation data, with variable names given by
+
+```{r names_rowranges}
+names(rowData(brge_methy))
+```
+
+can be obtained in a `GRanges` object, for a given variable. For instance, metadata of CpG genomic annotation and neighboring genes is obtained using array syntax
+
+```{r rowranges}
+rowRanges(brge_methy)[, "genes"]
+```
+
+Subject data can be accessed entirely in a single data.frame or a variable at the time. The entire subject (phenotype) information is retrieved with the function `colData()`:
+
+```{r sample_metadata}
+colData(brge_methy)
+```
+
+The list symbol `$` can be used, for instance, to obtain the sex of the individuals
+
+```{r sample_metadata_variable}
+brge_methy$sex
+```
+
+Subsetting the entire structure is also possible following the usual array syntax. For example, we can select only males from the `brge_methy` dataset
+
+```{r get_males}
+brge_methy[, brge_methy$sex == "male"]
+```
+
+The `metadata()` function retrieves experimental data
+
+```{r get_metadata}
+metadata(brge_methy)
+```
+
+which in our case is empty.
+
+
+## Annotation
+
+## `annotate` package
+
+Bioconductor distributes annotation packages for a wide range
+of gene expression microarrays and RNA-seq data. The annotate
+package is one way to use this annotation information. This code loads the `annotate` package and the databases for the Gene Ontology and one of the Affymetrix human microarray chips. 
+
+
+```{r load_annotate}
+library(annotate)
+library(hgu95av2.db)
+library(GO.db)
+```
+
+The databases are queried with `get()` or  `mget()` for multiple
+queries:
+
+```{r query}
+get("32972_at", envir=hgu95av2GENENAME)
+```
+
+```{r mquery}
+mget(c("738_at", "40840_at", "32972_at"), 
+     envir=hgu95av2GENENAME)
+```
+
+The name of the availabe information in a Bioconductor database (ended by `.db`, for instance `org.Hs.eg.db`) can be retreived by using `columns()`:
+
+```{r names_db}
+columns(hgu95av2.db)
+``` 
+
+The GO terms can be managed by
+
+```{r go}
+go <- get("738_at", envir=hgu95av2GO)
+names(go)
+get("GO:0009117", envir=GOTERM)
+```
+
+There are multiple annotated databases in Bioconductor that can be found here: [annotated data bases](http://bioconductor.org/packages/release/data/annotation/). For example
+
+```{r human}
+require(org.Hs.eg.db)
+columns(org.Hs.eg.db)
+# get the gene symbol
+get("9726", envir=org.Hs.egSYMBOL)
+```
+
+
+## BioMart
+
+[BioMart](http://www.biomart.org) is a query-oriented data management
+system developed jointly by the European Bioinformatics Institute (EBI) and Cold Spring Harbor Laboratory (CSHL). 
+
+`biomaRt` is an R interface to BioMart systems, in particular
+to [Ensembl](www.ensembl.org). Ensembl is a joint project between EMBL - European Bioinformatics Institute (EBI) and the Wellcome Trust Sanger Institute (WTSI) to develop a software system which produces and maintains automatic annotation on selected eukaryotic genomes. There are several databases that can be queried:
+
+```{r biomart}
+require(biomaRt)
+head(listMarts())
+```
+
+After selecting a database (e.g., **ensembl**) we select a dataset:
+
+```{r mart2}
+mart <- useMart(biomart="ensembl")
+listDatasets(mart)[1:10,]
+```
+
+After selecting a dataset (e.g., **hsapiens\_gene\_ensembl**) we select the attributes we are interested in:
+
+```{r list_attr}
+mart  <- useMart(biomart="ensembl", 
+                 dataset="hsapiens_gene_ensembl")
+listAttributes(mart)[1:10,]
+```
+
+**NOTE**: sometimes the host is not working. If so, try host="www.ensembl.org" in the `useMart` function.
+
+After selecting the dataset we can make different types of queries: 
+
+- **Query 1**: We could look for all the transcripts contained in the gene `7791` (entrez id):
+
+```{r query1}
+tx <- getBM(attributes="ensembl_transcript_id",
+            filters="entrezgene_id",
+            values="7791", mart=mart)
+tx
+```
+
+- *Query 2*: We could look for chromosome, position and gene name
+of a list of genes (entrez id):
+
+```{r query2}
+genes <- c("79699", "7791", "23140", "26009") 
+tx <- getBM(attributes=c("chromosome_name", "start_position", 
+                         "hgnc_symbol"),
+            filters="entrezgene_id",
+            values=genes, mart=mart)
+tx
+```
+
+- **Query 3**: We could look for chromosome, position and gene name
+of a list of genes (ENSEMBL):
+
+```{r query3}
+genes <- c("ENSG00000074755") 
+tx <- getBM(attributes=c("chromosome_name", "start_position", 
+                         "hgnc_symbol"),
+            filters="ensembl_gene_id",
+            values=genes, mart=mart)
+tx
+```
+
+- **Query 4**: Homology. `getLDS()` combines two data marts, for example to homologous genes in other species. We can look up the mouse equivalents of a particular Affy transcript, or of the NOX1 gene.
+
+```{r homology} 
+human <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+mouse <- useMart("ensembl", dataset = "mmusculus_gene_ensembl")
+getLDS(attributes = c("hgnc_symbol","chromosome_name", 
+       "start_position"),
+       filters = "hgnc_symbol", values = "NOX1", 
+       mart = human,
+       attributesL = c("external_gene_name", "chromosome_name",
+       "start_position"), 
+       martL = mouse)
+```
+
+## Annotate SNPs
+
+We had a set of 100 SNPs without chromosome and genomic position information. We need to know the gene that those SNPs belong to. 
+
+```{r snpsList}
+load("data/snpsList.Rdata")
+length(snpsList)
+head(snpsList)
+```
+
+- A hand-search (Genome Browser - \url{http://genome.ucsc.edu/}) would be easy but tedious, so we want an automated approach.
+
+- `R` can be used to carry out the entire analysis. That is, GWAS, annotation and post-GWAS. The annotation can be set by connecting `R` with Biomart:
+
+```{r get_mart_snps}
+snpmart <- useMart("ENSEMBL_MART_SNP", dataset = "hsapiens_snp")
+```
+
+- Use `listAttributes()` to get valid attribute names. 
+
+- Use `listFilters()` to get valid filter names.
+
+```{r get_mart_snps2}
+head(listAttributes(snpmart))
+
+head(listFilters(snpmart))
+```
+
+We can retrieve chromosome name, genomic position and reference allele in 1000 Genome Project of the 'significant SNPs' (provided in out list) by:
+
+```{r snpsInfo}
+snpInfo <- getBM(c("refsnp_id", "chr_name", "chrom_start", 
+                   "allele"), filters = c("snp_filter"), 
+                 values = snpsList, mart = snpmart)
+head(snpInfo)
+```
+
+How do we annotate this SNPs into genes?
+
+- Fist, transform SNP annotation into a `GenomicRange`
+
+```{r get_genes_from_snp}
+snpsInfo.gr <- makeGRangesFromDataFrame(snpInfo,
+                                        start.field="chrom_start", 
+                                        keep.extra.columns = TRUE,
+                                        seqnames.field = "chr_name",
+                                        end.field = "chrom_start")
+snpsInfo.gr
+```
+
+- Then, the genes corresponding to those variants can be obtained by using `VariantAnnotation` package and `TxDb.Hsapiens.UCSC.hg10.knownGene` annotation package that contains the annotated genes from UCSC in hg19 assembly. However, we need first to verify that the seqnames (e.g chromosome names) are the ones available in the reference genome
+
+```{r checkChr}
+seqnames(snpsInfo.gr)
+```
+
+We see that the annotation is not in the UCSC format (it uses NCBI), so this should be changed
+
+```{r checkChr2}
+seqlevelsStyle(snpsInfo.gr) <- "UCSC"
+```
+
+
+Then, we just keep the autosomes and sexual chromosomes
+
+```{r select}
+seqlevels(snpsInfo.gr, pruning.mode="coarse") <- paste0("chr", c(1:22, "X", "Y"))
+```
+
+
+We can obtain annotation for coding regions
+
+```{r getVariantGenes}
+library(VariantAnnotation)
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+coding <- locateVariants(snpsInfo.gr,
+                         TxDb.Hsapiens.UCSC.hg19.knownGene,
+                         CodingVariants())
+coding
+```
+
+or for all regions
+
+
+```{r getVariantGenes2}
+allvar <- locateVariants(snpsInfo.gr,
+                         TxDb.Hsapiens.UCSC.hg19.knownGene,
+                         AllVariants())
+allvar
+```
+
+We can see the distribution of the location of our variants
+
+```{r loc}
+table(allvar$LOCATION)
+```
+
+Finally, we can get the gene symbol by
+
+```{r genesymbol}
+library(org.Hs.eg.db)
+
+# to know the type of ID in the Human TxDb
+TxDb.Hsapiens.UCSC.hg19.knownGene
+
+# to know the accesors ('variables)
+keytypes(org.Hs.eg.db)
+
+# to make the call (be careful with other packages having select())
+keys <- allvar$GENEID
+genes <- AnnotationDbi::select(org.Hs.eg.db, columns="SYMBOL",
+                               key=keys, keytype="ENTREZID")
+
+# to add to the GRanges
+allvar$Symbol <- genes$SYMBOL
+allvar
+```
+

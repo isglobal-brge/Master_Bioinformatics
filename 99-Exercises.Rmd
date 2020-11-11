@@ -1,0 +1,97 @@
+# References
+
+<div id="refs"></div>
+
+
+# Exercises
+
+
+Here we propose several exercises whose answers will have to be deliver through the Moodle. The answers will also be available there. 
+
+
+## Bioconductor {#BioCEx}
+
+
+
+**EXERCISE 1**: Read plink data ('obesity.bed', 'obesity.fam', 'obesity.bim') that are available [here](https://github.com/isglobal-brge/brgedata/tree/master/inst/extdata)
+
+     1. How many samples are genotyped?
+     2. How many SNPs are in the chromosome 10?
+     3. Get the SNP names available in  the region chr2:134500-2300000.
+     4. In which chromosome is located the SNP rs1527354?
+     5. Get the number of individuals of each genoytpe corresponding to the SNP rs7859525. Which the homozygous normal genotype?
+
+
+
+
+**EXERCISE 2:** Install the Bioconductor package called `airway` and load the data `airway` which is a `SummarizedExperiment` by executing:
+
+```{r eval=FALSE}
+library(airway)
+data(airway)
+```
+
+     1. Print the object {\tt airway} and interpret the output.
+     2. Get the table of counts (use {\tt asssays} data) and the variables of the experiment (use {\tt colData} function).
+     3. Verify that {\tt SummarizedExperiment} objects check the dimension of the tables (think about the dimensions that should match).
+     4. Compare the number of counts of the gene ENSG00000000419 between treated and untreated cells (variable 'dex') using {\tt t.test} function.
+
+
+
+
+
+**EXERCISE 3:** [Recount2](https://jhubiostatistics.shinyapps.io/recount/) provides data for different RNA-seq experiments. These includes data from GTEx or TCGA projects. We have downloaded a subset of data corresponding to breast cancer and created a variable called `er` which encodes the estrogen receptor status (Negative and Positive). The `SummarizedExperiment` object is called `breast` and is available in the file 'breast_tcga.Rdata'. Load the data into R and answer the next questions
+
+     1. How many samples are in the `SummarizedExperiment` object?
+     2. And how many genes?
+     3. Which is the number of samples with positive estrogen receptor status (variable `er`)?
+     4. Subset the individuals having Negative strogen receptor status and draw a boxplot of the first gene. 
+     5. Create a `SummarizedExperiment` object of the genomic region chr6:151.2-151.8Mb. How many genes are in that region? How many of them are annotated? That is, how many of them have a gene symbol name? (HINT: use `rowRanges()` function and remember that `mcols()` function is used to get acccess to columns in a `GRanges` object) 
+
+
+
+
+**EXERCISE 4**: The file `snpsGWAS.Rdata` contains information about 28 SNPs that were called as a significantly associated with a given disease after performing a GWAS study.
+
+     1. Load this data into R.
+     2. Create a data.frame with the name of the SNP, its chromosome, its position and the allele name.
+     3. Add another column to this data.frame with the minor allele frequency (MAF) estimated from 1000 genomes (HINT: use `listAttributes` to retrieve the name of the attribute we are interested in).
+     4. Annotate the variants and get the gene symbol
+     5. How many SNPs are located in promoter regions?
+
+
+## Genetic association studies
+
+
+
+**EXERCISE 5**: Researchers are interested in assessing possible association between candidate SNPs and the response to treatment in patients diagnosed with major depression (file 'DM.txt' - NOTE: check how alleles are separated). The file also includes clinical information about other covariates of interest such as:
+
+     + HDRS: Hamilton Depression Rating Scale (continuous variable)
+     + PSICOT: Was the patient psychotic? (No and Yes)
+     + MELANCOL: Was the patient melancholic? (No and Yes)
+     + EPD_PREV: Number of previous episodes of depression (continuous variable)
+     + RESP: Response to treatment (outcome)
+
+Answer the following questions:
+
+     1. Is it necessary to check HWE hypothesis for this example?
+     2. Is there any SNP associated with the response to the treatment? If so, write a sentence interpreting the results of that association (only for one SNP)
+     3. Does the result change after adjusting for other clinical covariates?
+     4. Create a plot with the p-values only for dominant, recessive and additive models
+     5. Compute the p-values using MAX-statistic for all SNPs
+
+
+
+
+
+**EXERCISE 6**: Researchers are now interested in assessing the effect of haplotypes on the response to treatment. Answer the following questions:
+
+     1. Which is the combination of SNPs (e.g. number of consecutive haplotypes) that is more associated with the response to treatment? (NOTE1: Try only haplotypes of length 2 up to 4)
+     2. Which is the most frequent haplotype?
+     3. Compute the OR of association and its 95\% confidence intervals between the estimate haplotypes and the response to treatment
+
+
+
+
+
+

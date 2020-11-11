@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Bioconductor | Master in Bioinformatics and Omic Data Analysis</title>
+  <meta name="description" content="2 Bioconductor | Master in Bioinformatics and Omic Data Analysis" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Bioconductor | Master in Bioinformatics and Omic Data Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Bioconductor | Master in Bioinformatics and Omic Data Analysis" />
+  
+  
+  
+
+<meta name="author" content="Juan R González" />
+
+
+<meta name="date" content="2020-11-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="genomic-data-analysis.html"/>
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Aprendizaje Automático 1</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="bioconductor.html"><a href="bioconductor.html"><i class="fa fa-check"></i><b>2</b> Bioconductor</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="bioconductor.html"><a href="bioconductor.html#bioconductors-overview"><i class="fa fa-check"></i><b>2.1</b> Bioconductor’s overview</a></li>
+<li class="chapter" data-level="2.2" data-path="bioconductor.html"><a href="bioconductor.html#bioconductor-infrastructures"><i class="fa fa-check"></i><b>2.2</b> Bioconductor infrastructures</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="bioconductor.html"><a href="bioconductor.html#snpmatrix"><i class="fa fa-check"></i><b>2.2.1</b> <code>snpMatrix</code></a></li>
+<li class="chapter" data-level="2.2.2" data-path="bioconductor.html"><a href="bioconductor.html#expressionset"><i class="fa fa-check"></i><b>2.2.2</b> <code>ExpressionSet</code></a></li>
+<li class="chapter" data-level="2.2.3" data-path="bioconductor.html"><a href="bioconductor.html#summarizedexperiment"><i class="fa fa-check"></i><b>2.2.3</b> <code>SummarizedExperiment</code></a></li>
+<li class="chapter" data-level="2.2.4" data-path="bioconductor.html"><a href="bioconductor.html#genomic-ranges-granges"><i class="fa fa-check"></i><b>2.2.4</b> <code>Genomic Ranges (GRanges)</code></a></li>
+<li class="chapter" data-level="2.2.5" data-path="bioconductor.html"><a href="bioconductor.html#rangedsummarizedexperiment"><i class="fa fa-check"></i><b>2.2.5</b> <code>RangedSummarizedExperiment</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="bioconductor.html"><a href="bioconductor.html#annotation"><i class="fa fa-check"></i><b>2.3</b> Annotation</a></li>
+<li class="chapter" data-level="2.4" data-path="bioconductor.html"><a href="bioconductor.html#annotate-package"><i class="fa fa-check"></i><b>2.4</b> <code>annotate</code> package</a></li>
+<li class="chapter" data-level="2.5" data-path="bioconductor.html"><a href="bioconductor.html#biomart"><i class="fa fa-check"></i><b>2.5</b> BioMart</a></li>
+<li class="chapter" data-level="2.6" data-path="bioconductor.html"><a href="bioconductor.html#annotate-snps"><i class="fa fa-check"></i><b>2.6</b> Annotate SNPs</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Genomic data analysis</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html#descriptive-analysis"><i class="fa fa-check"></i><b>3.1</b> Descriptive analysis</a></li>
+<li class="chapter" data-level="3.2" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html#hardy-weinberg-equilibrium"><i class="fa fa-check"></i><b>3.2</b> Hardy-Weinberg equilibrium</a></li>
+<li class="chapter" data-level="3.3" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html#single-snp-association-analysis"><i class="fa fa-check"></i><b>3.3</b> Single SNP association analysis</a></li>
+<li class="chapter" data-level="3.4" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html#gene-environment-and-gene-gene-interactions"><i class="fa fa-check"></i><b>3.4</b> Gene-environment and gene-gene interactions</a></li>
+<li class="chapter" data-level="3.5" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html#haplotype-analysis"><i class="fa fa-check"></i><b>3.5</b> Haplotype analysis</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html#haplotype-estimation"><i class="fa fa-check"></i><b>3.5.1</b> Haplotype estimation</a></li>
+<li class="chapter" data-level="3.5.2" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html#haplotype-association"><i class="fa fa-check"></i><b>3.5.2</b> Haplotype association</a></li>
+<li class="chapter" data-level="3.5.3" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html#sliding-window-approach"><i class="fa fa-check"></i><b>3.5.3</b> Sliding window approach</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html#genetic-score"><i class="fa fa-check"></i><b>3.6</b> Genetic score</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="genome-wide-association-studies.html"><a href="genome-wide-association-studies.html"><i class="fa fa-check"></i><b>4</b> Genome-wide association studies</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="genome-wide-association-studies.html"><a href="genome-wide-association-studies.html#quality-control-of-snps"><i class="fa fa-check"></i><b>4.1</b> Quality control of SNPs</a></li>
+<li class="chapter" data-level="4.2" data-path="genome-wide-association-studies.html"><a href="genome-wide-association-studies.html#quality-control-of-individuals"><i class="fa fa-check"></i><b>4.2</b> Quality control of individuals</a></li>
+<li class="chapter" data-level="4.3" data-path="genome-wide-association-studies.html"><a href="genome-wide-association-studies.html#population-ancestry"><i class="fa fa-check"></i><b>4.3</b> Population ancestry</a></li>
+<li class="chapter" data-level="4.4" data-path="genome-wide-association-studies.html"><a href="genome-wide-association-studies.html#genome-wide-association-analysis"><i class="fa fa-check"></i><b>4.4</b> Genome-wide association analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>5</b> References</a></li>
+<li class="chapter" data-level="6" data-path="exercises.html"><a href="exercises.html"><i class="fa fa-check"></i><b>6</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="exercises.html"><a href="exercises.html#BioCEx"><i class="fa fa-check"></i><b>6.1</b> Bioconductor</a></li>
+<li class="chapter" data-level="6.2" data-path="exercises.html"><a href="exercises.html#genetic-association-studies"><i class="fa fa-check"></i><b>6.2</b> Genetic association studies</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Master in Bioinformatics and Omic Data Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bioconductor" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Bioconductor</h1>
+<p>This chapter offers a summary of the main data structures that are implemented in <a href="https://bioconductor.org/">Bioconductor</a> for dealing with genomic, transcriptomic and epigenomic data data. <code>Omic</code> data is typically composed of three datasets: one containing the actual high-dimensional data of omic variables per individuals, annotation data that specifies the characteristics of the variables and phenotypic information that encodes the subject’s traits of interest, covariates and sampling characteristics. For instance, transcriptomic data is stored in a <code>ExpressionSet</code> object, which is a data structure that contains the transcription values of individuals at each transcription probe, the genomic information for the transcription probes and the phenotypes of the individuals. Specific data is accessed, processed and analyzed with specific functions from diverse packages, conceived as methods acting on the <code>ExpressionSet</code> object. The aim of this chapter is then to introduce the specific omic objects available in Bioconductor. In the following chapters, we will introduce the packages that have been implemented to process and analyze these objects. We finish the chapter by illustrating how to perform genomic annotation which is crucial for interpreting results.</p>
+<p>Some of the data we are working with are available at our repository called <code>brgedata</code>. Therefore, I would recommend to install it just executing:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="bioconductor.html#cb1-1"></a>BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">&quot;isglobal-brge/brgedata&quot;</span>)</span></code></pre></div>
+<div id="bioconductors-overview" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Bioconductor’s overview</h2>
+<p><a href="https://bioconductor.org/">Bioconductor</a>: Analysis and comprehension of high-throughput
+genomic data</p>
+<ul>
+<li>Statistical analysis: large data, technological artifacts, designed
+experiments; rigorous</li>
+<li>Comprehension: biological context, visualization, reproducibility</li>
+<li>High-throughput
+<ul>
+<li>Sequencing: RNASeq, ChIPSeq, variants, copy number, …</li>
+<li>Microarrays: expression, SNP, …</li>
+<li>Flow cytometry, proteomics, images, …</li>
+</ul></li>
+</ul>
+<p>Packages, vignettes, work flows</p>
+<ul>
+<li>1974 software packages (Nov’20); also…
+<ul>
+<li>‘Annotation’ packages – static data bases of identifier maps,
+gene models, pathways, etc; e.g., [TxDb.Hsapiens.UCSC.hg19.knownGene][]</li>
+<li>’Experiment packages – data sets used to illustrate software
+functionality, e.g., [airway][]</li>
+</ul></li>
+<li>Discover and navigate via [biocViews][]</li>
+<li>Package ‘landing page’
+<ul>
+<li>Title, author / maintainer, short description, citation,
+installation instructions, …, download statistics</li>
+</ul></li>
+<li>All user-visible functions have help pages, most with runnable
+examples</li>
+<li>‘Vignettes’ an important feature in Bioconductor – narrative
+documents illustrating how to use the package, with integrated code</li>
+<li>‘Release’ (every six months) and ‘devel’ branches</li>
+<li><a href="https://support.bioconductor.org">Support site</a>;
+<a href="https://www.youtube.com/user/bioconductor">videos</a>;
+<a href="https://bioconductor.org/help/course-materials/">recent courses</a>.</li>
+<li><a href="https://bioconductor.org/packages/release/BiocViews.html#___Workflow">Common Workflows</a></li>
+</ul>
+<p>Package installation and use</p>
+<ul>
+<li><p>A package needs to be installed once, using the instructions on the
+package landing page (e.g., [DESeq2][]).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="bioconductor.html#cb2-1"></a><span class="kw">source</span>(<span class="st">&quot;https://bioconductor.org/biocLite.R&quot;</span>)</span>
+<span id="cb2-2"><a href="bioconductor.html#cb2-2"></a><span class="kw">biocLite</span>(<span class="kw">c</span>(<span class="st">&quot;DESeq2&quot;</span>, <span class="st">&quot;org.Hs.eg.db&quot;</span>))</span></code></pre></div></li>
+<li><p><strong>NEW</strong> functions have been created</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="bioconductor.html#cb3-1"></a><span class="kw">require</span>(BiocManager)</span>
+<span id="cb3-2"><a href="bioconductor.html#cb3-2"></a><span class="kw">install</span>(<span class="st">&quot;DESeq2&quot;</span>)</span>
+<span id="cb3-3"><a href="bioconductor.html#cb3-3"></a></span>
+<span id="cb3-4"><a href="bioconductor.html#cb3-4"></a><span class="co"># or</span></span>
+<span id="cb3-5"><a href="bioconductor.html#cb3-5"></a></span>
+<span id="cb3-6"><a href="bioconductor.html#cb3-6"></a>BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">&quot;DESeq2&quot;</span>)</span></code></pre></div></li>
+</ul>
+<p>older versions can be installed by</p>
+<pre><code>```r
+BiocManager::install(&quot;DESeq2&quot;, version = &quot;3.8&quot;)
+```</code></pre>
+<ul>
+<li><p><code>biocLite()</code> and <code>install()</code> install <em>Bioconductor</em> and [CRAN][]</p></li>
+<li><p>Github packages can be install by</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="bioconductor.html#cb5-1"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;isglobal-brge/SNPassoc&quot;</span>)</span></code></pre></div></li>
+<li><p>Once installed, the package can be loaded into an R session</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="bioconductor.html#cb6-1"></a><span class="kw">library</span>(GenomicRanges)</span></code></pre></div>
+<p>and the help system queried interactively, as outlined above:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="bioconductor.html#cb7-1"></a><span class="kw">help</span>(<span class="dt">package=</span><span class="st">&quot;GenomicRanges&quot;</span>)</span>
+<span id="cb7-2"><a href="bioconductor.html#cb7-2"></a><span class="kw">vignette</span>(<span class="dt">package=</span><span class="st">&quot;GenomicRanges&quot;</span>)</span>
+<span id="cb7-3"><a href="bioconductor.html#cb7-3"></a><span class="kw">vignette</span>(<span class="dt">package=</span><span class="st">&quot;GenomicRanges&quot;</span>, <span class="st">&quot;GenomicRangesHOWTOs&quot;</span>)</span>
+<span id="cb7-4"><a href="bioconductor.html#cb7-4"></a>?GRanges</span></code></pre></div></li>
+</ul>
+</div>
+<div id="bioconductor-infrastructures" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Bioconductor infrastructures</h2>
+<div id="snpmatrix" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> <code>snpMatrix</code></h3>
+<p>SNP array data can be stored in different formats. <a href="http://www.cog-genomics.org/plink2">PLINK binary format</a> is a common and efficient system to store and analyze genotype data. It was developed to analyze data with PLINK software <span class="citation">(Purcell et al. <a href="#ref-purcell2007plink" role="doc-biblioref">2007</a>)</span> but its efficiency in storing data in binary files has made it one of the standard formats for other software packages, including some in Bioconductor. PLINK stores SNP genomic data, annotation and phenotype information in three different files with extensions <code>.bed</code>, <code>.bim</code> and <code>.fam</code>:</p>
+<ul>
+<li>binary BED file: Contains the genomic SNP data, whose values are encoded in two bits (Homozygous normal 00, Heterozygous 10, Homozygous variant 11, missing 01).</li>
+<li>text BIM file: Contains SNPs annotations. Each row is a SNP and contains six columns: chromosome, SNP name, position in morgans, base-pair coordinates, allele 1 (reference nucleotide), allele 2 (alternative nucleotide).</li>
+<li>text FAM file: Contains the subject’s information. Each row is an individual and contains six variables: the Family identifier (ID), Individual ID, Paternal ID, Maternal ID, Sex (1=male; 2=female; other=unknown), phenotypes. Covariates can be added in additional columns.</li>
+</ul>
+<p>PLINK data can be loaded into R with the <code>read.plink()</code> function from <code>snpStats</code> Bioconductor’s package. The function requires the full path for the BED, BIM and FAM files, or only their name when the working directory of R contains the PLINK files.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="bioconductor.html#cb8-1"></a><span class="kw">library</span>(snpStats)</span>
+<span id="cb8-2"><a href="bioconductor.html#cb8-2"></a>ob.plink &lt;-<span class="st"> </span><span class="kw">read.plink</span>(<span class="dt">bed =</span> <span class="st">&quot;obesity.bed&quot;</span>, </span>
+<span id="cb8-3"><a href="bioconductor.html#cb8-3"></a>                       <span class="dt">bim =</span> <span class="st">&quot;obesity.bim&quot;</span>, </span>
+<span id="cb8-4"><a href="bioconductor.html#cb8-4"></a>                       <span class="dt">fam =</span> <span class="st">&quot;obesity.fam&quot;</span>)</span></code></pre></div>
+<p>In case of having the three files with the same name (i.e. obesity.fam, obesity.bim and obesity.bed) the following simplification may be convenient:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="bioconductor.html#cb9-1"></a>snps &lt;-<span class="st"> </span><span class="kw">read.plink</span>(<span class="st">&quot;obesity&quot;</span>) </span></code></pre></div>
+<p>Let us assume we have our PLINK data in folder called “data” at our working directory. Therefore, they can also be loaded by</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="bioconductor.html#cb10-1"></a><span class="kw">library</span>(snpStats)</span>
+<span id="cb10-2"><a href="bioconductor.html#cb10-2"></a>path &lt;-<span class="st"> &quot;data&quot;</span></span>
+<span id="cb10-3"><a href="bioconductor.html#cb10-3"></a>snps &lt;-<span class="st"> </span><span class="kw">read.plink</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;obesity&quot;</span>))</span>
+<span id="cb10-4"><a href="bioconductor.html#cb10-4"></a><span class="kw">names</span>(snps)</span></code></pre></div>
+<pre><code>[1] &quot;genotypes&quot; &quot;fam&quot;       &quot;map&quot;      </code></pre>
+<p>The <code>read.plink()</code> function returns a list with the three fields <code>genotypes</code>, <code>fam</code> and <code>map</code> that correspond to the three uploaded files. The <code>genotypes</code> field contains the genotype data stored in a <code>snpMatrix</code> object (individuals in rows and SNPs in columns).</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="bioconductor.html#cb12-1"></a>geno &lt;-<span class="st"> </span>snps<span class="op">$</span>genotypes</span>
+<span id="cb12-2"><a href="bioconductor.html#cb12-2"></a>geno</span></code></pre></div>
+<pre><code>A SnpMatrix with  2312 rows and  100000 columns
+Row names:  100 ... 998 
+Col names:  MitoC3993T ... rs28600179 </code></pre>
+<p>Genotypes are encoded as raw variables for storage efficiency. While individual values can be extracted with array syntax, manipulation of data is usually performed by methods that act on the complete object. The <code>fam</code> field contains the individual’s information in a <code>data.frame</code> object:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="bioconductor.html#cb14-1"></a>individuals &lt;-<span class="st"> </span>snps<span class="op">$</span>fam</span>
+<span id="cb14-2"><a href="bioconductor.html#cb14-2"></a><span class="kw">head</span>(individuals)</span></code></pre></div>
+<pre><code>     pedigree member father mother sex affected
+100    FAM_OB    100     NA     NA   1        1
+1001   FAM_OB   1001     NA     NA   1        1
+1004   FAM_OB   1004     NA     NA   2        2
+1005   FAM_OB   1005     NA     NA   1        2
+1006   FAM_OB   1006     NA     NA   2        1
+1008   FAM_OB   1008     NA     NA   1        1</code></pre>
+<p>The <code>map</code> field contains the SNPs annotation in a <code>data.frame</code>:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="bioconductor.html#cb16-1"></a>annotation &lt;-<span class="st"> </span>snps<span class="op">$</span>map</span>
+<span id="cb16-2"><a href="bioconductor.html#cb16-2"></a><span class="kw">head</span>(annotation)</span></code></pre></div>
+<pre><code>           chromosome   snp.name cM position allele.1 allele.2
+MitoC3993T         NA MitoC3993T NA     3993        T        C
+MitoG4821A         NA MitoG4821A NA     4821        A        G
+MitoG6027A         NA MitoG6027A NA     6027        A        G
+MitoT6153C         NA MitoT6153C NA     6153        C        T
+MitoC7275T         NA MitoC7275T NA     7275        T        C
+MitoT9699C         NA MitoT9699C NA     9699        C        T</code></pre>
+<p>Subsetting SNP data requires at least two different operations. For instance, if we are interested in extracting the SNPs of chromosome 1, we need to select those variants in <code>annotation</code> that are located in chromosome 1 and then subset the <code>snpMatrix</code> object as a typical matrix.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="bioconductor.html#cb18-1"></a>annotationChr1 &lt;-<span class="st"> </span>annotation[annotation<span class="op">$</span>chromosome <span class="op">==</span><span class="st"> &quot;1&quot;</span> <span class="op">&amp;</span><span class="st"> </span></span>
+<span id="cb18-2"><a href="bioconductor.html#cb18-2"></a><span class="st">                               </span><span class="op">!</span><span class="kw">is.na</span>(annotation<span class="op">$</span>chromosome), ]</span>
+<span id="cb18-3"><a href="bioconductor.html#cb18-3"></a>genoChr1 &lt;-<span class="st"> </span>geno[, <span class="kw">rownames</span>(annotationChr1)]</span>
+<span id="cb18-4"><a href="bioconductor.html#cb18-4"></a>genoChr1</span></code></pre></div>
+<pre><code>A SnpMatrix with  2312 rows and  7721 columns
+Row names:  100 ... 998 
+Col names:  rs12354060 ... rs7527472 </code></pre>
+<p>Subsetting samples follow a similar pattern. Suppose we want to select the genotypes of the control individuals. Case-control status is often encoded in the FAM file and therefore uploaded in the <code>fam</code> field. In our example, controls are coded with 1 and cases with 2 in the variable “affected” of individuals. Therefore, the genotypes of the control samples are extracted by</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="bioconductor.html#cb20-1"></a>individualsCtrl &lt;-<span class="st"> </span>individuals[individuals<span class="op">$</span>affected <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, ]</span>
+<span id="cb20-2"><a href="bioconductor.html#cb20-2"></a>genoCtrl &lt;-<span class="st"> </span>geno[<span class="kw">rownames</span>(individualsCtrl), ]</span>
+<span id="cb20-3"><a href="bioconductor.html#cb20-3"></a>genoCtrl</span></code></pre></div>
+<pre><code>A SnpMatrix with  1587 rows and  100000 columns
+Row names:  100 ... 998 
+Col names:  MitoC3993T ... rs28600179 </code></pre>
+</div>
+<div id="expressionset" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> <code>ExpressionSet</code></h3>
+<p><code>ExpressionSet</code>was one of the first implementations of Bioconductor to manage <em>omic</em> experiments. Although its use is discouraged in Bioconductor’s guidelines for the development of current and future packages, most publicly available data is available in this structure while future packages are still required to be able to upload and operate with it. The GEO repository contains thousands of transcriptomic experiments that are available in <code>ExpressionSet</code> format. Data available in <a href="https://www.ncbi.nlm.nih.gov/geo/">GEO repository</a> can be donwloaded into R as an <code>ExpressionSet</code> using <code>GEOquery</code> package. Let us donwload the experiment with accession number GSE63061 from the GEO website</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="bioconductor.html#cb22-1"></a><span class="kw">library</span>(GEOquery)</span>
+<span id="cb22-2"><a href="bioconductor.html#cb22-2"></a>gsm.expr &lt;-<span class="st"> </span><span class="kw">getGEO</span>(<span class="st">&quot;GSE63061&quot;</span>, <span class="dt">destdir =</span> <span class="st">&quot;.&quot;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb22-3"><a href="bioconductor.html#cb22-3"></a>gsm.expr &lt;-<span class="st"> </span>gsm.expr</span></code></pre></div>
+<p><code>gsm.expr</code> is an object of class <code>ExpressionSet</code> that has three main slots. Transcriptomic data is stored in the <code>assayData</code> slot, phenotypes are in <code>phenoData</code> and probe annotation in <code>featuredData</code>. There are three other slots <code>protocolData</code>, <code>experimentData</code> and <code>annotation</code> that specify equipment-generated information about protocols, resulting publications and the platform on which the samples were assayed. Methods are implemented to extract the data from each slot of the object. For instance <code>exprs</code> extracts the transcriptomic data in a matrix where subjects are columns and probes are rows</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="bioconductor.html#cb23-1"></a>expr &lt;-<span class="st"> </span><span class="kw">exprs</span>(gsm.expr)</span>
+<span id="cb23-2"><a href="bioconductor.html#cb23-2"></a><span class="kw">dim</span>(expr)</span></code></pre></div>
+<pre><code>[1] 32049   388</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="bioconductor.html#cb25-1"></a>expr[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>             GSM1539409 GSM1539410 GSM1539411 GSM1539412 GSM1539413
+ILMN_1343291  12.552807  12.711459  13.088393  12.643831  13.098389
+ILMN_1343295  10.101556   9.776015   9.594397  10.126782  10.223301
+ILMN_1651209   6.084671   6.255012   6.160485   6.109219   6.069960
+ILMN_1651210   6.068805   6.016468   6.024322   6.016118   6.056163
+ILMN_1651221   6.121060   6.173167   6.039552   6.111306   6.089542</code></pre>
+<p><code>phenoData()</code> retrieves the subjects’ phenotypes in an <code>AnnotatedDataFrame</code> object which is converted to a data.frame by the function <code>pData()</code></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="bioconductor.html#cb27-1"></a><span class="co">#get phenotype data</span></span>
+<span id="cb27-2"><a href="bioconductor.html#cb27-2"></a>pheno &lt;-<span class="st"> </span><span class="kw">phenoData</span>(gsm.expr)</span>
+<span id="cb27-3"><a href="bioconductor.html#cb27-3"></a>pheno</span></code></pre></div>
+<pre><code>An object of class &#39;AnnotatedDataFrame&#39;
+  sampleNames: GSM1539409 GSM1539410 ... GSM1539796 (388
+    total)
+  varLabels: title geo_accession ... tissue:ch1 (40 total)
+  varMetadata: labelDescription</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="bioconductor.html#cb29-1"></a>phenoDataFrame &lt;-<span class="st"> </span><span class="kw">pData</span>(gsm.expr)</span>
+<span id="cb29-2"><a href="bioconductor.html#cb29-2"></a>phenoDataFrame[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</span></code></pre></div>
+<pre><code>                  title geo_accession                status
+GSM1539409 7196843065_F    GSM1539409 Public on Aug 05 2015
+GSM1539410 7196843076_G    GSM1539410 Public on Aug 05 2015
+GSM1539411 7196843068_B    GSM1539411 Public on Aug 05 2015
+GSM1539412 7196843063_B    GSM1539412 Public on Aug 05 2015
+GSM1539413 7196843065_L    GSM1539413 Public on Aug 05 2015
+           submission_date
+GSM1539409     Nov 06 2014
+GSM1539410     Nov 06 2014
+GSM1539411     Nov 06 2014
+GSM1539412     Nov 06 2014
+GSM1539413     Nov 06 2014</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="bioconductor.html#cb31-1"></a><span class="co">#Alzheimer&#39;s case control variable</span></span>
+<span id="cb31-2"><a href="bioconductor.html#cb31-2"></a><span class="kw">summary</span>(phenoDataFrame<span class="op">$</span>characteristics_ch1)</span></code></pre></div>
+<pre><code>   Length     Class      Mode 
+      388 character character </code></pre>
+<p>Finally the <code>fData()</code> function gets the probes’ annotationin a data.frame</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="bioconductor.html#cb33-1"></a>probes &lt;-<span class="st"> </span><span class="kw">fData</span>(gsm.expr)</span>
+<span id="cb33-2"><a href="bioconductor.html#cb33-2"></a>probes[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>                       ID      Species Source  Search_Key  Transcript
+ILMN_1343291 ILMN_1343291 Homo sapiens RefSeq NM_001402.4   ILMN_5311
+ILMN_1343295 ILMN_1343295 Homo sapiens RefSeq              ILMN_27206
+ILMN_1651209 ILMN_1651209 Homo sapiens RefSeq NM_182838.1   ILMN_8692
+ILMN_1651210 ILMN_1651210 Homo sapiens RefSeq XM_941691.1 ILMN_138115
+ILMN_1651221 ILMN_1651221 Homo sapiens RefSeq XM_926225.1  ILMN_33528</code></pre>
+</div>
+<div id="summarizedexperiment" class="section level3" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> <code>SummarizedExperiment</code></h3>
+<p>The <code>SummarizedExperiment</code> class is a comprehensive data structure that can be used to store expression and methylation data from microarrays or read counts from RNA-seq experiments, among others. A <code>SummarizedExperiment</code> object contains slots for one or more  datasets, feature annotation (e.g. genes, transcripts, SNPs, CpGs), individual phenotypes and experimental details, such as laboratory and experimental protocols. In a <code>SummarizedExperiment</code>, the rows of <em>omic</em> data are features and columns are subjects.</p>
+<div class="figure">
+<img src="figures/sumExp.svg" alt="" />
+<p class="caption">SummarizedExperiment</p>
+</div>
+<p>Information is coordinated across the object’s slots. For instance, subsetting samples in the assay matrix automatically subsets them in the phenotype metadata. A <code>SummarizedExperiment</code>object is easily manipulated and constitutes the input and output of many of Bioconductor’s methods.</p>
+<p>Data is retrieved from a <code>SummarizedExperiment</code> by using specific methods or accessors. We illustrate the functions with <code>brge_methy</code> which includes real methylation data and is available from the Bioconductor’s <code>brgedata</code> package. The data is made available by loading of the package</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="bioconductor.html#cb35-1"></a><span class="kw">library</span>(brgedata)</span>
+<span id="cb35-2"><a href="bioconductor.html#cb35-2"></a>brge_methy</span></code></pre></div>
+<pre><code>class: GenomicRatioSet 
+dim: 392277 20 
+metadata(0):
+assays(1): Beta
+rownames(392277): cg13869341 cg24669183 ... cg26251715
+  cg25640065
+rowData names(14): Forward_Sequence SourceSeq ...
+  Regulatory_Feature_Group DHS
+colnames(20): x0017 x0043 ... x0077 x0079
+colData names(9): age sex ... Mono Neu
+Annotation
+  array: IlluminaHumanMethylation450k
+  annotation: ilmn12.hg19
+Preprocessing
+  Method: NA
+  minfi version: NA
+  Manifest version: NA</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="bioconductor.html#cb37-1"></a><span class="kw">extends</span>(<span class="st">&quot;GenomicRatioSet&quot;</span>)</span></code></pre></div>
+<pre><code>[1] &quot;GenomicRatioSet&quot;            &quot;RangedSummarizedExperiment&quot;
+[3] &quot;SummarizedExperiment&quot;       &quot;Vector&quot;                    
+[5] &quot;Annotated&quot;                  &quot;vector_OR_Vector&quot;          </code></pre>
+<p>The function <code>extends()</code> shows that the data has been encoded in an object of <code>GenomicRatioSet</code> class, which is an extension of the more primitive classes <code>RangedSummarizedExperiment</code> and <code>SummarizedExperiment</code>. <code>brge_methy</code> illustrates a typical object within Bioconductor’s framework, as it is a structure that inherits different types of classes in an established hierarchy. For each class, there are specific methods which are properly inherited across classes. For instance, in our example, <code>SummarizedExperiment</code> is <code>brge_methy</code>’s most primitive <em>omic</em> class and, therefore, all the methods of <code>SummarizedExperiment</code> apply to it. In particular, the methylation data that is stored in the object can be extracted with the function <code>assay()</code></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="bioconductor.html#cb39-1"></a>betas &lt;-<span class="st"> </span><span class="kw">assay</span>(brge_methy)</span>
+<span id="cb39-2"><a href="bioconductor.html#cb39-2"></a>betas[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</span></code></pre></div>
+<pre><code>                x0017      x0043     x0036      x0041
+cg13869341 0.90331003 0.90082827 0.8543610 0.84231205
+cg24669183 0.86349463 0.84009629 0.8741255 0.85122181
+cg15560884 0.65986032 0.69634338 0.6931083 0.69752294
+cg01014490 0.01448404 0.01509478 0.0163614 0.01322362
+cg17505339 0.92176287 0.92060149 0.9101060 0.93249167</code></pre>
+<p>The assay slot of a <code>SummarizedExperiment</code> object can contain any type of data (i.e. numeric, character, factor…), structure or large on-disk representations, such as a HDF5Array. Feature annotation data is accessed with the function <code>rowData()</code>:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="bioconductor.html#cb41-1"></a><span class="kw">rowData</span>(brge_methy)[,<span class="dv">2</span><span class="op">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>DataFrame with 392277 rows and 4 columns
+                                                    SourceSeq
+                                                  &lt;character&gt;
+cg13869341 CCGGTGGCTGGCCACTCTGCTAGAGTCCATCCGCCAAGCTGGGGGCATCG
+cg24669183 TCACCGCCTTGACAGCTTTGCAGAGTGCTGCTCAGGTATTCTGCAAGACG
+cg15560884 CGCGTAAACAAGGGAAGCTGAGTAATTGTATGTTCAAATACTTGCAAAAC
+cg01014490 TCAGAACTCGCGGTGGGGGCTGCTGGTTCTTCCAGGAGCGCGCATGAGCG
+cg17505339 AAACAAACAAAGATATCAAGCCACAGATTCAAAGTGCTATAAACTCCACG
+...                                                       ...
+cg04964672 CGGCGGCTTTCCACGCTGCGGCTTGGAGTGGTCCTTGTTTAGATTCCTTT
+cg01086462 CGCAGGTATGGTGTACATTAAGCAGGCAGGGTCAATCAGGGATGGTCTAT
+cg02233183 CAAAATGAATGAAATTTACAAACCCAGCAGCCAATAGATCTCCAGAGTCG
+cg26251715 CGCTGGTTGTCCAGGCTGGAATGCAATGGTGCAATGTCCGCTCACTCCAA
+cg25640065 CGGGGCAGGGGTCCGTAACTGCAGCCCTCCATGCCTGAGCCCCCCACCCC
+           Random_Loci Methyl27_Loci         genes
+           &lt;character&gt;   &lt;character&gt;   &lt;character&gt;
+cg13869341                                  WASH5P
+cg24669183                                        
+cg15560884                                        
+cg01014490                                        
+cg17505339                                        
+...                ...           ...           ...
+cg04964672                                        
+cg01086462                                        
+cg02233183                           NLGN4Y;NLGN4Y
+cg26251715                                  TTTY14
+cg25640065                                        </code></pre>
+<p>which returns a data.frame object. In our example, it contains the sequences and the genes associated with the CpG probes, among other information.</p>
+</div>
+<div id="genomic-ranges-granges" class="section level3" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> <code>Genomic Ranges (GRanges)</code></h3>
+<p>The Bioconductor’s package <code>GenomicRanges</code> aims to represent and manipulate the genomic annotation of molecular <em>omic</em> data under a reference genome. It contains functions to select specific regions and perform operations with them <span class="citation">(Lawrence et al. <a href="#ref-lawrence2013software" role="doc-biblioref">2013</a>)</span>. Objects of <code>GRanges</code> class are important to annotate and manipulate genomic, transcriptomic and methylomic data. In particular, they are used in conjunction with <code>SummarizedExperiment</code>, within the <code>RangedSummarizedExperiment</code> class that is explained in the following section.</p>
+<p>Annotation data refers to the characteristics of the variables in the high-dimensional data set. In particular for <em>omic</em> data relative to DNA structure and function, each variable may be given a location in a reference genome. While not two genomes are identical, the construction of a reference genome allows the mapping of specific characteristics of individual genomes to a common ground where they can be compared. The reference genome defines a coordinate system: “chromosome id” and “position along the chromosome”. For instance, a position such as chr10:4567-5671 would represent the 4567th to the 5671st base pair on the reference’s chromosome 10.</p>
+<p>The main functionalities implemented <code>GenomicRanges</code> are methods on <code>GRanges</code> objects. Objects are created by the function <code>GRanges</code>, minimum requirements are the genomic positions given by the chromosome <code>seqnames</code> and base pair coordinates <code>ranges</code>. Other metadata (e.g. variables) can be added to provide further information about each segment.</p>
+<p>We illustrate <code>GenomicRanges</code> creating 8 segments on either chr1 or chr2, each with defined start and end points. We add strand information, passed through the argument <code>strand</code>, to indicate the direction of each sequence. We also add a hypothetical variable <code>disease</code> that indicates whether asthma or obesity have been associated with each interval</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="bioconductor.html#cb43-1"></a><span class="kw">library</span>(GenomicRanges)</span>
+<span id="cb43-2"><a href="bioconductor.html#cb43-2"></a>gr &lt;-<span class="st"> </span><span class="kw">GRanges</span>(<span class="dt">seqnames=</span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;chr1&quot;</span>, <span class="dv">4</span>), <span class="kw">rep</span>(<span class="st">&quot;chr2&quot;</span>, <span class="dv">4</span>)),</span>
+<span id="cb43-3"><a href="bioconductor.html#cb43-3"></a>              <span class="dt">ranges =</span> <span class="kw">IRanges</span>(<span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">1000</span>, <span class="dv">1800</span>, <span class="dv">5300</span>, <span class="dv">7900</span>,</span>
+<span id="cb43-4"><a href="bioconductor.html#cb43-4"></a>                                         <span class="dv">1300</span>, <span class="dv">2100</span>, <span class="dv">3400</span>, <span class="dv">6700</span>),</span>
+<span id="cb43-5"><a href="bioconductor.html#cb43-5"></a>                               <span class="dt">end =</span><span class="kw">c</span>(<span class="dv">2200</span>, <span class="dv">3900</span>, <span class="dv">5400</span>, <span class="dv">8100</span>,</span>
+<span id="cb43-6"><a href="bioconductor.html#cb43-6"></a>                                      <span class="dv">2600</span>, <span class="dv">3300</span>, <span class="dv">4460</span>, <span class="dv">6850</span>)),</span>
+<span id="cb43-7"><a href="bioconductor.html#cb43-7"></a>              <span class="dt">strand =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;+&quot;</span>, <span class="st">&quot;-&quot;</span>), <span class="dv">4</span>),</span>
+<span id="cb43-8"><a href="bioconductor.html#cb43-8"></a>              <span class="dt">disease =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;Asthma&quot;</span>,<span class="dv">4</span>), <span class="kw">rep</span>(<span class="st">&quot;Obesity&quot;</span>,<span class="dv">4</span>)))</span>
+<span id="cb43-9"><a href="bioconductor.html#cb43-9"></a>gr</span></code></pre></div>
+<pre><code>GRanges object with 8 ranges and 1 metadata column:
+      seqnames    ranges strand |     disease
+         &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
+  [1]     chr1 1000-2200      + |      Asthma
+  [2]     chr1 1800-3900      - |      Asthma
+  [3]     chr1 5300-5400      + |      Asthma
+  [4]     chr1 7900-8100      - |      Asthma
+  [5]     chr2 1300-2600      + |     Obesity
+  [6]     chr2 2100-3300      - |     Obesity
+  [7]     chr2 3400-4460      + |     Obesity
+  [8]     chr2 6700-6850      - |     Obesity
+  -------
+  seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<p><code>gr</code> is our constructed object of class <code>GRanges</code>. The  object responds to the usual array and subset extraction given by squared parentheses</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="bioconductor.html#cb45-1"></a>gr[<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>GRanges object with 1 range and 1 metadata column:
+      seqnames    ranges strand |     disease
+         &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
+  [1]     chr1 1000-2200      + |      Asthma
+  -------
+  seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<p>However, there are also specific functions to access and modify information. For instance, <code>seqnames()</code> extract the chromosomes defined in our examples, whose first element can be redefined accordingly:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="bioconductor.html#cb47-1"></a><span class="kw">seqnames</span>(gr)</span></code></pre></div>
+<pre><code>factor-Rle of length 8 with 2 runs
+  Lengths:    4    4
+  Values : chr1 chr2
+Levels(2): chr1 chr2</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="bioconductor.html#cb49-1"></a><span class="kw">seqnames</span>(gr)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;chr2&quot;</span></span>
+<span id="cb49-2"><a href="bioconductor.html#cb49-2"></a>gr</span></code></pre></div>
+<pre><code>GRanges object with 8 ranges and 1 metadata column:
+      seqnames    ranges strand |     disease
+         &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
+  [1]     chr2 1000-2200      + |      Asthma
+  [2]     chr1 1800-3900      - |      Asthma
+  [3]     chr1 5300-5400      + |      Asthma
+  [4]     chr1 7900-8100      - |      Asthma
+  [5]     chr2 1300-2600      + |     Obesity
+  [6]     chr2 2100-3300      - |     Obesity
+  [7]     chr2 3400-4460      + |     Obesity
+  [8]     chr2 6700-6850      - |     Obesity
+  -------
+  seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<p>This is important to annotation using different system. NCBI encodes chromosomes as 1, 2, 3, …; while UCSC uses chr1, chr2, … The chromosome style can be changed using</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="bioconductor.html#cb51-1"></a><span class="kw">seqlevelsStyle</span>(gr) &lt;-<span class="st"> &quot;NCBI&quot;</span></span>
+<span id="cb51-2"><a href="bioconductor.html#cb51-2"></a>gr</span></code></pre></div>
+<pre><code>GRanges object with 8 ranges and 1 metadata column:
+      seqnames    ranges strand |     disease
+         &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
+  [1]        2 1000-2200      + |      Asthma
+  [2]        1 1800-3900      - |      Asthma
+  [3]        1 5300-5400      + |      Asthma
+  [4]        1 7900-8100      - |      Asthma
+  [5]        2 1300-2600      + |     Obesity
+  [6]        2 2100-3300      - |     Obesity
+  [7]        2 3400-4460      + |     Obesity
+  [8]        2 6700-6850      - |     Obesity
+  -------
+  seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<p>Let’s us write back the UCSC style</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="bioconductor.html#cb53-1"></a><span class="kw">seqlevelsStyle</span>(gr) &lt;-<span class="st"> &quot;UCSC&quot;</span></span>
+<span id="cb53-2"><a href="bioconductor.html#cb53-2"></a>gr</span></code></pre></div>
+<pre><code>GRanges object with 8 ranges and 1 metadata column:
+      seqnames    ranges strand |     disease
+         &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
+  [1]     chr2 1000-2200      + |      Asthma
+  [2]     chr1 1800-3900      - |      Asthma
+  [3]     chr1 5300-5400      + |      Asthma
+  [4]     chr1 7900-8100      - |      Asthma
+  [5]     chr2 1300-2600      + |     Obesity
+  [6]     chr2 2100-3300      - |     Obesity
+  [7]     chr2 3400-4460      + |     Obesity
+  [8]     chr2 6700-6850      - |     Obesity
+  -------
+  seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<p>Additional information can be added to the current object as a new field of a list</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="bioconductor.html#cb55-1"></a>gr<span class="op">$</span>gene_id &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;Gene&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>)</span>
+<span id="cb55-2"><a href="bioconductor.html#cb55-2"></a>gr</span></code></pre></div>
+<pre><code>GRanges object with 8 ranges and 2 metadata columns:
+      seqnames    ranges strand |     disease     gene_id
+         &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
+  [1]     chr2 1000-2200      + |      Asthma       Gene1
+  [2]     chr1 1800-3900      - |      Asthma       Gene2
+  [3]     chr1 5300-5400      + |      Asthma       Gene3
+  [4]     chr1 7900-8100      - |      Asthma       Gene4
+  [5]     chr2 1300-2600      + |     Obesity       Gene5
+  [6]     chr2 2100-3300      - |     Obesity       Gene6
+  [7]     chr2 3400-4460      + |     Obesity       Gene7
+  [8]     chr2 6700-6850      - |     Obesity       Gene8
+  -------
+  seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<p><code>GenomicRanges</code> provides different methods to perform arithmetic with the ranges, see <code>?GRanges</code> for a full list. For instance, with <code>shift()</code> an interval is moved a given base-pair distance and with <code>flank()</code> the interval is stretched</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="bioconductor.html#cb57-1"></a><span class="co">#shift: move all intervals 10 base pair towards the end</span></span>
+<span id="cb57-2"><a href="bioconductor.html#cb57-2"></a><span class="kw">shift</span>(gr, <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>GRanges object with 8 ranges and 2 metadata columns:
+      seqnames    ranges strand |     disease     gene_id
+         &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
+  [1]     chr2 1010-2210      + |      Asthma       Gene1
+  [2]     chr1 1810-3910      - |      Asthma       Gene2
+  [3]     chr1 5310-5410      + |      Asthma       Gene3
+  [4]     chr1 7910-8110      - |      Asthma       Gene4
+  [5]     chr2 1310-2610      + |     Obesity       Gene5
+  [6]     chr2 2110-3310      - |     Obesity       Gene6
+  [7]     chr2 3410-4470      + |     Obesity       Gene7
+  [8]     chr2 6710-6860      - |     Obesity       Gene8
+  -------
+  seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="bioconductor.html#cb59-1"></a><span class="co">#shift: move each intervals individually</span></span>
+<span id="cb59-2"><a href="bioconductor.html#cb59-2"></a><span class="kw">shift</span>(gr, <span class="kw">seq</span>(<span class="dv">10</span>,<span class="dv">100</span>, <span class="dt">length=</span><span class="dv">8</span>))</span></code></pre></div>
+<pre><code>GRanges object with 8 ranges and 2 metadata columns:
+      seqnames    ranges strand |     disease     gene_id
+         &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
+  [1]     chr2 1010-2210      + |      Asthma       Gene1
+  [2]     chr1 1822-3922      - |      Asthma       Gene2
+  [3]     chr1 5335-5435      + |      Asthma       Gene3
+  [4]     chr1 7948-8148      - |      Asthma       Gene4
+  [5]     chr2 1361-2661      + |     Obesity       Gene5
+  [6]     chr2 2174-3374      - |     Obesity       Gene6
+  [7]     chr2 3487-4547      + |     Obesity       Gene7
+  [8]     chr2 6800-6950      - |     Obesity       Gene8
+  -------
+  seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="bioconductor.html#cb61-1"></a><span class="co">#flank:  recover regions next to the input set. </span></span>
+<span id="cb61-2"><a href="bioconductor.html#cb61-2"></a><span class="co">#        For a 50 base stretch upstream (negative value for</span></span>
+<span id="cb61-3"><a href="bioconductor.html#cb61-3"></a><span class="co">#        downstream)</span></span>
+<span id="cb61-4"><a href="bioconductor.html#cb61-4"></a><span class="kw">flank</span>(gr, <span class="dv">50</span>)</span></code></pre></div>
+<pre><code>GRanges object with 8 ranges and 2 metadata columns:
+      seqnames    ranges strand |     disease     gene_id
+         &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
+  [1]     chr2   950-999      + |      Asthma       Gene1
+  [2]     chr1 3901-3950      - |      Asthma       Gene2
+  [3]     chr1 5250-5299      + |      Asthma       Gene3
+  [4]     chr1 8101-8150      - |      Asthma       Gene4
+  [5]     chr2 1250-1299      + |     Obesity       Gene5
+  [6]     chr2 3301-3350      - |     Obesity       Gene6
+  [7]     chr2 3350-3399      + |     Obesity       Gene7
+  [8]     chr2 6851-6900      - |     Obesity       Gene8
+  -------
+  seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<p><code>GenomicRanges</code> also includes methods for aggregating and summarizing <code>GRanges</code>objects. The functions <code>reduce()</code>, <code>disjoint()</code> and <code>coverage()</code> are most useful. <code>disjoin()</code>, for instance, reduces the intervals into the smallest set of unique, non-overlapping pieces that make up the original object. It is strand-specific by default, but this can be avoided with <code>ignore.strand=TRUE</code>.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="bioconductor.html#cb63-1"></a><span class="kw">disjoin</span>(gr, <span class="dt">ignore.strand=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>GRanges object with 10 ranges and 0 metadata columns:
+       seqnames    ranges strand
+          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+   [1]     chr1 1800-3900      *
+   [2]     chr1 5300-5400      *
+   [3]     chr1 7900-8100      *
+   [4]     chr2 1000-1299      *
+   [5]     chr2 1300-2099      *
+   [6]     chr2 2100-2200      *
+   [7]     chr2 2201-2600      *
+   [8]     chr2 2601-3300      *
+   [9]     chr2 3400-4460      *
+  [10]     chr2 6700-6850      *
+  -------
+  seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<p><code>reduce()</code> creates the smallest range set of unique, non-overlapping intervals. Strand information is also taken into account by default and can also be turned off</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="bioconductor.html#cb65-1"></a><span class="kw">reduce</span>(gr, <span class="dt">ignore.strand=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>GRanges object with 6 ranges and 0 metadata columns:
+      seqnames    ranges strand
+         &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+  [1]     chr1 1800-3900      *
+  [2]     chr1 5300-5400      *
+  [3]     chr1 7900-8100      *
+  [4]     chr2 1000-3300      *
+  [5]     chr2 3400-4460      *
+  [6]     chr2 6700-6850      *
+  -------
+  seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<p><code>coverage()</code> summarizes the times each base is covered by an interval</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="bioconductor.html#cb67-1"></a><span class="kw">coverage</span>(gr)</span></code></pre></div>
+<pre><code>RleList of length 2
+$chr1
+integer-Rle of length 8100 with 6 runs
+  Lengths: 1799 2101 1399  101 2499  201
+  Values :    0    1    0    1    0    1
+
+$chr2
+integer-Rle of length 6850 with 10 runs
+  Lengths:  999  300  800  101  400  700   99 1061 2239  151
+  Values :    0    1    2    3    2    1    0    1    0    1</code></pre>
+<p>It is also possible to perform operations between two different <code>GRanges</code> objects. For instance, one may be interested in knowing the intervals that overlap with a targeted region:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="bioconductor.html#cb69-1"></a>target &lt;-<span class="st"> </span><span class="kw">GRanges</span>(<span class="dt">seqnames=</span><span class="st">&quot;chr1&quot;</span>, </span>
+<span id="cb69-2"><a href="bioconductor.html#cb69-2"></a>                  <span class="dt">range=</span><span class="kw">IRanges</span>(<span class="dt">start=</span><span class="dv">1200</span>, <span class="dv">4000</span>))</span>
+<span id="cb69-3"><a href="bioconductor.html#cb69-3"></a>target</span></code></pre></div>
+<pre><code>GRanges object with 1 range and 0 metadata columns:
+      seqnames    ranges strand
+         &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+  [1]     chr1 1200-4000      *
+  -------
+  seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="bioconductor.html#cb71-1"></a>gr.ov &lt;-<span class="st"> </span><span class="kw">findOverlaps</span>(target, gr)</span>
+<span id="cb71-2"><a href="bioconductor.html#cb71-2"></a>gr.ov</span></code></pre></div>
+<pre><code>Hits object with 1 hit and 0 metadata columns:
+      queryHits subjectHits
+      &lt;integer&gt;   &lt;integer&gt;
+  [1]         1           2
+  -------
+  queryLength: 1 / subjectLength: 8</code></pre>
+<p>To recover the overlapping intervals between <code>gr</code> and <code>target</code> we can run</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="bioconductor.html#cb73-1"></a>gr[<span class="kw">subjectHits</span>(gr.ov)]</span></code></pre></div>
+<pre><code>GRanges object with 1 range and 2 metadata columns:
+      seqnames    ranges strand |     disease     gene_id
+         &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
+  [1]     chr1 1800-3900      - |      Asthma       Gene2
+  -------
+  seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<p>or</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="bioconductor.html#cb75-1"></a><span class="kw">subsetByOverlaps</span>(gr, target)</span></code></pre></div>
+<pre><code>GRanges object with 1 range and 2 metadata columns:
+      seqnames    ranges strand |     disease     gene_id
+         &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
+  [1]     chr1 1800-3900      - |      Asthma       Gene2
+  -------
+  seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<p>Other operations can be found <a href="https://bioconductor.org/help/course-materials/2014/SeattleFeb2014/">here</a>.</p>
+</div>
+<div id="rangedsummarizedexperiment" class="section level3" number="2.2.5">
+<h3><span class="header-section-number">2.2.5</span> <code>RangedSummarizedExperiment</code></h3>
+<p><code>SummarizedExperiment</code> is extended to <code>RangedSummarizedExperiment</code>, a child class that contains the annotation data of the features in a <code>GenomicRanges</code> object. In our epigenomic example, the second most primitive class of <code>brge_methy</code> object with <em>omic</em> functionality, after <code>SummarizedExperiment</code>, is <code>RangedSummarizedExperiment</code>. Annotation data, with variable names given by</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="bioconductor.html#cb77-1"></a><span class="kw">names</span>(<span class="kw">rowData</span>(brge_methy))</span></code></pre></div>
+<pre><code> [1] &quot;Forward_Sequence&quot;         &quot;SourceSeq&quot;               
+ [3] &quot;Random_Loci&quot;              &quot;Methyl27_Loci&quot;           
+ [5] &quot;genes&quot;                    &quot;UCSC_RefGene_Accession&quot;  
+ [7] &quot;group&quot;                    &quot;Phantom&quot;                 
+ [9] &quot;DMR&quot;                      &quot;Enhancer&quot;                
+[11] &quot;HMM_Island&quot;               &quot;Regulatory_Feature_Name&quot; 
+[13] &quot;Regulatory_Feature_Group&quot; &quot;DHS&quot;                     </code></pre>
+<p>can be obtained in a <code>GRanges</code> object, for a given variable. For instance, metadata of CpG genomic annotation and neighboring genes is obtained using array syntax</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="bioconductor.html#cb79-1"></a><span class="kw">rowRanges</span>(brge_methy)[, <span class="st">&quot;genes&quot;</span>]</span></code></pre></div>
+<pre><code>GRanges object with 392277 ranges and 1 metadata column:
+             seqnames    ranges strand |         genes
+                &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |   &lt;character&gt;
+  cg13869341     chr1     15865      * |        WASH5P
+  cg24669183     chr1    534242      * |              
+  cg15560884     chr1    710097      * |              
+  cg01014490     chr1    714177      * |              
+  cg17505339     chr1    720865      * |              
+         ...      ...       ...    ... .           ...
+  cg04964672     chrY   7428198      * |              
+  cg01086462     chrY   7429349      * |              
+  cg02233183     chrY  16634382      * | NLGN4Y;NLGN4Y
+  cg26251715     chrY  21236229      * |        TTTY14
+  cg25640065     chrY  23569324      * |              
+  -------
+  seqinfo: 24 sequences from an unspecified genome; no seqlengths</code></pre>
+<p>Subject data can be accessed entirely in a single data.frame or a variable at the time. The entire subject (phenotype) information is retrieved with the function <code>colData()</code>:</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="bioconductor.html#cb81-1"></a><span class="kw">colData</span>(brge_methy)</span></code></pre></div>
+<pre><code>DataFrame with 20 rows and 9 columns
+            age      sex           NK     Bcell       CD4T       CD8T
+      &lt;numeric&gt; &lt;factor&gt;    &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt;  &lt;numeric&gt;
+x0017         4   Female -5.81386e-19 0.1735078 0.20406869  0.1009741
+x0043         4   Female  1.64826e-03 0.1820172 0.16171272  0.1287722
+x0036         4   Male    1.13186e-02 0.1690173 0.15546368  0.1277417
+x0041         4   Female  8.50822e-03 0.0697158 0.00732789  0.0321861
+x0032         4   Male    0.00000e+00 0.1139780 0.22230399  0.0216090
+...         ...      ...          ...       ...        ...        ...
+x0018         4   Female    0.0170284 0.0781698   0.112735 0.06796816
+x0057         4   Female    0.0000000 0.0797774   0.111072 0.00910489
+x0061         4   Female    0.0000000 0.1640266   0.224203 0.13125212
+x0077         4   Female    0.0000000 0.1122731   0.168056 0.07840593
+x0079         4   Female    0.0120148 0.0913650   0.205830 0.11475389
+              Eos      Mono       Neu
+        &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
+x0017 0.00000e+00 0.0385654  0.490936
+x0043 0.00000e+00 0.0499542  0.491822
+x0036 0.00000e+00 0.1027105  0.459632
+x0041 0.00000e+00 0.0718280  0.807749
+x0032 2.60504e-18 0.0567246  0.575614
+...           ...       ...       ...
+x0018 8.37770e-03 0.0579535  0.658600
+x0057 4.61887e-18 0.1015260  0.686010
+x0061 8.51074e-03 0.0382647  0.429575
+x0077 6.13397e-02 0.0583411  0.515284
+x0079 0.00000e+00 0.0750535  0.513597</code></pre>
+<p>The list symbol <code>$</code> can be used, for instance, to obtain the sex of the individuals</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="bioconductor.html#cb83-1"></a>brge_methy<span class="op">$</span>sex</span></code></pre></div>
+<pre><code> [1] Female Female Male   Female Male   Male   Male   Male   Male  
+[10] Male   Female Female Female Male   Male   Female Female Female
+[19] Female Female
+Levels: Female Male</code></pre>
+<p>Subsetting the entire structure is also possible following the usual array syntax. For example, we can select only males from the <code>brge_methy</code> dataset</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="bioconductor.html#cb85-1"></a>brge_methy[, brge_methy<span class="op">$</span>sex <span class="op">==</span><span class="st"> &quot;male&quot;</span>]</span></code></pre></div>
+<pre><code>class: GenomicRatioSet 
+dim: 392277 0 
+metadata(0):
+assays(1): Beta
+rownames(392277): cg13869341 cg24669183 ... cg26251715
+  cg25640065
+rowData names(14): Forward_Sequence SourceSeq ...
+  Regulatory_Feature_Group DHS
+colnames(0):
+colData names(9): age sex ... Mono Neu
+Annotation
+  array: IlluminaHumanMethylation450k
+  annotation: ilmn12.hg19
+Preprocessing
+  Method: NA
+  minfi version: NA
+  Manifest version: NA</code></pre>
+<p>The <code>metadata()</code> function retrieves experimental data</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="bioconductor.html#cb87-1"></a><span class="kw">metadata</span>(brge_methy)</span></code></pre></div>
+<pre><code>list()</code></pre>
+<p>which in our case is empty.</p>
+</div>
+</div>
+<div id="annotation" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Annotation</h2>
+</div>
+<div id="annotate-package" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> <code>annotate</code> package</h2>
+<p>Bioconductor distributes annotation packages for a wide range
+of gene expression microarrays and RNA-seq data. The annotate
+package is one way to use this annotation information. This code loads the <code>annotate</code> package and the databases for the Gene Ontology and one of the Affymetrix human microarray chips.</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="bioconductor.html#cb89-1"></a><span class="kw">library</span>(annotate)</span>
+<span id="cb89-2"><a href="bioconductor.html#cb89-2"></a><span class="kw">library</span>(hgu95av2.db)</span>
+<span id="cb89-3"><a href="bioconductor.html#cb89-3"></a><span class="kw">library</span>(GO.db)</span></code></pre></div>
+<p>The databases are queried with <code>get()</code> or <code>mget()</code> for multiple
+queries:</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="bioconductor.html#cb90-1"></a><span class="kw">get</span>(<span class="st">&quot;32972_at&quot;</span>, <span class="dt">envir=</span>hgu95av2GENENAME)</span></code></pre></div>
+<pre><code>[1] &quot;NADPH oxidase 1&quot;</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="bioconductor.html#cb92-1"></a><span class="kw">mget</span>(<span class="kw">c</span>(<span class="st">&quot;738_at&quot;</span>, <span class="st">&quot;40840_at&quot;</span>, <span class="st">&quot;32972_at&quot;</span>), </span>
+<span id="cb92-2"><a href="bioconductor.html#cb92-2"></a>     <span class="dt">envir=</span>hgu95av2GENENAME)</span></code></pre></div>
+<pre><code>$`738_at`
+[1] &quot;5&#39;-nucleotidase, cytosolic II&quot;
+
+$`40840_at`
+[1] &quot;peptidylprolyl isomerase F&quot;
+
+$`32972_at`
+[1] &quot;NADPH oxidase 1&quot;</code></pre>
+<p>The name of the availabe information in a Bioconductor database (ended by <code>.db</code>, for instance <code>org.Hs.eg.db</code>) can be retreived by using <code>columns()</code>:</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="bioconductor.html#cb94-1"></a><span class="kw">columns</span>(hgu95av2.db)</span></code></pre></div>
+<pre><code> [1] &quot;ACCNUM&quot;       &quot;ALIAS&quot;        &quot;ENSEMBL&quot;      &quot;ENSEMBLPROT&quot; 
+ [5] &quot;ENSEMBLTRANS&quot; &quot;ENTREZID&quot;     &quot;ENZYME&quot;       &quot;EVIDENCE&quot;    
+ [9] &quot;EVIDENCEALL&quot;  &quot;GENENAME&quot;     &quot;GO&quot;           &quot;GOALL&quot;       
+[13] &quot;IPI&quot;          &quot;MAP&quot;          &quot;OMIM&quot;         &quot;ONTOLOGY&quot;    
+[17] &quot;ONTOLOGYALL&quot;  &quot;PATH&quot;         &quot;PFAM&quot;         &quot;PMID&quot;        
+[21] &quot;PROBEID&quot;      &quot;PROSITE&quot;      &quot;REFSEQ&quot;       &quot;SYMBOL&quot;      
+[25] &quot;UCSCKG&quot;       &quot;UNIGENE&quot;      &quot;UNIPROT&quot;     </code></pre>
+<p>The GO terms can be managed by</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="bioconductor.html#cb96-1"></a>go &lt;-<span class="st"> </span><span class="kw">get</span>(<span class="st">&quot;738_at&quot;</span>, <span class="dt">envir=</span>hgu95av2GO)</span>
+<span id="cb96-2"><a href="bioconductor.html#cb96-2"></a><span class="kw">names</span>(go)</span></code></pre></div>
+<pre><code> [1] &quot;GO:0006195&quot; &quot;GO:0016311&quot; &quot;GO:0017144&quot; &quot;GO:0046040&quot; &quot;GO:0046085&quot;
+ [6] &quot;GO:0005829&quot; &quot;GO:0000166&quot; &quot;GO:0005515&quot; &quot;GO:0008253&quot; &quot;GO:0046872&quot;</code></pre>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="bioconductor.html#cb98-1"></a><span class="kw">get</span>(<span class="st">&quot;GO:0009117&quot;</span>, <span class="dt">envir=</span>GOTERM)</span></code></pre></div>
+<pre><code>GOID: GO:0009117
+Term: nucleotide metabolic process
+Ontology: BP
+Definition: The chemical reactions and pathways involving a
+    nucleotide, a nucleoside that is esterified with
+    (ortho)phosphate or an oligophosphate at any hydroxyl
+    group on the glycose moiety; may be mono-, di- or
+    triphosphate; this definition includes cyclic nucleotides
+    (nucleoside cyclic phosphates).
+Synonym: nucleotide metabolism</code></pre>
+<p>There are multiple annotated databases in Bioconductor that can be found here: <a href="http://bioconductor.org/packages/release/data/annotation/">annotated data bases</a>. For example</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="bioconductor.html#cb100-1"></a><span class="kw">require</span>(org.Hs.eg.db)</span>
+<span id="cb100-2"><a href="bioconductor.html#cb100-2"></a><span class="kw">columns</span>(org.Hs.eg.db)</span></code></pre></div>
+<pre><code> [1] &quot;ACCNUM&quot;       &quot;ALIAS&quot;        &quot;ENSEMBL&quot;      &quot;ENSEMBLPROT&quot; 
+ [5] &quot;ENSEMBLTRANS&quot; &quot;ENTREZID&quot;     &quot;ENZYME&quot;       &quot;EVIDENCE&quot;    
+ [9] &quot;EVIDENCEALL&quot;  &quot;GENENAME&quot;     &quot;GO&quot;           &quot;GOALL&quot;       
+[13] &quot;IPI&quot;          &quot;MAP&quot;          &quot;OMIM&quot;         &quot;ONTOLOGY&quot;    
+[17] &quot;ONTOLOGYALL&quot;  &quot;PATH&quot;         &quot;PFAM&quot;         &quot;PMID&quot;        
+[21] &quot;PROSITE&quot;      &quot;REFSEQ&quot;       &quot;SYMBOL&quot;       &quot;UCSCKG&quot;      
+[25] &quot;UNIGENE&quot;      &quot;UNIPROT&quot;     </code></pre>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="bioconductor.html#cb102-1"></a><span class="co"># get the gene symbol</span></span>
+<span id="cb102-2"><a href="bioconductor.html#cb102-2"></a><span class="kw">get</span>(<span class="st">&quot;9726&quot;</span>, <span class="dt">envir=</span>org.Hs.egSYMBOL)</span></code></pre></div>
+<pre><code>[1] &quot;ZNF646&quot;</code></pre>
+</div>
+<div id="biomart" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> BioMart</h2>
+<p><a href="http://www.biomart.org">BioMart</a> is a query-oriented data management
+system developed jointly by the European Bioinformatics Institute (EBI) and Cold Spring Harbor Laboratory (CSHL).</p>
+<p><code>biomaRt</code> is an R interface to BioMart systems, in particular
+to <a href="www.ensembl.org">Ensembl</a>. Ensembl is a joint project between EMBL - European Bioinformatics Institute (EBI) and the Wellcome Trust Sanger Institute (WTSI) to develop a software system which produces and maintains automatic annotation on selected eukaryotic genomes. There are several databases that can be queried:</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="bioconductor.html#cb104-1"></a><span class="kw">require</span>(biomaRt)</span>
+<span id="cb104-2"><a href="bioconductor.html#cb104-2"></a><span class="kw">head</span>(<span class="kw">listMarts</span>())</span></code></pre></div>
+<pre><code>               biomart                version
+1 ENSEMBL_MART_ENSEMBL      Ensembl Genes 101
+2   ENSEMBL_MART_MOUSE      Mouse strains 101
+3     ENSEMBL_MART_SNP  Ensembl Variation 101
+4 ENSEMBL_MART_FUNCGEN Ensembl Regulation 101</code></pre>
+<p>After selecting a database (e.g., <strong>ensembl</strong>) we select a dataset:</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="bioconductor.html#cb106-1"></a>mart &lt;-<span class="st"> </span><span class="kw">useMart</span>(<span class="dt">biomart=</span><span class="st">&quot;ensembl&quot;</span>)</span>
+<span id="cb106-2"><a href="bioconductor.html#cb106-2"></a><span class="kw">listDatasets</span>(mart)[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,]</span></code></pre></div>
+<pre><code>                        dataset
+1      acalliptera_gene_ensembl
+2    acarolinensis_gene_ensembl
+3     acchrysaetos_gene_ensembl
+4     acitrinellus_gene_ensembl
+5     amelanoleuca_gene_ensembl
+6       amexicanus_gene_ensembl
+7         ampachon_gene_ensembl
+8       anancymaae_gene_ensembl
+9   aplatyrhynchos_gene_ensembl
+10 applatyrhynchos_gene_ensembl
+                                        description
+1                  Eastern happy genes (fAstCal1.2)
+2                    Anole lizard genes (AnoCar2.0)
+3                   Golden eagle genes (bAquChr1.2)
+4                    Midas cichlid genes (Midas_v5)
+5                             Panda genes (ailMel1)
+6      Mexican tetra genes (Astyanax_mexicanus-2.0)
+7  Pachon cavefish genes (Astyanax_mexicanus-1.0.2)
+8                Ma&#39;s night monkey genes (Anan_2.0)
+9                       Mallard genes (ASM874695v1)
+10                         Duck genes (CAU_duck1.0)
+                    version
+1                fAstCal1.2
+2                 AnoCar2.0
+3                bAquChr1.2
+4                  Midas_v5
+5                   ailMel1
+6    Astyanax_mexicanus-2.0
+7  Astyanax_mexicanus-1.0.2
+8                  Anan_2.0
+9               ASM874695v1
+10              CAU_duck1.0</code></pre>
+<p>After selecting a dataset (e.g., <strong>hsapiens_gene_ensembl</strong>) we select the attributes we are interested in:</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="bioconductor.html#cb108-1"></a>mart  &lt;-<span class="st"> </span><span class="kw">useMart</span>(<span class="dt">biomart=</span><span class="st">&quot;ensembl&quot;</span>, </span>
+<span id="cb108-2"><a href="bioconductor.html#cb108-2"></a>                 <span class="dt">dataset=</span><span class="st">&quot;hsapiens_gene_ensembl&quot;</span>)</span>
+<span id="cb108-3"><a href="bioconductor.html#cb108-3"></a><span class="kw">listAttributes</span>(mart)[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,]</span></code></pre></div>
+<pre><code>                            name                  description
+1                ensembl_gene_id               Gene stable ID
+2        ensembl_gene_id_version       Gene stable ID version
+3          ensembl_transcript_id         Transcript stable ID
+4  ensembl_transcript_id_version Transcript stable ID version
+5             ensembl_peptide_id            Protein stable ID
+6     ensembl_peptide_id_version    Protein stable ID version
+7                ensembl_exon_id               Exon stable ID
+8                    description             Gene description
+9                chromosome_name     Chromosome/scaffold name
+10                start_position              Gene start (bp)
+           page
+1  feature_page
+2  feature_page
+3  feature_page
+4  feature_page
+5  feature_page
+6  feature_page
+7  feature_page
+8  feature_page
+9  feature_page
+10 feature_page</code></pre>
+<p><strong>NOTE</strong>: sometimes the host is not working. If so, try host=“www.ensembl.org” in the <code>useMart</code> function.</p>
+<p>After selecting the dataset we can make different types of queries:</p>
+<ul>
+<li><strong>Query 1</strong>: We could look for all the transcripts contained in the gene <code>7791</code> (entrez id):</li>
+</ul>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="bioconductor.html#cb110-1"></a>tx &lt;-<span class="st"> </span><span class="kw">getBM</span>(<span class="dt">attributes=</span><span class="st">&quot;ensembl_transcript_id&quot;</span>,</span>
+<span id="cb110-2"><a href="bioconductor.html#cb110-2"></a>            <span class="dt">filters=</span><span class="st">&quot;entrezgene_id&quot;</span>,</span>
+<span id="cb110-3"><a href="bioconductor.html#cb110-3"></a>            <span class="dt">values=</span><span class="st">&quot;7791&quot;</span>, <span class="dt">mart=</span>mart)</span>
+<span id="cb110-4"><a href="bioconductor.html#cb110-4"></a>tx</span></code></pre></div>
+<pre><code>   ensembl_transcript_id
+1        ENST00000322764
+2        ENST00000449630
+3        ENST00000468083
+4        ENST00000457235
+5        ENST00000354434
+6        ENST00000392910
+7        ENST00000477373
+8        ENST00000436448
+9        ENST00000446634
+10       ENST00000497119
+11       ENST00000644808
+12       ENST00000644767
+13       ENST00000645428
+14       ENST00000643962
+15       ENST00000642783
+16       ENST00000644791
+17       ENST00000647142
+18       ENST00000645637
+19       ENST00000646695
+20       ENST00000647126</code></pre>
+<ul>
+<li><em>Query 2</em>: We could look for chromosome, position and gene name
+of a list of genes (entrez id):</li>
+</ul>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="bioconductor.html#cb112-1"></a>genes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;79699&quot;</span>, <span class="st">&quot;7791&quot;</span>, <span class="st">&quot;23140&quot;</span>, <span class="st">&quot;26009&quot;</span>) </span>
+<span id="cb112-2"><a href="bioconductor.html#cb112-2"></a>tx &lt;-<span class="st"> </span><span class="kw">getBM</span>(<span class="dt">attributes=</span><span class="kw">c</span>(<span class="st">&quot;chromosome_name&quot;</span>, <span class="st">&quot;start_position&quot;</span>, </span>
+<span id="cb112-3"><a href="bioconductor.html#cb112-3"></a>                         <span class="st">&quot;hgnc_symbol&quot;</span>),</span>
+<span id="cb112-4"><a href="bioconductor.html#cb112-4"></a>            <span class="dt">filters=</span><span class="st">&quot;entrezgene_id&quot;</span>,</span>
+<span id="cb112-5"><a href="bioconductor.html#cb112-5"></a>            <span class="dt">values=</span>genes, <span class="dt">mart=</span>mart)</span>
+<span id="cb112-6"><a href="bioconductor.html#cb112-6"></a>tx</span></code></pre></div>
+<pre><code>  chromosome_name start_position hgnc_symbol
+1              17        4004445       ZZEF1
+2               1       77562416        ZZZ3
+3               7      143381295         ZYX
+4 CHR_HG708_PATCH      143381295         ZYX
+5               1       52726453      ZYG11B</code></pre>
+<ul>
+<li><strong>Query 3</strong>: We could look for chromosome, position and gene name
+of a list of genes (ENSEMBL):</li>
+</ul>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="bioconductor.html#cb114-1"></a>genes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ENSG00000074755&quot;</span>) </span>
+<span id="cb114-2"><a href="bioconductor.html#cb114-2"></a>tx &lt;-<span class="st"> </span><span class="kw">getBM</span>(<span class="dt">attributes=</span><span class="kw">c</span>(<span class="st">&quot;chromosome_name&quot;</span>, <span class="st">&quot;start_position&quot;</span>, </span>
+<span id="cb114-3"><a href="bioconductor.html#cb114-3"></a>                         <span class="st">&quot;hgnc_symbol&quot;</span>),</span>
+<span id="cb114-4"><a href="bioconductor.html#cb114-4"></a>            <span class="dt">filters=</span><span class="st">&quot;ensembl_gene_id&quot;</span>,</span>
+<span id="cb114-5"><a href="bioconductor.html#cb114-5"></a>            <span class="dt">values=</span>genes, <span class="dt">mart=</span>mart)</span>
+<span id="cb114-6"><a href="bioconductor.html#cb114-6"></a>tx</span></code></pre></div>
+<pre><code>  chromosome_name start_position hgnc_symbol
+1              17        4004445       ZZEF1</code></pre>
+<ul>
+<li><strong>Query 4</strong>: Homology. <code>getLDS()</code> combines two data marts, for example to homologous genes in other species. We can look up the mouse equivalents of a particular Affy transcript, or of the NOX1 gene.</li>
+</ul>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="bioconductor.html#cb116-1"></a>human &lt;-<span class="st"> </span><span class="kw">useMart</span>(<span class="st">&quot;ensembl&quot;</span>, <span class="dt">dataset =</span> <span class="st">&quot;hsapiens_gene_ensembl&quot;</span>)</span>
+<span id="cb116-2"><a href="bioconductor.html#cb116-2"></a>mouse &lt;-<span class="st"> </span><span class="kw">useMart</span>(<span class="st">&quot;ensembl&quot;</span>, <span class="dt">dataset =</span> <span class="st">&quot;mmusculus_gene_ensembl&quot;</span>)</span>
+<span id="cb116-3"><a href="bioconductor.html#cb116-3"></a><span class="kw">getLDS</span>(<span class="dt">attributes =</span> <span class="kw">c</span>(<span class="st">&quot;hgnc_symbol&quot;</span>,<span class="st">&quot;chromosome_name&quot;</span>, </span>
+<span id="cb116-4"><a href="bioconductor.html#cb116-4"></a>       <span class="st">&quot;start_position&quot;</span>),</span>
+<span id="cb116-5"><a href="bioconductor.html#cb116-5"></a>       <span class="dt">filters =</span> <span class="st">&quot;hgnc_symbol&quot;</span>, <span class="dt">values =</span> <span class="st">&quot;NOX1&quot;</span>, </span>
+<span id="cb116-6"><a href="bioconductor.html#cb116-6"></a>       <span class="dt">mart =</span> human,</span>
+<span id="cb116-7"><a href="bioconductor.html#cb116-7"></a>       <span class="dt">attributesL =</span> <span class="kw">c</span>(<span class="st">&quot;external_gene_name&quot;</span>, <span class="st">&quot;chromosome_name&quot;</span>,</span>
+<span id="cb116-8"><a href="bioconductor.html#cb116-8"></a>       <span class="st">&quot;start_position&quot;</span>), </span>
+<span id="cb116-9"><a href="bioconductor.html#cb116-9"></a>       <span class="dt">martL =</span> mouse)</span></code></pre></div>
+<pre><code>  HGNC.symbol Chromosome.scaffold.name Gene.start..bp. Gene.name
+1        NOX1                        X       100843324      Nox1
+  Chromosome.scaffold.name.1 Gene.start..bp..1
+1                          X         134086421</code></pre>
+</div>
+<div id="annotate-snps" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Annotate SNPs</h2>
+<p>We had a set of 100 SNPs without chromosome and genomic position information. We need to know the gene that those SNPs belong to.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="bioconductor.html#cb118-1"></a><span class="kw">load</span>(<span class="st">&quot;data/snpsList.Rdata&quot;</span>)</span>
+<span id="cb118-2"><a href="bioconductor.html#cb118-2"></a><span class="kw">length</span>(snpsList)</span></code></pre></div>
+<pre><code>[1] 100</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="bioconductor.html#cb120-1"></a><span class="kw">head</span>(snpsList)</span></code></pre></div>
+<pre><code>[1] &quot;rs1932919&quot;  &quot;rs6849766&quot;  &quot;rs11246756&quot; &quot;rs7184849&quot;  &quot;rs308857&quot;  
+[6] &quot;rs16990309&quot;</code></pre>
+<ul>
+<li><p>A hand-search (Genome Browser - ) would be easy but tedious, so we want an automated approach.</p></li>
+<li><p><code>R</code> can be used to carry out the entire analysis. That is, GWAS, annotation and post-GWAS. The annotation can be set by connecting <code>R</code> with Biomart:</p></li>
+</ul>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="bioconductor.html#cb122-1"></a>snpmart &lt;-<span class="st"> </span><span class="kw">useMart</span>(<span class="st">&quot;ENSEMBL_MART_SNP&quot;</span>, <span class="dt">dataset =</span> <span class="st">&quot;hsapiens_snp&quot;</span>)</span></code></pre></div>
+<ul>
+<li><p>Use <code>listAttributes()</code> to get valid attribute names.</p></li>
+<li><p>Use <code>listFilters()</code> to get valid filter names.</p></li>
+</ul>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="bioconductor.html#cb123-1"></a><span class="kw">head</span>(<span class="kw">listAttributes</span>(snpmart))</span></code></pre></div>
+<pre><code>                       name                             description
+1                 refsnp_id                            Variant name
+2             refsnp_source                          Variant source
+3 refsnp_source_description              Variant source description
+4                  chr_name                Chromosome/scaffold name
+5               chrom_start Chromosome/scaffold position start (bp)
+6                 chrom_end   Chromosome/scaffold position end (bp)
+  page
+1  snp
+2  snp
+3  snp
+4  snp
+5  snp
+6  snp</code></pre>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="bioconductor.html#cb125-1"></a><span class="kw">head</span>(<span class="kw">listFilters</span>(snpmart))</span></code></pre></div>
+<pre><code>          name              description
+1     chr_name Chromosome/scaffold name
+2        start                    Start
+3          end                      End
+4   band_start               Band Start
+5     band_end                 Band End
+6 marker_start             Marker Start</code></pre>
+<p>We can retrieve chromosome name, genomic position and reference allele in 1000 Genome Project of the ‘significant SNPs’ (provided in out list) by:</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="bioconductor.html#cb127-1"></a>snpInfo &lt;-<span class="st"> </span><span class="kw">getBM</span>(<span class="kw">c</span>(<span class="st">&quot;refsnp_id&quot;</span>, <span class="st">&quot;chr_name&quot;</span>, <span class="st">&quot;chrom_start&quot;</span>, </span>
+<span id="cb127-2"><a href="bioconductor.html#cb127-2"></a>                   <span class="st">&quot;allele&quot;</span>), <span class="dt">filters =</span> <span class="kw">c</span>(<span class="st">&quot;snp_filter&quot;</span>), </span>
+<span id="cb127-3"><a href="bioconductor.html#cb127-3"></a>                 <span class="dt">values =</span> snpsList, <span class="dt">mart =</span> snpmart)</span>
+<span id="cb127-4"><a href="bioconductor.html#cb127-4"></a><span class="kw">head</span>(snpInfo)</span></code></pre></div>
+<pre><code>  refsnp_id chr_name chrom_start allele
+1  rs294611        3    14801351    T/C
+2  rs485141        1    76618179  C/A/G
+3  rs419655        1    24986471  T/A/C
+4  rs680017        1    99202181    A/G
+5 rs6439924        3   140450815    A/C
+6 rs2125230        1   243722546    G/A</code></pre>
+<p>How do we annotate this SNPs into genes?</p>
+<ul>
+<li>Fist, transform SNP annotation into a <code>GenomicRange</code></li>
+</ul>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="bioconductor.html#cb129-1"></a>snpsInfo.gr &lt;-<span class="st"> </span><span class="kw">makeGRangesFromDataFrame</span>(snpInfo,</span>
+<span id="cb129-2"><a href="bioconductor.html#cb129-2"></a>                                        <span class="dt">start.field=</span><span class="st">&quot;chrom_start&quot;</span>, </span>
+<span id="cb129-3"><a href="bioconductor.html#cb129-3"></a>                                        <span class="dt">keep.extra.columns =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb129-4"><a href="bioconductor.html#cb129-4"></a>                                        <span class="dt">seqnames.field =</span> <span class="st">&quot;chr_name&quot;</span>,</span>
+<span id="cb129-5"><a href="bioconductor.html#cb129-5"></a>                                        <span class="dt">end.field =</span> <span class="st">&quot;chrom_start&quot;</span>)</span>
+<span id="cb129-6"><a href="bioconductor.html#cb129-6"></a>snpsInfo.gr</span></code></pre></div>
+<pre><code>GRanges object with 101 ranges and 2 metadata columns:
+        seqnames    ranges strand |   refsnp_id      allele
+           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
+    [1]        3  14801351      * |    rs294611         T/C
+    [2]        1  76618179      * |    rs485141       C/A/G
+    [3]        1  24986471      * |    rs419655       T/A/C
+    [4]        1  99202181      * |    rs680017         A/G
+    [5]        3 140450815      * |   rs6439924         A/C
+    ...      ...       ...    ... .         ...         ...
+   [97]        X  64333971      * |   rs1932919         C/T
+   [98]        X 101998212      * |   rs5944928         C/T
+   [99]        X 151640975      * |  rs12861395       A/G/T
+  [100]        9 135028063      * |   rs7025267         G/A
+  [101]        9  37418938      * |  rs10814535       C/G/T
+  -------
+  seqinfo: 25 sequences from an unspecified genome; no seqlengths</code></pre>
+<ul>
+<li>Then, the genes corresponding to those variants can be obtained by using <code>VariantAnnotation</code> package and <code>TxDb.Hsapiens.UCSC.hg10.knownGene</code> annotation package that contains the annotated genes from UCSC in hg19 assembly. However, we need first to verify that the seqnames (e.g chromosome names) are the ones available in the reference genome</li>
+</ul>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="bioconductor.html#cb131-1"></a><span class="kw">seqnames</span>(snpsInfo.gr)</span></code></pre></div>
+<pre><code>factor-Rle of length 101 with 37 runs
+  Lengths:                    1                    3                    1 ...                    4                    3                    2
+  Values :                    3                    1                    3 ...                    8                    X                    9
+Levels(25): CHR_HSCHR1_3_CTG32_1 CHR_HSCHR22_1_CTG6 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X</code></pre>
+<p>We see that the annotation is not in the UCSC format (it uses NCBI), so this should be changed</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="bioconductor.html#cb133-1"></a><span class="kw">seqlevelsStyle</span>(snpsInfo.gr) &lt;-<span class="st"> &quot;UCSC&quot;</span></span></code></pre></div>
+<p>Then, we just keep the autosomes and sexual chromosomes</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="bioconductor.html#cb134-1"></a><span class="kw">seqlevels</span>(snpsInfo.gr, <span class="dt">pruning.mode=</span><span class="st">&quot;coarse&quot;</span>) &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;chr&quot;</span>, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">22</span>, <span class="st">&quot;X&quot;</span>, <span class="st">&quot;Y&quot;</span>))</span></code></pre></div>
+<p>We can obtain annotation for coding regions</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="bioconductor.html#cb135-1"></a><span class="kw">library</span>(VariantAnnotation)</span>
+<span id="cb135-2"><a href="bioconductor.html#cb135-2"></a><span class="kw">library</span>(TxDb.Hsapiens.UCSC.hg19.knownGene)</span>
+<span id="cb135-3"><a href="bioconductor.html#cb135-3"></a>coding &lt;-<span class="st"> </span><span class="kw">locateVariants</span>(snpsInfo.gr,</span>
+<span id="cb135-4"><a href="bioconductor.html#cb135-4"></a>                         TxDb.Hsapiens.UCSC.hg19.knownGene,</span>
+<span id="cb135-5"><a href="bioconductor.html#cb135-5"></a>                         <span class="kw">CodingVariants</span>())</span>
+<span id="cb135-6"><a href="bioconductor.html#cb135-6"></a>coding</span></code></pre></div>
+<pre><code>GRanges object with 3 ranges and 9 metadata columns:
+      seqnames    ranges strand | LOCATION  LOCSTART    LOCEND   QUERYID        TXID         CDSID      GENEID       PRECEDEID        FOLLOWID
+         &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;character&gt; &lt;IntegerList&gt; &lt;character&gt; &lt;CharacterList&gt; &lt;CharacterList&gt;
+  [1]    chr21  19755999      - |   coding       441       441        39       73044        213015        5651                                
+  [2]    chr11   4626540      - |   coding       195       195        70       43412        128591       55128                                
+  [3]    chr11   4626540      - |   coding       195       195        70       43414        128591       55128                                
+  -------
+  seqinfo: 24 sequences from an unspecified genome; no seqlengths</code></pre>
+<p>or for all regions</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="bioconductor.html#cb137-1"></a>allvar &lt;-<span class="st"> </span><span class="kw">locateVariants</span>(snpsInfo.gr,</span>
+<span id="cb137-2"><a href="bioconductor.html#cb137-2"></a>                         TxDb.Hsapiens.UCSC.hg19.knownGene,</span>
+<span id="cb137-3"><a href="bioconductor.html#cb137-3"></a>                         <span class="kw">AllVariants</span>())</span>
+<span id="cb137-4"><a href="bioconductor.html#cb137-4"></a>allvar</span></code></pre></div>
+<pre><code>GRanges object with 194 ranges and 9 metadata columns:
+        seqnames    ranges strand |   LOCATION  LOCSTART    LOCEND   QUERYID        TXID         CDSID      GENEID
+           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |   &lt;factor&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;character&gt; &lt;IntegerList&gt; &lt;character&gt;
+    [1]     chr3  14801351      + |     intron     82050     82050         1       13302                     84077
+    [2]     chr3  14801351      + |     intron     82552     82552         1       13303                     84077
+    [3]     chr3  14801351      + |     intron     82447     82447         1       13304                     84077
+    [4]     chr3  14801351      + |     intron     44260     44260         1       13305                     84077
+    [5]     chr3  14801351      + |     intron      2170      2170         1       13306                     84077
+    ...      ...       ...    ... .        ...       ...       ...       ...         ...           ...         ...
+  [190]     chrX 101998212      + | intron         22392     22392        96       76301                     80823
+  [191]     chrX 101998212      + | intron         22324     22324        96       76302                     80823
+  [192]     chrX 151640975      * | intergenic      &lt;NA&gt;      &lt;NA&gt;        97        &lt;NA&gt;                      &lt;NA&gt;
+  [193]     chr9 135028063      * | intergenic      &lt;NA&gt;      &lt;NA&gt;        98        &lt;NA&gt;                      &lt;NA&gt;
+  [194]     chr9  37418938      * | intergenic      &lt;NA&gt;      &lt;NA&gt;        99        &lt;NA&gt;                      &lt;NA&gt;
+                                PRECEDEID                          FOLLOWID
+                          &lt;CharacterList&gt;                   &lt;CharacterList&gt;
+    [1]                                                                    
+    [2]                                                                    
+    [3]                                                                    
+    [4]                                                                    
+    [5]                                                                    
+    ...                               ...                               ...
+  [190]                                                                    
+  [191]                                                                    
+  [192] 100130935,100287428,100287466,...         100533997,1260,139135,...
+  [193]               1056,1057,11092,...            10585,26786,286336,...
+  [194]              158234,219,22844,... 100506710,100616278,100616289,...
+  -------
+  seqinfo: 24 sequences from an unspecified genome; no seqlengths</code></pre>
+<p>We can see the distribution of the location of our variants</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="bioconductor.html#cb139-1"></a><span class="kw">table</span>(allvar<span class="op">$</span>LOCATION)</span></code></pre></div>
+<pre><code>
+spliceSite     intron    fiveUTR   threeUTR     coding intergenic   promoter 
+         0        129          0          4          3         57          1 </code></pre>
+<p>Finally, we can get the gene symbol by</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="bioconductor.html#cb141-1"></a><span class="kw">library</span>(org.Hs.eg.db)</span>
+<span id="cb141-2"><a href="bioconductor.html#cb141-2"></a></span>
+<span id="cb141-3"><a href="bioconductor.html#cb141-3"></a><span class="co"># to know the type of ID in the Human TxDb</span></span>
+<span id="cb141-4"><a href="bioconductor.html#cb141-4"></a>TxDb.Hsapiens.UCSC.hg19.knownGene</span></code></pre></div>
+<pre><code>TxDb object:
+# Db type: TxDb
+# Supporting package: GenomicFeatures
+# Data source: UCSC
+# Genome: hg19
+# Organism: Homo sapiens
+# Taxonomy ID: 9606
+# UCSC Table: knownGene
+# Resource URL: http://genome.ucsc.edu/
+# Type of Gene ID: Entrez Gene ID
+# Full dataset: yes
+# miRBase build ID: GRCh37
+# transcript_nrow: 82960
+# exon_nrow: 289969
+# cds_nrow: 237533
+# Db created by: GenomicFeatures package from Bioconductor
+# Creation time: 2015-10-07 18:11:28 +0000 (Wed, 07 Oct 2015)
+# GenomicFeatures version at creation time: 1.21.30
+# RSQLite version at creation time: 1.0.0
+# DBSCHEMAVERSION: 1.1</code></pre>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="bioconductor.html#cb143-1"></a><span class="co"># to know the accesors (&#39;variables)</span></span>
+<span id="cb143-2"><a href="bioconductor.html#cb143-2"></a><span class="kw">keytypes</span>(org.Hs.eg.db)</span></code></pre></div>
+<pre><code> [1] &quot;ACCNUM&quot;       &quot;ALIAS&quot;        &quot;ENSEMBL&quot;      &quot;ENSEMBLPROT&quot;  &quot;ENSEMBLTRANS&quot; &quot;ENTREZID&quot;     &quot;ENZYME&quot;       &quot;EVIDENCE&quot;     &quot;EVIDENCEALL&quot; 
+[10] &quot;GENENAME&quot;     &quot;GO&quot;           &quot;GOALL&quot;        &quot;IPI&quot;          &quot;MAP&quot;          &quot;OMIM&quot;         &quot;ONTOLOGY&quot;     &quot;ONTOLOGYALL&quot;  &quot;PATH&quot;        
+[19] &quot;PFAM&quot;         &quot;PMID&quot;         &quot;PROSITE&quot;      &quot;REFSEQ&quot;       &quot;SYMBOL&quot;       &quot;UCSCKG&quot;       &quot;UNIGENE&quot;      &quot;UNIPROT&quot;     </code></pre>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="bioconductor.html#cb145-1"></a><span class="co"># to make the call (be careful with other packages having select())</span></span>
+<span id="cb145-2"><a href="bioconductor.html#cb145-2"></a>keys &lt;-<span class="st"> </span>allvar<span class="op">$</span>GENEID</span>
+<span id="cb145-3"><a href="bioconductor.html#cb145-3"></a>genes &lt;-<span class="st"> </span>AnnotationDbi<span class="op">::</span><span class="kw">select</span>(org.Hs.eg.db, <span class="dt">columns=</span><span class="st">&quot;SYMBOL&quot;</span>,</span>
+<span id="cb145-4"><a href="bioconductor.html#cb145-4"></a>                               <span class="dt">key=</span>keys, <span class="dt">keytype=</span><span class="st">&quot;ENTREZID&quot;</span>)</span>
+<span id="cb145-5"><a href="bioconductor.html#cb145-5"></a></span>
+<span id="cb145-6"><a href="bioconductor.html#cb145-6"></a><span class="co"># to add to the GRanges</span></span>
+<span id="cb145-7"><a href="bioconductor.html#cb145-7"></a>allvar<span class="op">$</span>Symbol &lt;-<span class="st"> </span>genes<span class="op">$</span>SYMBOL</span>
+<span id="cb145-8"><a href="bioconductor.html#cb145-8"></a>allvar</span></code></pre></div>
+<pre><code>GRanges object with 194 ranges and 10 metadata columns:
+        seqnames    ranges strand |   LOCATION  LOCSTART    LOCEND   QUERYID        TXID         CDSID      GENEID
+           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |   &lt;factor&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;character&gt; &lt;IntegerList&gt; &lt;character&gt;
+    [1]     chr3  14801351      + |     intron     82050     82050         1       13302                     84077
+    [2]     chr3  14801351      + |     intron     82552     82552         1       13303                     84077
+    [3]     chr3  14801351      + |     intron     82447     82447         1       13304                     84077
+    [4]     chr3  14801351      + |     intron     44260     44260         1       13305                     84077
+    [5]     chr3  14801351      + |     intron      2170      2170         1       13306                     84077
+    ...      ...       ...    ... .        ...       ...       ...       ...         ...           ...         ...
+  [190]     chrX 101998212      + | intron         22392     22392        96       76301                     80823
+  [191]     chrX 101998212      + | intron         22324     22324        96       76302                     80823
+  [192]     chrX 151640975      * | intergenic      &lt;NA&gt;      &lt;NA&gt;        97        &lt;NA&gt;                      &lt;NA&gt;
+  [193]     chr9 135028063      * | intergenic      &lt;NA&gt;      &lt;NA&gt;        98        &lt;NA&gt;                      &lt;NA&gt;
+  [194]     chr9  37418938      * | intergenic      &lt;NA&gt;      &lt;NA&gt;        99        &lt;NA&gt;                      &lt;NA&gt;
+                                PRECEDEID                          FOLLOWID      Symbol
+                          &lt;CharacterList&gt;                   &lt;CharacterList&gt; &lt;character&gt;
+    [1]                                                                         C3orf20
+    [2]                                                                         C3orf20
+    [3]                                                                         C3orf20
+    [4]                                                                         C3orf20
+    [5]                                                                         C3orf20
+    ...                               ...                               ...         ...
+  [190]                                                                          BHLHB9
+  [191]                                                                          BHLHB9
+  [192] 100130935,100287428,100287466,...         100533997,1260,139135,...        &lt;NA&gt;
+  [193]               1056,1057,11092,...            10585,26786,286336,...        &lt;NA&gt;
+  [194]              158234,219,22844,... 100506710,100616278,100616289,...        &lt;NA&gt;
+  -------
+  seqinfo: 24 sequences from an unspecified genome; no seqlengths</code></pre>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-lawrence2013software">
+<p>Lawrence, Michael, Wolfgang Huber, Hervé Pages, Patrick Aboyoun, Marc Carlson, Robert Gentleman, Martin T Morgan, and Vincent J Carey. 2013. “Software for Computing and Annotating Genomic Ranges.” <em>PLoS Computational Biology</em> 9 (8): e1003118.</p>
+</div>
+<div id="ref-purcell2007plink">
+<p>Purcell, Shaun, Benjamin Neale, Kathe Todd-Brown, Lori Thomas, Manuel AR Ferreira, David Bender, Julian Maller, et al. 2007. “PLINK: A Tool Set for Whole-Genome Association and Population-Based Linkage Analyses.” <em>The American Journal of Human Genetics</em> 81 (3): 559–75.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="genomic-data-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/isglobal-brge/Aprendizaje_Automatico_1/tree/master/docs00-GenomicAnnotation.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
