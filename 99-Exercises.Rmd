@@ -6,14 +6,14 @@
 # Exercises
 
 
-Here we propose several exercises whose answers will have to be deliver through the Moodle. The answers will also be available there. 
+Here we propose several exercises whose answers will have to be deliver through the Moodle. The data are in a folder called `data_for_exercises`. The answers will also be available in the Moodle site. 
 
 
 ## Bioconductor {#BioCEx}
 
 
 
-**EXERCISE 1**: Read plink data ('obesity.bed', 'obesity.fam', 'obesity.bim') that are available [here](https://github.com/isglobal-brge/brgedata/tree/master/inst/extdata)
+**EXERCISE 1**: Read PLINK data ('obesity.bed', 'obesity.fam', 'obesity.bim') that are available [here](https://github.com/isglobal-brge/brgedata/tree/master/inst/extdata)
 
      1. How many samples are genotyped?
      2. How many SNPs are in the chromosome 10?

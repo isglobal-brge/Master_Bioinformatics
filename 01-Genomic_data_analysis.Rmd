@@ -1,4 +1,4 @@
-# Genomic data analysis
+# Single association analysis
 
 Genetic association studies aim to identify genetic variants that explain subject differences in qualitative or quantitative traits. Genetic variants may include SNPs, CNVs, mosaicisms or polymorphic inversions, which can be obtained from SNP array. In this chapter, we thoroughly discuss SNP association studies. We explain the different genetic models to be used in single SNP associations and how they are applied in a massive univariate testing when several SNPs are analyzed. Relating the simultaneous analysis of multiple SNPs, we discuss haplotype and genetic scores associations
 
