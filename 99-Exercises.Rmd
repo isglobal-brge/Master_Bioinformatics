@@ -91,6 +91,13 @@ Answer the following questions:
      3. Compute the OR of association and its 95\% confidence intervals between the estimate haplotypes and the response to treatment
 
 
+**EXERCISE 7**: Researchers are now interested in creating a genetic score to predict the response to the treatment
+
+     1. Perform all the required steps to get such score and evaluate its performance using a ROC curve
+     
+     
+     
+
 
 
 
