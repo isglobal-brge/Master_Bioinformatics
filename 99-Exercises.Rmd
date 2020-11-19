@@ -95,3 +95,20 @@ Answer the following questions:
 
      1. Perform all the required steps to get such score and evaluate its performance using a ROC curve
      
+     
+     
+     
+## GWAS
+
+
+
+**EXERCISE 8**: Researchers are interested in detecting new SNPs associated with BMI (body mass index). To do so, they performed a GWAS using DNA information about 425 individuals. Genotype information is available in plink format (files 'coronary.bed', 'coronary.bim', 'coronary.fam') while phenotypic information can be found in the file 'coronary.txt'.
+
+     1. Read genotypes using `snpStats` library
+     2. Verify that both data sets are in the same order (NOTE: 'id' variable in the file 'coronary.txt' must be used since it corresponds to the unique patient number)
+     3. Perform some QC filtering of individuals
+     4. Remove those SNPs that do not pass QC  (HWE and low MAF)
+     5. Assess association between BMI' and the SNPs  (NOTE: remember that you are analyzing a **quantitative trait**)
+     6. Calculate 'lambda' and create a Q-Q plot to assess population stratification
+     7. Assess association between BMI' and the SNPs adjusting for population stratification (variables 'ev3' and 'ev4' in the file 'coronary.txt') (NOTE: remember that you are analyzing a **quantitative trait**). Are there differences with crude analysis?
+     8. Create a Manhattan plot

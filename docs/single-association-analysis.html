@@ -24,7 +24,7 @@
 <meta name="author" content="Juan R González" />
 
 
-<meta name="date" content="2020-11-16" />
+<meta name="date" content="2020-11-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -177,6 +177,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="6.1" data-path="exercises.html"><a href="exercises.html#BioCEx"><i class="fa fa-check"></i><b>6.1</b> Bioconductor</a></li>
 <li class="chapter" data-level="6.2" data-path="exercises.html"><a href="exercises.html#genetic-association-studies"><i class="fa fa-check"></i><b>6.2</b> Genetic association studies</a></li>
+<li class="chapter" data-level="6.3" data-path="exercises.html"><a href="exercises.html#gwas"><i class="fa fa-check"></i><b>6.3</b> GWAS</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -927,12 +928,9 @@ Figure 3.6: Sliding window approach. Results obtained of varying haplotype size 
 <span id="cb225-2"><a href="single-association-analysis.html#cb225-2"></a>dd.end.complete &lt;-<span class="st"> </span>dd.end[<span class="kw">complete.cases</span>(dd.end),]</span>
 <span id="cb225-3"><a href="single-association-analysis.html#cb225-3"></a>mod &lt;-<span class="st"> </span><span class="kw">stepAIC</span>(<span class="kw">glm</span>(casecontrol <span class="op">~</span><span class="st"> </span>., dd.end.complete,</span>
 <span id="cb225-4"><a href="single-association-analysis.html#cb225-4"></a>                   <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>),</span>
-<span id="cb225-5"><a href="single-association-analysis.html#cb225-5"></a>               <span class="dt">method=</span><span class="st">&quot;forward&quot;</span>, <span class="dt">trace=</span><span class="dv">0</span>)</span>
-<span id="cb225-6"><a href="single-association-analysis.html#cb225-6"></a>snps.score &lt;-<span class="st"> </span><span class="kw">names</span>(<span class="kw">coef</span>(mod))[<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb225-7"><a href="single-association-analysis.html#cb225-7"></a>snps.score</span></code></pre></div>
-<pre><code>[1] &quot;rs1422993&quot; &quot;rs324957&quot;  &quot;rs727162&quot;  &quot;rs6084432&quot;</code></pre>
+<span id="cb225-5"><a href="single-association-analysis.html#cb225-5"></a>               <span class="dt">method=</span><span class="st">&quot;forward&quot;</span>, <span class="dt">trace=</span><span class="dv">0</span>)</span></code></pre></div>
 <p>The selected SNPs, from the multivariate model, in <code>snps.score</code> are then used to create the genetic score. First, a summary shows the SNPs’ associations of the selected SNPs with the trait</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="single-association-analysis.html#cb227-1"></a><span class="kw">summary</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="single-association-analysis.html#cb226-1"></a><span class="kw">summary</span>(mod)</span></code></pre></div>
 <pre><code>
 Call:
 glm(formula = casecontrol ~ rs1422993 + rs324957 + rs727162 + 
@@ -959,22 +957,26 @@ Residual deviance: 1569.2  on 1513  degrees of freedom
 AIC: 1579.2
 
 Number of Fisher Scoring iterations: 4</code></pre>
+<p>This is the code to retrieve the selected SNPs to create the genetic score:</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="single-association-analysis.html#cb228-1"></a>snps.score &lt;-<span class="st"> </span><span class="kw">names</span>(<span class="kw">coef</span>(mod))[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb228-2"><a href="single-association-analysis.html#cb228-2"></a>snps.score</span></code></pre></div>
+<pre><code>[1] &quot;rs1422993&quot; &quot;rs324957&quot;  &quot;rs727162&quot;  &quot;rs6084432&quot;</code></pre>
 <p>The function <code>riskScore()</code> of the <code>PredictABEL</code> package creates the risk score</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="single-association-analysis.html#cb229-1"></a>pos &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">names</span>(dd.end.complete)<span class="op">%in%</span>snps.score)</span>
-<span id="cb229-2"><a href="single-association-analysis.html#cb229-2"></a><span class="kw">names</span>(dd.end.complete)</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="single-association-analysis.html#cb230-1"></a>pos &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">names</span>(dd.end.complete)<span class="op">%in%</span>snps.score)</span>
+<span id="cb230-2"><a href="single-association-analysis.html#cb230-2"></a><span class="kw">names</span>(dd.end.complete)</span></code></pre></div>
 <pre><code>[1] &quot;casecontrol&quot; &quot;rs1422993&quot;   &quot;rs184448&quot;    &quot;rs324957&quot;   
 [5] &quot;rs324960&quot;    &quot;rs324981&quot;    &quot;rs727162&quot;    &quot;rs6084432&quot;  </code></pre>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="single-association-analysis.html#cb231-1"></a>pos</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="single-association-analysis.html#cb232-1"></a>pos</span></code></pre></div>
 <pre><code>[1] 2 4 7 8</code></pre>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="single-association-analysis.html#cb233-1"></a>score &lt;-<span class="st"> </span><span class="kw">riskScore</span>(mod, <span class="dt">data=</span>dd.end.complete, </span>
-<span id="cb233-2"><a href="single-association-analysis.html#cb233-2"></a>                      <span class="dt">cGenPreds=</span>pos,</span>
-<span id="cb233-3"><a href="single-association-analysis.html#cb233-3"></a>                      <span class="dt">Type=</span><span class="st">&quot;unweighted&quot;</span>)</span>
-<span id="cb233-4"><a href="single-association-analysis.html#cb233-4"></a><span class="kw">table</span>(score)</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="single-association-analysis.html#cb234-1"></a>score &lt;-<span class="st"> </span><span class="kw">riskScore</span>(mod, <span class="dt">data=</span>dd.end.complete, </span>
+<span id="cb234-2"><a href="single-association-analysis.html#cb234-2"></a>                      <span class="dt">cGenPreds=</span>pos,</span>
+<span id="cb234-3"><a href="single-association-analysis.html#cb234-3"></a>                      <span class="dt">Type=</span><span class="st">&quot;unweighted&quot;</span>)</span>
+<span id="cb234-4"><a href="single-association-analysis.html#cb234-4"></a><span class="kw">table</span>(score)</span></code></pre></div>
 <pre><code>score
   0   1   2   3   4   5   6 
 101 389 491 347 139  44   7 </code></pre>
 <p>The distribution of the score across individuals can be seen in Figure <a href="single-association-analysis.html#fig:histGS">3.7</a></p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="single-association-analysis.html#cb235-1"></a><span class="kw">hist</span>(score, <span class="dt">col=</span><span class="st">&quot;gray90&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="single-association-analysis.html#cb236-1"></a><span class="kw">hist</span>(score, <span class="dt">col=</span><span class="st">&quot;gray90&quot;</span>)</span></code></pre></div>
 <div class="figure"><span id="fig:histGS"></span>
 <img src="fig/histGS-1.png" alt="Distribution of the genetic score used to predict case/control status in the asthma example." width="672" />
 <p class="caption">
@@ -982,15 +984,26 @@ Figure 3.7: Distribution of the genetic score used to predict case/control statu
 </p>
 </div>
 <p>Once the genetic score is created, we test its association with asthma status using a general linear model</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="single-association-analysis.html#cb236-1"></a>mod.lin &lt;-<span class="st"> </span><span class="kw">glm</span>(casecontrol<span class="op">~</span>score, dd.end.complete,</span>
-<span id="cb236-2"><a href="single-association-analysis.html#cb236-2"></a>               <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb236-3"><a href="single-association-analysis.html#cb236-3"></a><span class="kw">exp</span>(<span class="kw">coef</span>(mod.lin)[<span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="single-association-analysis.html#cb237-1"></a>mod.lin &lt;-<span class="st"> </span><span class="kw">glm</span>(casecontrol<span class="op">~</span>score, dd.end.complete,</span>
+<span id="cb237-2"><a href="single-association-analysis.html#cb237-2"></a>               <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb237-3"><a href="single-association-analysis.html#cb237-3"></a>mod.lin</span></code></pre></div>
+<pre><code>
+Call:  glm(formula = casecontrol ~ score, family = &quot;binomial&quot;, data = dd.end.complete)
+
+Coefficients:
+(Intercept)        score  
+    -1.7612       0.2151  
+
+Degrees of Freedom: 1517 Total (i.e. Null);  1516 Residual
+Null Deviance:	    1587 
+Residual Deviance: 1570 	AIC: 1574</code></pre>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="single-association-analysis.html#cb239-1"></a><span class="kw">exp</span>(<span class="kw">coef</span>(mod.lin)[<span class="dv">2</span>])</span></code></pre></div>
 <pre><code>   score 
 1.240039 </code></pre>
-<p>We observe that the risk of asthma increases 21% per each risk allele. The predictive power of the genetic score can be assessed by computing the area under the ROC curve (AUC).</p>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="single-association-analysis.html#cb238-1"></a>predrisk &lt;-<span class="st"> </span><span class="kw">predRisk</span>(mod.lin, dd.end.complete)</span>
-<span id="cb238-2"><a href="single-association-analysis.html#cb238-2"></a><span class="kw">plotROC</span>(<span class="dt">data=</span>dd.end.complete, <span class="dt">cOutcome=</span><span class="dv">1</span>,</span>
-<span id="cb238-3"><a href="single-association-analysis.html#cb238-3"></a>        <span class="dt">predrisk =</span> predrisk)</span></code></pre></div>
+<p>We observe that the risk of asthma increases 24% per each risk allele. The predictive power of the genetic score can be assessed by computing the area under the ROC curve (AUC).</p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="single-association-analysis.html#cb241-1"></a>predrisk &lt;-<span class="st"> </span><span class="kw">predRisk</span>(mod.lin, dd.end.complete)</span>
+<span id="cb241-2"><a href="single-association-analysis.html#cb241-2"></a><span class="kw">plotROC</span>(<span class="dt">data=</span>dd.end.complete, <span class="dt">cOutcome=</span><span class="dv">1</span>,</span>
+<span id="cb241-3"><a href="single-association-analysis.html#cb241-3"></a>        <span class="dt">predrisk =</span> predrisk)</span></code></pre></div>
 <div class="figure"><span id="fig:rocGS"></span>
 <img src="fig/rocGS-1.png" alt="ROC curve of the genetic score used to predict case/control status in the asthma example." width="672" />
 <p class="caption">

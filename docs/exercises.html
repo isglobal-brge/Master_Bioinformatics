@@ -24,7 +24,7 @@
 <meta name="author" content="Juan R González" />
 
 
-<meta name="date" content="2020-11-16" />
+<meta name="date" content="2020-11-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -177,6 +177,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="6.1" data-path="exercises.html"><a href="exercises.html#BioCEx"><i class="fa fa-check"></i><b>6.1</b> Bioconductor</a></li>
 <li class="chapter" data-level="6.2" data-path="exercises.html"><a href="exercises.html#genetic-association-studies"><i class="fa fa-check"></i><b>6.2</b> Genetic association studies</a></li>
+<li class="chapter" data-level="6.3" data-path="exercises.html"><a href="exercises.html#gwas"><i class="fa fa-check"></i><b>6.3</b> GWAS</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -210,8 +211,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  4. In which chromosome is located the SNP rs1527354?
  5. Get the number of individuals of each genoytpe corresponding to the SNP rs7859525. Which the homozygous normal genotype?</code></pre>
 <p><strong>EXERCISE 2:</strong> Install the Bioconductor package called <code>airway</code> and load the data <code>airway</code> which is a <code>SummarizedExperiment</code> by executing:</p>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="exercises.html#cb327-1"></a><span class="kw">library</span>(airway)</span>
-<span id="cb327-2"><a href="exercises.html#cb327-2"></a><span class="kw">data</span>(airway)</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="exercises.html#cb330-1"></a><span class="kw">library</span>(airway)</span>
+<span id="cb330-2"><a href="exercises.html#cb330-2"></a><span class="kw">data</span>(airway)</span></code></pre></div>
 <pre><code> 1. Print the object {\tt airway} and interpret the output.
  2. Get the table of counts (use {\tt asssays} data) and the variables of the experiment (use {\tt colData} function).
  3. Verify that {\tt SummarizedExperiment} objects check the dimension of the tables (think about the dimensions that should match).
@@ -248,7 +249,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  2. Which is the most frequent haplotype?
  3. Compute the OR of association and its 95\% confidence intervals between the estimate haplotypes and the response to treatment</code></pre>
 <p><strong>EXERCISE 7</strong>: Researchers are now interested in creating a genetic score to predict the response to the treatment</p>
-<pre><code> 1. Perform all the required steps to get such score and evaluate its performance using a ROC curve</code></pre>
+<pre><code> 1. Perform all the required steps to get such score and evaluate its performance using a ROC curve
+ 
+ 
+ 
+ </code></pre>
+</div>
+<div id="gwas" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> GWAS</h2>
+<p><strong>EXERCISE 8</strong>: Researchers are interested in detecting new SNPs associated with BMI (body mass index). To do so, they performed a GWAS using DNA information about 425 individuals. Genotype information is available in plink format (files ‘coronary.bed’, ‘coronary.bim’, ‘coronary.fam’) while phenotypic information can be found in the file ‘coronary.txt’.</p>
+<pre><code> 1. Read genotypes using `snpStats` library
+ 2. Verify that both data sets are in the same order (NOTE: &#39;id&#39; variable in the file &#39;coronary.txt&#39; must be used since it corresponds to the unique patient number)
+ 3. Perform some QC filtering of individuals
+ 4. Remove those SNPs that do not pass QC  (HWE and low MAF)
+ 5. Assess association between BMI&#39; and the SNPs  (NOTE: remember that you are analyzing a **quantitative trait**)
+ 6. Calculate &#39;lambda&#39; and create a Q-Q plot to assess population stratification
+ 7. Assess association between BMI&#39; and the SNPs adjusting for population stratification (variables &#39;ev3&#39; and &#39;ev4&#39; in the file &#39;coronary.txt&#39;) (NOTE: remember that you are analyzing a **quantitative trait**). Are there differences with crude analysis?
+ 8. Create a Manhattan plot</code></pre>
 
 </div>
 </div>

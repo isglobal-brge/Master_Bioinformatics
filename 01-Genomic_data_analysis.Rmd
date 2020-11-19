@@ -418,8 +418,6 @@ dd.end.complete <- dd.end[complete.cases(dd.end),]
 mod <- stepAIC(glm(casecontrol ~ ., dd.end.complete,
                    family="binomial"),
                method="forward", trace=0)
-snps.score <- names(coef(mod))[-1]
-snps.score
 ```
 
 The selected SNPs, from the multivariate model, in `snps.score` are then used to create the genetic score. First, a summary shows the SNPs' associations of the selected SNPs with the trait
@@ -427,6 +425,13 @@ The selected SNPs, from the multivariate model, in `snps.score` are then used to
 ```{r print_gs}
 summary(mod)
 ``` 
+
+This is the code to retrieve the selected SNPs to create the genetic score:
+
+```{r select SNPs}
+snps.score <- names(coef(mod))[-1]
+snps.score
+```
 
 The function `riskScore()` of the `PredictABEL` package creates the risk score
 
@@ -451,10 +456,11 @@ Once the genetic score is created, we test its association with asthma status us
 ```{r effect_gs}
 mod.lin <- glm(casecontrol~score, dd.end.complete,
                family="binomial")
+mod.lin
 exp(coef(mod.lin)[2])
 ```
 
-We observe that the risk of asthma increases 21% per each risk allele. The predictive power of the genetic score can be assessed by computing the area under the ROC curve (AUC). 
+We observe that the risk of asthma increases 24% per each risk allele. The predictive power of the genetic score can be assessed by computing the area under the ROC curve (AUC). 
 
 ```{r rocGS, fig.cap='ROC curve of the genetic score used to predict case/control status in the asthma example.'}
 predrisk <- predRisk(mod.lin, dd.end.complete)
