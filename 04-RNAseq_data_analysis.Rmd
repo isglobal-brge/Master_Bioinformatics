@@ -164,7 +164,7 @@ NormByCQN <- normalizeCounts(counts.ok, method="cqn",
 
 We now compare the performance of each normalization method. Assuming that between two samples, most genes are not differentially expressed, the distribution of the difference of log-ratios between the samples should be centered around 0 when data is correctly normalized. We thus examine the distributions for the 1st and 2nd sample under normalization by the total number of reads and by RPKM (Figure \ref@(fig:checkNorm):
 
-```{r checkNorm, fig.cap = "Comparison of log-ratio count intensity of samples 1 and 2 from the Pickrell dataset.", fig.align='center', echo=FALSE}
+```{r checkNorm, fig.cap = "Comparison of log-ratio count intensity of samples 1 and 2 from the Pickrell dataset.", fig.align='center'}
 MbyT <- log2(NormByCPM[, 1] / NormByCPM[, 2])
 MbyRPKM <- log2(NormByRPKM[, 1] / NormByRPKM[, 2])
 
@@ -179,7 +179,7 @@ abline(v=0, col="red")
 Figure \@ref(fig:checkNorm), however, does not show whether the null difference between samples holds for different levels of gene expression. With a MA-plot, one can check whether data has been correctly normalized at any expression level. The MA-plot is available from the Bioconductor package `edgeR`. The resulting plot can be seen in Figure \@ref(fig:MAall) (top left part).  In the X-axis the plot shows the mean between the log-ratios. In the Y-axis the plot shows the difference of log-ratios between the samples, similar to figure \@ref(fig:checkNorm). The MA-plot is, therefore, the difference against the mean of the gene counts between the two samples. The red line shows the expected M-values as a function of A-values. In our example of non-normalized data, we can see that for genes with low counts the distribution of the difference between samples is not zero; in particular, we observe that sample 2 has more counts than sample 1. 
 
 
-```{r MAall, fig.cap="MA-plot of Pickrell data on samples 1 and 3 for raw data and normalized data using CPM, RPKM, TPM, TMM and CQN methods.", echo=FALSE, fig.align='center'}
+```{r MAall, fig.cap="MA-plot of Pickrell data on samples 1 and 3 for raw data and normalized data using CPM, RPKM, TPM, TMM and CQN methods.", fig.align='center', fig.dim=c(14, 8)}
 library(edgeR)
 par(mfrow=c(3,2))
 maPlot(counts[,1], counts[,2], pch=19, cex=.5, ylim=c(-8,8),
