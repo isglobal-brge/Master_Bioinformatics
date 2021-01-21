@@ -130,11 +130,12 @@ Answer the following questions:
 3. Using TPM normalized data:
      - Plot a heatmap of the top 500 most variable genes. Compare with the heatmap obtained using the 100 most variable genes.
      - Re-do the heatmaps setting the scale argument to `none`, and `column`. Compare the results with `scale = 'row'`.
-4. Perform a differential expression analysis comparing `CASE` vs `CONTROL` samples. 
-5. Create a volcano plot
-6. Examine the counts of reads for a single gene (most associated with CASES). Hint: use `DESeq2::plotCounts ()`
+4. Create a new variable called **group** by renaming the variable **title** as: `normal`, `primary` and `metastasis`. 
+5. Perform a differential expression analysis using the variable `group` and get the list of differentially expressed genes comparing `metastasis vs normal` and `primary vs normal`. 
+5. Create two MA and volcano plots to describe the previous comparisons. 
+6. Examine the distribution of counts for a single gene (most associated with `metastasis`). Hint: use `DESeq2::plotCounts ()`
 7. Do the same plot for the top-10 genes (this tries to mimic your supplementary material in your paper!)
-8. Investigate whether there the analyses must be adjusted for other covariates.
+8. Investigate whether the analysis should be adjusted for other covariates.
 9. Re-do the differential expression analysis using `edgeR` (`voom`) package. Find out how much `DESeq2` and `edgeR` agree on the list of differentially expressed genes. 
      
 

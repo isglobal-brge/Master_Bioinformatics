@@ -393,12 +393,16 @@ DESeq2::plotMA(object = dds, ylim = c(-5, 5))
 
 ##### Volcano plot
 
-We highly recommend to read the vignette of [EnhancedVolcano]( https://www.bioconductor.org/packages/release/bioc/vignettes/EnhancedVolcano/inst/doc/EnhancedVolcano.html) Bioconductor package to get this type of plots:
+We highly recommend to read the vignette of [EnhancedVolcano]( https://www.bioconductor.org/packages/release/bioc/vignettes/EnhancedVolcano/inst/doc/EnhancedVolcano.html) Bioconductor package to get this type of plots. This figure has the default cut-off for log2FC as >|2| and the default cut-off for P value as 10e-6.:
 
-
-```{r volcanogeneral, fig.cap='Volcano plot example obtained from EnhancedVolcano Bioconductor package.', fig.align='center', echo=FALSE}
-knitr::include_graphics('figures/volcano.png')
+```{r volcanoEnhanced, fig.cap='Volcano plot males vs females Pickrell data', fig.align='center'}
+library(EnhancedVolcano)
+EnhancedVolcano(DEresults,
+                lab = rownames(DEresults),
+                x = 'log2FoldChange',
+                y = 'pvalue')
 ```
+    
 
 ##### P-value distribution
 
@@ -731,7 +735,7 @@ Based on the separation of case and control samples in the PCA plots in Figure \
 set_s <- RUVs(set, unique(rownames(set)), k=2, differences) 
 ```
 
-Now let’s do diagnostics again: compare the count matrices with or without RUVs processing, comparing RLE plots (Figure \@ref(fig:rleRUVs)) and PCA plots (Figure \@ref(fig:pcaRUVs)) to see the effect of RUVg on the normalization and separation of case and control samples.
+Now let’s do diagnostics again: compare the count matrices with or without RUVs processing, comparing RLE plots (Figure \@ref(fig:rleRUVs)) and PCA plots (Figure \@ref(fig:pcaRUVs2)) to see the effect of RUVg on the normalization and separation of case and control samples.
 
 ```{r rleRUVs, fig.align='center', fig.cap='RLE plots to observe the effect of RUVs.'}
 par(mfrow = c(1,2))
@@ -743,7 +747,7 @@ plotRLE(set_s, outline=FALSE, ylim=c(-4, 4),
         main = 'with RUVs')
 ```
 
-```{r pcaRUVs, fig.align='center', fig.cap='PCA plots to observe the effect of RUVs.'}
+```{r pcaRUVs2, fig.align='center', fig.cap='PCA plots to observe the effect of RUVs.'}
 par(mfrow = c(1,2))
 plotPCA(set, col=as.numeric(colData$group), 
         main = 'without RUVs', adj = 0.5,

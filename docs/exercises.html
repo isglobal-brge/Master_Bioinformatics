@@ -235,8 +235,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  4. In which chromosome is located the SNP rs1527354?
  5. Get the number of individuals of each genoytpe corresponding to the SNP rs7859525. Which the homozygous normal genotype?</code></pre>
 <p><strong>EXERCISE 2:</strong> Install the Bioconductor package called <code>airway</code> and load the data <code>airway</code> which is a <code>SummarizedExperiment</code> by executing:</p>
-<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="exercises.html#cb382-1"></a><span class="kw">library</span>(airway)</span>
-<span id="cb382-2"><a href="exercises.html#cb382-2"></a><span class="kw">data</span>(airway)</span></code></pre></div>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="exercises.html#cb396-1"></a><span class="kw">library</span>(airway)</span>
+<span id="cb396-2"><a href="exercises.html#cb396-2"></a><span class="kw">data</span>(airway)</span></code></pre></div>
 <pre><code> 1. Print the object {\tt airway} and interpret the output.
  2. Get the table of counts (use {\tt asssays} data) and the variables of the experiment (use {\tt colData} function).
  3. Verify that {\tt SummarizedExperiment} objects check the dimension of the tables (think about the dimensions that should match).
@@ -310,11 +310,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Plot a heatmap of the top 500 most variable genes. Compare with the heatmap obtained using the 100 most variable genes.</li>
 <li>Re-do the heatmaps setting the scale argument to <code>none</code>, and <code>column</code>. Compare the results with <code>scale = 'row'</code>.</li>
 </ul></li>
-<li>Perform a differential expression analysis comparing <code>CASE</code> vs <code>CONTROL</code> samples.</li>
-<li>Create a volcano plot</li>
-<li>Examine the counts of reads for a single gene (most associated with CASES). Hint: use <code>DESeq2::plotCounts ()</code></li>
+<li>Create a new variable called <strong>group</strong> by renaming the variable <strong>title</strong> as: <code>normal</code>, <code>primary</code> and <code>metastasis</code>.</li>
+<li>Perform a differential expression analysis using the variable <code>group</code> and get the list of differentially expressed genes comparing <code>metastasis vs normal</code> and <code>primary vs normal</code>.</li>
+<li>Create two MA and volcano plots to describe the previous comparisons.</li>
+<li>Examine the distribution of counts for a single gene (most associated with <code>metastasis</code>). Hint: use <code>DESeq2::plotCounts ()</code></li>
 <li>Do the same plot for the top-10 genes (this tries to mimic your supplementary material in your paper!)</li>
-<li>Investigate whether there the analyses must be adjusted for other covariates.</li>
+<li>Investigate whether the analysis should be adjusted for other covariates.</li>
 <li>Re-do the differential expression analysis using <code>edgeR</code> (<code>voom</code>) package. Find out how much <code>DESeq2</code> and <code>edgeR</code> agree on the list of differentially expressed genes.</li>
 </ol>
 
