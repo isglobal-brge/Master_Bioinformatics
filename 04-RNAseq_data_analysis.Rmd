@@ -400,7 +400,7 @@ library(EnhancedVolcano)
 EnhancedVolcano(DEresults,
                 lab = rownames(DEresults),
                 x = 'log2FoldChange',
-                y = 'pvalue')
+                y = 'pvalue', ylim=c(0,50))
 ```
     
 
