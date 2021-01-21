@@ -24,7 +24,7 @@
 <meta name="author" content="Juan R González" />
 
 
-<meta name="date" content="2021-01-19" />
+<meta name="date" content="2021-01-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -200,8 +200,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.1" data-path="exercises.html"><a href="exercises.html#BioCEx"><i class="fa fa-check"></i><b>8.1</b> Bioconductor</a></li>
 <li class="chapter" data-level="8.2" data-path="exercises.html"><a href="exercises.html#genetic-association-studies"><i class="fa fa-check"></i><b>8.2</b> Genetic association studies</a></li>
 <li class="chapter" data-level="8.3" data-path="exercises.html"><a href="exercises.html#gwas"><i class="fa fa-check"></i><b>8.3</b> GWAS</a></li>
-<li class="chapter" data-level="8.4" data-path="microarray-data-analysis.html"><a href="microarray-data-analysis.html#microarray-data-analysis"><i class="fa fa-check"></i><b>8.4</b> Microarray data analysis</a></li>
-<li class="chapter" data-level="8.5" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#rnaseq-data-analysis"><i class="fa fa-check"></i><b>8.5</b> RNAseq data analysis</a></li>
+<li class="chapter" data-level="8.4" data-path="exercises.html"><a href="exercises.html#Microarray-exerc"><i class="fa fa-check"></i><b>8.4</b> Microarray data analysis</a></li>
+<li class="chapter" data-level="8.5" data-path="exercises.html"><a href="exercises.html#RNAseq-exerc"><i class="fa fa-check"></i><b>8.5</b> RNAseq data analysis</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -229,8 +229,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="descriptive-analysis" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Descriptive analysis</h2>
 <p>SNP data are typically available in text format or Excel spreadsheets which are easily uploaded in <code>R</code> as a data frame. Here, as an illustrative example, we are analyzing a dataset containing epidemiological information and 51 SNPs from a case-control study on asthma. The data is loaded into the R session by</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="single-association-analysis.html#cb147-1"></a>asthma &lt;-<span class="st"> </span><span class="kw">read.delim</span>(<span class="st">&quot;data/asthma.txt&quot;</span>)</span>
-<span id="cb147-2"><a href="single-association-analysis.html#cb147-2"></a><span class="kw">str</span>(asthma, <span class="dt">list.len=</span><span class="dv">9</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="single-association-analysis.html#cb148-1"></a>asthma &lt;-<span class="st"> </span><span class="kw">read.delim</span>(<span class="st">&quot;data/asthma.txt&quot;</span>)</span>
+<span id="cb148-2"><a href="single-association-analysis.html#cb148-2"></a><span class="kw">str</span>(asthma, <span class="dt">list.len=</span><span class="dv">9</span>)</span></code></pre></div>
 <pre><code>&#39;data.frame&#39;:	1578 obs. of  57 variables:
  $ country    : chr  &quot;Germany&quot; &quot;Germany&quot; &quot;Germany&quot; &quot;Germany&quot; ...
  $ gender     : chr  &quot;Males&quot; &quot;Males&quot; &quot;Males&quot; &quot;Females&quot; ...
@@ -242,7 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  $ rs4849332  : chr  &quot;TT&quot; &quot;GT&quot; &quot;TT&quot; &quot;GT&quot; ...
  $ rs1367179  : chr  &quot;GC&quot; &quot;GC&quot; &quot;GC&quot; &quot;GG&quot; ...
   [list output truncated]</code></pre>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="single-association-analysis.html#cb149-1"></a>asthma[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="single-association-analysis.html#cb150-1"></a>asthma[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</span></code></pre></div>
 <pre><code>  country  gender      age      bmi smoke casecontrol rs4490198
 1 Germany   Males 42.80630 20.14797     2           0        GG
 2 Germany   Males 50.22861 24.69136     0           0        GG
@@ -257,20 +257,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 5        GG</code></pre>
 <p>We observe that we have case-control status (0: control, 1: asthma) and another 4 variables encoding the country of origin, gender, age, body mass index (bmi) and smoking status (0: no smoker, 1: ex-smoker, 2: current smoker). There are 51 SNPs whose genotypes are given by the alleles names.</p>
 <p>To start the analysis, we must indicate which columns of the dataset <code>asthma</code> contain the SNP data, using the <code>setupSNP</code> function. In our example, SNPs start from column 7 onwards, which we specify in argument <em>colSNPs</em></p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="single-association-analysis.html#cb151-1"></a><span class="kw">library</span>(SNPassoc)</span>
-<span id="cb151-2"><a href="single-association-analysis.html#cb151-2"></a>asthma.s &lt;-<span class="st"> </span><span class="kw">setupSNP</span>(<span class="dt">data=</span>asthma, <span class="dt">colSNPs=</span><span class="dv">7</span><span class="op">:</span><span class="kw">ncol</span>(asthma), <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="single-association-analysis.html#cb152-1"></a><span class="kw">library</span>(SNPassoc)</span>
+<span id="cb152-2"><a href="single-association-analysis.html#cb152-2"></a>asthma.s &lt;-<span class="st"> </span><span class="kw">setupSNP</span>(<span class="dt">data=</span>asthma, <span class="dt">colSNPs=</span><span class="dv">7</span><span class="op">:</span><span class="kw">ncol</span>(asthma), <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p>This is an alternative way of determining the columns containing the SNPs</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="single-association-analysis.html#cb152-1"></a>idx &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;^rs&quot;</span>, <span class="kw">colnames</span>(asthma))</span>
-<span id="cb152-2"><a href="single-association-analysis.html#cb152-2"></a>asthma.s &lt;-<span class="st"> </span><span class="kw">setupSNP</span>(<span class="dt">data=</span>asthma, <span class="dt">colSNPs=</span>idx, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="single-association-analysis.html#cb153-1"></a>idx &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;^rs&quot;</span>, <span class="kw">colnames</span>(asthma))</span>
+<span id="cb153-2"><a href="single-association-analysis.html#cb153-2"></a>asthma.s &lt;-<span class="st"> </span><span class="kw">setupSNP</span>(<span class="dt">data=</span>asthma, <span class="dt">colSNPs=</span>idx, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p>The argument <em>sep</em> indicates the character separating the alleles. The default value is ’‘/´´. In our case, there is no separating character, so that, we set <em>sep=""</em>. The argument <em>name.genotypes</em> can be used when genotypes are available in other formats, such as 0, 1, 2 or’‘norm´´,’‘het´´,’’mut´´. The purpose of the <code>setupSNP</code> function is to assign the class <em>snp</em> to the SNPs variables, to which <code>SNPassoc</code> methods will be applied. The function labels the most common genotype across subjects as the reference one. When numerous SNPs are available, the function can be parallelized through the argument <em>mc.cores</em> that indicates the number of processors to be used. We can verify that the SNP variables are given the new class <em>snp</em></p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="single-association-analysis.html#cb153-1"></a><span class="kw">head</span>(asthma.s<span class="op">$</span>rs1422993)</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="single-association-analysis.html#cb154-1"></a><span class="kw">head</span>(asthma.s<span class="op">$</span>rs1422993)</span></code></pre></div>
 <pre><code>[1] G/G G/T G/G G/T G/T G/G
 Genotypes: G/G G/T T/T
 Alleles:  G T </code></pre>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="single-association-analysis.html#cb155-1"></a><span class="kw">class</span>(asthma.s<span class="op">$</span>rs1422993)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="single-association-analysis.html#cb156-1"></a><span class="kw">class</span>(asthma.s<span class="op">$</span>rs1422993)</span></code></pre></div>
 <pre><code>[1] &quot;snp&quot;    &quot;factor&quot;</code></pre>
 <p>and summarize their content with <code>summary</code></p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="single-association-analysis.html#cb157-1"></a><span class="kw">summary</span>(asthma.s<span class="op">$</span>rs1422993)</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="single-association-analysis.html#cb158-1"></a><span class="kw">summary</span>(asthma.s<span class="op">$</span>rs1422993)</span></code></pre></div>
 <pre><code>Genotypes: 
     frequency percentage
 G/G       903  57.224335
@@ -284,7 +284,7 @@ T       780   24.71483
 
 HWE (p value): 0.250093 </code></pre>
 <p>which shows the genotype and allele frequencies for a given SNP, testing for Hardy-Weinberg equilibrium (HWE). We can also visualize the results in a plot by</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="single-association-analysis.html#cb159-1"></a><span class="kw">plot</span>(asthma.s<span class="op">$</span>rs1422993)</span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="single-association-analysis.html#cb160-1"></a><span class="kw">plot</span>(asthma.s<span class="op">$</span>rs1422993)</span></code></pre></div>
 <div class="figure"><span id="fig:plotsummarySNP"></span>
 <img src="fig/plotsummarySNP-1.png" alt="SNP summary. Bar chart showing the basic information of a given SNP" width="672" />
 <p class="caption">
@@ -292,7 +292,7 @@ Figure 3.1: SNP summary. Bar chart showing the basic information of a given SNP
 </p>
 </div>
 <p>The argument <em>type</em> helps to get a pie chart</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="single-association-analysis.html#cb160-1"></a><span class="kw">plot</span>(asthma.s<span class="op">$</span>rs1422993, <span class="dt">type=</span>pie)</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="single-association-analysis.html#cb161-1"></a><span class="kw">plot</span>(asthma.s<span class="op">$</span>rs1422993, <span class="dt">type=</span>pie)</span></code></pre></div>
 <div class="figure"><span id="fig:plotsummarySNP2"></span>
 <img src="fig/plotsummarySNP2-1.png" alt="SNP summary. Pie chart showing the basic information of a given SNP" width="672" />
 <p class="caption">
@@ -300,7 +300,7 @@ Figure 3.2: SNP summary. Pie chart showing the basic information of a given SNP
 </p>
 </div>
 <p>The <em>summary</em> function can also be applied to the whole dataset</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="single-association-analysis.html#cb161-1"></a><span class="kw">summary</span>(asthma.s, <span class="dt">print=</span><span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="single-association-analysis.html#cb162-1"></a><span class="kw">summary</span>(asthma.s, <span class="dt">print=</span><span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>           alleles major.allele.freq HWE      missing (%)
 rs4490198  A/G     59.2              0.174133  0.6       
 rs4849332  G/T     61.8              0.522060  0.1       
@@ -353,7 +353,7 @@ rs3918395  G/T     86.8              0.508732  1.2
 rs2787095  G/C     60.2              0.102053  0.8       
 rs2853215  G/A     73.0              0.249516  0.2       </code></pre>
 <p>showing the SNP labels with minor/major allele format, the major allele frequency the HWE test and the percentage of missing genotypes. Missing values can be further explored plotting with</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="single-association-analysis.html#cb163-1"></a><span class="kw">plotMissing</span>(asthma.s, <span class="dt">print.labels.SNPs =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="single-association-analysis.html#cb164-1"></a><span class="kw">plotMissing</span>(asthma.s, <span class="dt">print.labels.SNPs =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <div class="figure"><span id="fig:plotMissing"></span>
 <img src="fig/plotMissing-1.png" alt="Missing genotypes. Black squares shows missing genotuype information of asthma data example." width="672" />
 <p class="caption">
@@ -365,8 +365,8 @@ Figure 3.3: Missing genotypes. Black squares shows missing genotuype information
 <div id="hardy-weinberg-equilibrium" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Hardy-Weinberg equilibrium</h2>
 <p>Genotyping of SNPs needs to pass quality control measures. Aside from technical details that need to be considered for filtering SNPs with low quality, genotype calling error can be detected by a HWE test. The test compares the observed genotype frequencies with those expected under random mating, which follows when the SNPs are in the absence of selection, mutation, genetic drift, or other forces. Therefore, HWE must be checked only in controls. There are several tests described in the literature to verify HWE. In <code>SNPassoc</code> HWE is tested for all the bi-allelic SNP markers using a fast exact test <span class="citation">(Wigginton, Cutler, and Abecasis <a href="#ref-wigginton2005note" role="doc-biblioref">2005</a>)</span> implemented in the <em>tableHWE</em> function.</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="single-association-analysis.html#cb164-1"></a>hwe &lt;-<span class="st"> </span><span class="kw">tableHWE</span>(asthma.s)</span>
-<span id="cb164-2"><a href="single-association-analysis.html#cb164-2"></a><span class="kw">head</span>(hwe)</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="single-association-analysis.html#cb165-1"></a>hwe &lt;-<span class="st"> </span><span class="kw">tableHWE</span>(asthma.s)</span>
+<span id="cb165-2"><a href="single-association-analysis.html#cb165-2"></a><span class="kw">head</span>(hwe)</span></code></pre></div>
 <pre><code>           HWE (p value)
 rs4490198      0.1741325
 rs4849332      0.5220596
@@ -375,26 +375,26 @@ rs11123242     0.9328981
 rs13014858     0.3511162
 rs1430094      0.3055089</code></pre>
 <p>We observe that the first SNPs in the dataset are under HWE since their P-values rejecting the HWE hypothesis (null hypothesis) are larger than 0.05. However, when tested in control samples only, by stratifying by cases and controls</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="single-association-analysis.html#cb166-1"></a>hwe2 &lt;-<span class="st"> </span><span class="kw">tableHWE</span>(asthma.s, casecontrol)</span>
-<span id="cb166-2"><a href="single-association-analysis.html#cb166-2"></a></span>
-<span id="cb166-3"><a href="single-association-analysis.html#cb166-3"></a><span class="co">#SNPs is HWE in the whole sample but not controls</span></span>
-<span id="cb166-4"><a href="single-association-analysis.html#cb166-4"></a>snpNHWE &lt;-<span class="st"> </span>hwe2[,<span class="dv">1</span>]<span class="op">&gt;</span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span>hwe2[,<span class="dv">2</span>]<span class="op">&lt;</span><span class="fl">0.05</span></span>
-<span id="cb166-5"><a href="single-association-analysis.html#cb166-5"></a><span class="kw">rownames</span>(hwe2)[snpNHWE]</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="single-association-analysis.html#cb167-1"></a>hwe2 &lt;-<span class="st"> </span><span class="kw">tableHWE</span>(asthma.s, casecontrol)</span>
+<span id="cb167-2"><a href="single-association-analysis.html#cb167-2"></a></span>
+<span id="cb167-3"><a href="single-association-analysis.html#cb167-3"></a><span class="co">#SNPs is HWE in the whole sample but not controls</span></span>
+<span id="cb167-4"><a href="single-association-analysis.html#cb167-4"></a>snpNHWE &lt;-<span class="st"> </span>hwe2[,<span class="dv">1</span>]<span class="op">&gt;</span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span>hwe2[,<span class="dv">2</span>]<span class="op">&lt;</span><span class="fl">0.05</span></span>
+<span id="cb167-5"><a href="single-association-analysis.html#cb167-5"></a><span class="kw">rownames</span>(hwe2)[snpNHWE]</span></code></pre></div>
 <pre><code>[1] &quot;rs1345267&quot;</code></pre>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="single-association-analysis.html#cb168-1"></a>hwe2[snpNHWE,]</span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="single-association-analysis.html#cb169-1"></a>hwe2[snpNHWE,]</span></code></pre></div>
 <pre><code>all groups          0          1 
 0.11218285 0.04956349 0.81604706 </code></pre>
 <p>We see that rs1345267 is not in HWE within controls because its P-value is &lt;0.05. Notice that one is interested in keeping those SNPsthat do not reject the null hypothesis. As several SNPs are tested, multiple comparisons must be considered. In this particular setting, a threshold of 0.001 is normally considered. As a quality control measure, it is not necessary to be as conservative as in those situations where false discovery rates need to be controlled.</p>
 <p>SNPs that do not pass the HWE test must be removed form further analyses. We can recall <em>setupSNP</em> and indicate the columns of the SNPs to be kept</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="single-association-analysis.html#cb170-1"></a>snps.ok &lt;-<span class="st"> </span><span class="kw">rownames</span>(hwe2)[hwe2[,<span class="dv">2</span>]<span class="op">&gt;=</span><span class="fl">0.001</span>]</span>
-<span id="cb170-2"><a href="single-association-analysis.html#cb170-2"></a>pos &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">colnames</span>(asthma)<span class="op">%in%</span>snps.ok, <span class="dt">useNames =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb170-3"><a href="single-association-analysis.html#cb170-3"></a>asthma.s &lt;-<span class="st"> </span><span class="kw">setupSNP</span>(asthma, pos, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="single-association-analysis.html#cb171-1"></a>snps.ok &lt;-<span class="st"> </span><span class="kw">rownames</span>(hwe2)[hwe2[,<span class="dv">2</span>]<span class="op">&gt;=</span><span class="fl">0.001</span>]</span>
+<span id="cb171-2"><a href="single-association-analysis.html#cb171-2"></a>pos &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">colnames</span>(asthma)<span class="op">%in%</span>snps.ok, <span class="dt">useNames =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb171-3"><a href="single-association-analysis.html#cb171-3"></a>asthma.s &lt;-<span class="st"> </span><span class="kw">setupSNP</span>(asthma, pos, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p>Note that in the variable <em>pos</em> we redefine the SNP variables to be considered as class <em>snp</em>.</p>
 </div>
 <div id="single-snp-association-analysis" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Single SNP association analysis</h2>
 <p>We are interested in finding those SNPs associated with asthma status that is encoded in the variable <em>casecontrol</em>. We first illustrate the association between case-control status and the SNP rs1422993. The association analysis for all genetic models is performed by the function <em>association</em> that regresses <em>casecontrol</em> on the variable rs1422993 from the dataset <em>asthma.s</em> that already contains the SNP variables of class <em>snp</em>.</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="single-association-analysis.html#cb171-1"></a><span class="kw">association</span>(casecontrol <span class="op">~</span><span class="st"> </span>rs1422993, <span class="dt">data =</span> asthma.s)</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="single-association-analysis.html#cb172-1"></a><span class="kw">association</span>(casecontrol <span class="op">~</span><span class="st"> </span>rs1422993, <span class="dt">data =</span> asthma.s)</span></code></pre></div>
 <pre><code>
 SNP: rs1422993  adjusted by: 
                 0    %   1    %   OR lower upper  p-value  AIC
@@ -415,13 +415,13 @@ log-Additive
 0,1,2        1238 78.5 340 21.5 1.22  1.01  1.47 0.040151 1644</code></pre>
 <p>The function <em>association</em> follows the usual syntax of R modelling functions with the difference that the variables in the model that are of class <em>snp</em> are tested using different genetic models. In our example, we observe that all genetic models but the recessive one are statistically significant. <em>association</em> also fits the overdominant model, which compares the two homozygous genotypes versus the heterozygous one. This genetic model of inheritance is biologically rare although it has been linked to sickle cell anemia in humans. The result table describes the number of individuals in each genotype across cases and controls. The ORs and CI-95% are also computed. The last column describes the AIC (Akaike information criteria) that can be used to decide which is the best model of inheritance; the lower the better the model is.</p>
 <p>In the example, one may conclude that rs1422993 is associated with asthma and that, for instance, the risk of being asthmatic is 39% higher in people having at least one alternative allele (T) with respect to individuals having none (dominant model). This risk is statistically significant since the CI-95% does not contain 1, the P-value is 0.0078&lt;0.022, or the P-value of the max-statistics is 0.01</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="single-association-analysis.html#cb173-1"></a><span class="kw">maxstat</span>(asthma.s<span class="op">$</span>casecontrol, asthma.s<span class="op">$</span>rs1422993)</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="single-association-analysis.html#cb174-1"></a><span class="kw">maxstat</span>(asthma.s<span class="op">$</span>casecontrol, asthma.s<span class="op">$</span>rs1422993)</span></code></pre></div>
 <pre><code>     dominant recessive log-additive MAX-statistic Pr(&gt;z)  
 [1,]    7.073     0.024        4.291         7.073 0.0166 *
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>If an expected model of inheritance is hypothesized, the association analysis for the model can be specified in the argument <em>model</em>, which by default test all models,</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="single-association-analysis.html#cb175-1"></a><span class="kw">association</span>(casecontrol <span class="op">~</span><span class="st"> </span>rs1422993, asthma.s, <span class="dt">model=</span><span class="st">&quot;dominant&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="single-association-analysis.html#cb176-1"></a><span class="kw">association</span>(casecontrol <span class="op">~</span><span class="st"> </span>rs1422993, asthma.s, <span class="dt">model=</span><span class="st">&quot;dominant&quot;</span>)</span></code></pre></div>
 <pre><code>
 SNP: rs1422993  adjusted by: 
            0  %   1    %   OR lower upper  p-value  AIC
@@ -429,7 +429,7 @@ Dominant
 G/G      730 59 173 50.9 1.00             0.007826 1642
 G/T-T/T  508 41 167 49.1 1.39  1.09  1.77              </code></pre>
 <p>Association tests are typically adjusted by covariates, which are incorporated in the model in the usual form</p>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="single-association-analysis.html#cb177-1"></a><span class="kw">association</span>(casecontrol <span class="op">~</span><span class="st"> </span>rs1422993 <span class="op">+</span><span class="st"> </span>country <span class="op">+</span><span class="st"> </span>smoke, asthma.s)</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="single-association-analysis.html#cb178-1"></a><span class="kw">association</span>(casecontrol <span class="op">~</span><span class="st"> </span>rs1422993 <span class="op">+</span><span class="st"> </span>country <span class="op">+</span><span class="st"> </span>smoke, asthma.s)</span></code></pre></div>
 <pre><code>
 SNP: rs1422993  adjusted by: country smoke 
                 0    %   1    %   OR lower upper p-value  AIC
@@ -449,7 +449,7 @@ G/T           423 34.3 144 42.5 1.37  1.05  1.79
 log-Additive                                                 
 0,1,2        1232 78.4 339 21.6 1.19  0.96  1.46 0.10926 1408</code></pre>
 <p>ORs for stratified analysis on given categorical covariates are used to verify whether the risk is constant across groups</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="single-association-analysis.html#cb179-1"></a><span class="kw">association</span>(casecontrol <span class="op">~</span><span class="st"> </span>rs1422993 <span class="op">+</span><span class="st"> </span>survival<span class="op">::</span><span class="kw">strata</span>(gender), asthma.s)</span></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="single-association-analysis.html#cb180-1"></a><span class="kw">association</span>(casecontrol <span class="op">~</span><span class="st"> </span>rs1422993 <span class="op">+</span><span class="st"> </span>survival<span class="op">::</span><span class="kw">strata</span>(gender), asthma.s)</span></code></pre></div>
 <pre><code>
 SNP: rs1422993  adjusted by: survival::strata(gender) 
                 0    %   1    %   OR lower upper  p-value  AIC
@@ -469,8 +469,8 @@ G/T           425 34.3 145 42.6 1.41  1.10  1.80
 log-Additive                                                  
 0,1,2        1238 78.5 340 21.5 1.21  1.00  1.46 0.055231 1636</code></pre>
 <p>We can see, for instance, that the dominant model is significant only in males. The subset argument allows fitting the model in a subgroup of individuals</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="single-association-analysis.html#cb181-1"></a><span class="kw">association</span>(casecontrol <span class="op">~</span><span class="st"> </span>rs1422993, asthma.s, </span>
-<span id="cb181-2"><a href="single-association-analysis.html#cb181-2"></a>                <span class="dt">subset=</span>country<span class="op">==</span><span class="st">&quot;Spain&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="single-association-analysis.html#cb182-1"></a><span class="kw">association</span>(casecontrol <span class="op">~</span><span class="st"> </span>rs1422993, asthma.s, </span>
+<span id="cb182-2"><a href="single-association-analysis.html#cb182-2"></a>                <span class="dt">subset=</span>country<span class="op">==</span><span class="st">&quot;Spain&quot;</span>)</span></code></pre></div>
 <pre><code>
 SNP: rs1422993  adjusted by: 
                0    %  1    %   OR lower upper p-value   AIC
@@ -490,7 +490,7 @@ G/T          125 38.1 24 49.0 1.56  0.85  2.85
 log-Additive                                                
 0,1,2        328 87.0 49 13.0 1.23  0.77  1.96  0.3816 294.5</code></pre>
 <p>These analyses can be also be performed in quantitative traits, such as body mass index, since <em>association</em> function automatically selects the error distribution of the regression analysis (either Gaussian or binomial).</p>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="single-association-analysis.html#cb183-1"></a><span class="kw">association</span>(bmi <span class="op">~</span><span class="st"> </span>rs1422993, asthma.s) </span></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="single-association-analysis.html#cb184-1"></a><span class="kw">association</span>(bmi <span class="op">~</span><span class="st"> </span>rs1422993, asthma.s) </span></code></pre></div>
 <pre><code>
 SNP: rs1422993  adjusted by: 
                 n    me     se       dif   lower  upper p-value  AIC
@@ -511,8 +511,8 @@ log-Additive
 0,1,2                           0.033951 -0.3153 0.3832  0.8489 9067</code></pre>
 <p>For BMI, <em>association</em> tests whether the difference between means is statistically significant, rather than computing an OR.</p>
 <p>For multiple SNP data, our objective is to identify the variants that are significantly associated with the trait. The most basic strategy is, therefore, to fit an association test like the one described above for each of the SNPs in the dataset and determine which of those associations are significant. The massive univariate testing is the most widely used analysis method for <em>omic</em> data because of its simplicity. In <em>SNPassoc</em>, this type of analysis is done with the function <em>WGassociation</em></p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="single-association-analysis.html#cb185-1"></a>ans &lt;-<span class="st"> </span><span class="kw">WGassociation</span>(casecontrol, <span class="dt">data=</span>asthma.s)</span>
-<span id="cb185-2"><a href="single-association-analysis.html#cb185-2"></a><span class="kw">head</span>(ans)</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="single-association-analysis.html#cb186-1"></a>ans &lt;-<span class="st"> </span><span class="kw">WGassociation</span>(casecontrol, <span class="dt">data=</span>asthma.s)</span>
+<span id="cb186-2"><a href="single-association-analysis.html#cb186-2"></a><span class="kw">head</span>(ans)</span></code></pre></div>
 <pre><code>           comments codominant dominant recessive overdominant
 rs4490198         -    0.52765  0.29503   0.96400      0.29998
 rs4849332         -    0.96912  0.92986   0.84806      0.82327
@@ -528,14 +528,14 @@ rs11123242      0.52009
 rs13014858      0.40897
 rs1430094       0.36611</code></pre>
 <p>Here, only the outcome is required in the formula argument (first argument) since the function successively calls <em>association</em> on each of the variables of class <em>snp</em> within <em>data</em>. The function returns the P-values of association of each SNP under each genetic model. Covariates can also be introduced in the model</p>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="single-association-analysis.html#cb187-1"></a>ans.adj &lt;-<span class="st"> </span><span class="kw">WGassociation</span>(casecontrol <span class="op">~</span><span class="st"> </span>country <span class="op">+</span><span class="st"> </span>smoke, asthma.s)</span>
-<span id="cb187-2"><a href="single-association-analysis.html#cb187-2"></a><span class="kw">head</span>(ans.adj)</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="single-association-analysis.html#cb188-1"></a>ans.adj &lt;-<span class="st"> </span><span class="kw">WGassociation</span>(casecontrol <span class="op">~</span><span class="st"> </span>country <span class="op">+</span><span class="st"> </span>smoke, asthma.s)</span>
+<span id="cb188-2"><a href="single-association-analysis.html#cb188-2"></a><span class="kw">head</span>(ans.adj)</span></code></pre></div>
 <p><code>SNPassoc</code> is computationally limited on large genomic data. The computing time can be reduced by parallelization, specifying in the argument <em>mc.cores</em> the number of computing cores to be used. Alternatively, the function <em>scanWGassociation</em>, a C compiled function, can be used to compute a predetermined genetic model across all SNPs, passed in the argument <em>model</em>, which by default is the additive model</p>
 <pre class="more"><code>ans.fast &lt;- scanWGassociation(casecontrol, asthma.s)</code></pre>
 <p><strong>NOTE</strong>: This function is not available on the <code>SNPassoc</code> version available on CRAN. The user can install the development version available on GitHub to get access to this function just executing</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="single-association-analysis.html#cb189-1"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;isglobal-brge/SNPassoc&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="single-association-analysis.html#cb190-1"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;isglobal-brge/SNPassoc&quot;</span>)</span></code></pre></div>
 <p>The P-values obtained from massive univariate analyses are visualized with the generic <em>plot</em> function</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="single-association-analysis.html#cb190-1"></a><span class="kw">plot</span>(ans)</span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="single-association-analysis.html#cb191-1"></a><span class="kw">plot</span>(ans)</span></code></pre></div>
 <div class="figure"><span id="fig:plotGWAS"></span>
 <img src="fig/plotGWAS-1.png" alt="Manhattan-type plots for different genetic models. P-values in -log10 scale to assess the association between case-control status and SNPs in the asthma example." width="672" />
 <p class="caption">
@@ -544,8 +544,8 @@ Figure 3.4: Manhattan-type plots for different genetic models. P-values in -log1
 </div>
 <p>This produces a Manhattan plot of the -log10(P-values) for all the SNPs over all models. It shows the nominal level of significance and the Bonferroni level, which is the level corrected by the multiple testing across all SNPs. The overall hypothesis of massive univariate association tests is whether there is any SNP that is significantly associated with the phenotype. As multiple SNPs are tested, the probability of finding at least one significant finding increases if we do not lower the significance threshold. The Bonferroni correction lowers the threshold by the number of SNPs tested (0.0001=0.05/51). In the Manhattan plotof our analysis, we see that no SNP is significant at the Bonferroni level, and therefore there is no SNP that is significantly associated with asthma.</p>
 <p>Maximum-statistic <span class="citation">(see González et al. <a href="#ref-gonzalez2008maximizing" role="doc-biblioref">2008</a>)</span> can also be used to test association between asthma status and SNPs</p>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="single-association-analysis.html#cb191-1"></a>ans.max &lt;-<span class="st"> </span><span class="kw">maxstat</span>(asthma.s, casecontrol)</span>
-<span id="cb191-2"><a href="single-association-analysis.html#cb191-2"></a>ans.max</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="single-association-analysis.html#cb192-1"></a>ans.max &lt;-<span class="st"> </span><span class="kw">maxstat</span>(asthma.s, casecontrol)</span>
+<span id="cb192-2"><a href="single-association-analysis.html#cb192-2"></a>ans.max</span></code></pre></div>
 <pre><code>           dominant recessive log-additive MAX-statistic  Pr(&gt;z)   
 rs4490198     1.097     0.002        0.466         1.097 0.50189   
 rs4849332     0.008     0.037        0.001         0.037 0.97609   
@@ -600,13 +600,13 @@ rs2853215     0.686     0.931        1.130         1.130 0.49261
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>We note that even under the max-statistics none of the SNPs tested is significant under the Bonferroni correction (&lt;0.0001) for multiple SNP testing</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="single-association-analysis.html#cb193-1"></a><span class="co">#minimum P-value across SNPs</span></span>
-<span id="cb193-2"><a href="single-association-analysis.html#cb193-2"></a><span class="kw">min</span>(ans.max[<span class="st">&quot;Pr(&gt;z)&quot;</span>,])</span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="single-association-analysis.html#cb194-1"></a><span class="co">#minimum P-value across SNPs</span></span>
+<span id="cb194-2"><a href="single-association-analysis.html#cb194-2"></a><span class="kw">min</span>(ans.max[<span class="st">&quot;Pr(&gt;z)&quot;</span>,])</span></code></pre></div>
 <pre><code>[1] 0.003392342</code></pre>
 <p>Information for specific association models for given SNPs can also be retrieved with <em>WGstats</em></p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="single-association-analysis.html#cb195-1"></a>infoTable &lt;-<span class="st"> </span><span class="kw">WGstats</span>(ans)</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="single-association-analysis.html#cb196-1"></a>infoTable &lt;-<span class="st"> </span><span class="kw">WGstats</span>(ans)</span></code></pre></div>
 <p>Therefore, we can have access to the results for a given SNP by</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="single-association-analysis.html#cb196-1"></a>infoTable<span class="op">$</span>rs1422993</span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="single-association-analysis.html#cb197-1"></a>infoTable<span class="op">$</span>rs1422993</span></code></pre></div>
 <pre><code>
 SNP: rs1422993  adjusted by: 
                 0    %   1    %   OR lower upper  p-value  AIC
@@ -627,26 +627,26 @@ log-Additive
 0,1,2        1238 78.5 340 21.5 1.22  1.01  1.47 0.040151 1644</code></pre>
 <p>recovering our previous results given by <em>association</em> function.</p>
 <p><strong>NOTE</strong>: The R output of specific association analyses can be exported into LaTeX by using <em>getNiceTable</em> function and <em>xtable</em> R package. The following code creates a table for the SNPs rs1422993 and rs184448</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="single-association-analysis.html#cb198-1"></a><span class="kw">library</span>(xtable)</span>
-<span id="cb198-2"><a href="single-association-analysis.html#cb198-2"></a>out &lt;-<span class="st"> </span><span class="kw">getNiceTable</span>(ans[<span class="kw">c</span>(<span class="st">&quot;rs1422993&quot;</span>, <span class="st">&quot;rs184448&quot;</span>)])</span>
-<span id="cb198-3"><a href="single-association-analysis.html#cb198-3"></a></span>
-<span id="cb198-4"><a href="single-association-analysis.html#cb198-4"></a>nlines &lt;-<span class="st"> </span><span class="kw">attr</span>(out, <span class="st">&quot;nlines&quot;</span>)</span>
-<span id="cb198-5"><a href="single-association-analysis.html#cb198-5"></a>hlines &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">-1</span>, <span class="dv">0</span>, <span class="kw">cumsum</span>(nlines<span class="op">+</span><span class="dv">1</span>), <span class="kw">nrow</span>(out), <span class="kw">nrow</span>(out))</span>
-<span id="cb198-6"><a href="single-association-analysis.html#cb198-6"></a></span>
-<span id="cb198-7"><a href="single-association-analysis.html#cb198-7"></a><span class="kw">print</span>(<span class="kw">xtable</span>(out, <span class="dt">caption=</span><span class="st">&#39;Genetic association using</span></span>
-<span id="cb198-8"><a href="single-association-analysis.html#cb198-8"></a><span class="st">                different genetic models from asthma </span></span>
-<span id="cb198-9"><a href="single-association-analysis.html#cb198-9"></a><span class="st">                data example of rs1422993 and rs184448 </span></span>
-<span id="cb198-10"><a href="single-association-analysis.html#cb198-10"></a><span class="st">                SNPs obtained with SNPassoc.&#39;</span>,</span>
-<span id="cb198-11"><a href="single-association-analysis.html#cb198-11"></a>             <span class="dt">label =</span> <span class="st">&#39;tab-2SNPs&#39;</span>),</span>
-<span id="cb198-12"><a href="single-association-analysis.html#cb198-12"></a>      <span class="dt">tabular.enviroment=</span><span class="st">&quot;longtable&quot;</span>, <span class="dt">file=</span><span class="st">&quot;tableSNPs&quot;</span>,</span>
-<span id="cb198-13"><a href="single-association-analysis.html#cb198-13"></a>      <span class="dt">floating=</span><span class="ot">FALSE</span>,  <span class="dt">include.rownames =</span> <span class="ot">FALSE</span>, </span>
-<span id="cb198-14"><a href="single-association-analysis.html#cb198-14"></a>      <span class="dt">hline.after=</span> hlines, <span class="dt">sanitize.text.function=</span>identity)</span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="single-association-analysis.html#cb199-1"></a><span class="kw">library</span>(xtable)</span>
+<span id="cb199-2"><a href="single-association-analysis.html#cb199-2"></a>out &lt;-<span class="st"> </span><span class="kw">getNiceTable</span>(ans[<span class="kw">c</span>(<span class="st">&quot;rs1422993&quot;</span>, <span class="st">&quot;rs184448&quot;</span>)])</span>
+<span id="cb199-3"><a href="single-association-analysis.html#cb199-3"></a></span>
+<span id="cb199-4"><a href="single-association-analysis.html#cb199-4"></a>nlines &lt;-<span class="st"> </span><span class="kw">attr</span>(out, <span class="st">&quot;nlines&quot;</span>)</span>
+<span id="cb199-5"><a href="single-association-analysis.html#cb199-5"></a>hlines &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">-1</span>, <span class="dv">0</span>, <span class="kw">cumsum</span>(nlines<span class="op">+</span><span class="dv">1</span>), <span class="kw">nrow</span>(out), <span class="kw">nrow</span>(out))</span>
+<span id="cb199-6"><a href="single-association-analysis.html#cb199-6"></a></span>
+<span id="cb199-7"><a href="single-association-analysis.html#cb199-7"></a><span class="kw">print</span>(<span class="kw">xtable</span>(out, <span class="dt">caption=</span><span class="st">&#39;Genetic association using</span></span>
+<span id="cb199-8"><a href="single-association-analysis.html#cb199-8"></a><span class="st">                different genetic models from asthma </span></span>
+<span id="cb199-9"><a href="single-association-analysis.html#cb199-9"></a><span class="st">                data example of rs1422993 and rs184448 </span></span>
+<span id="cb199-10"><a href="single-association-analysis.html#cb199-10"></a><span class="st">                SNPs obtained with SNPassoc.&#39;</span>,</span>
+<span id="cb199-11"><a href="single-association-analysis.html#cb199-11"></a>             <span class="dt">label =</span> <span class="st">&#39;tab-2SNPs&#39;</span>),</span>
+<span id="cb199-12"><a href="single-association-analysis.html#cb199-12"></a>      <span class="dt">tabular.enviroment=</span><span class="st">&quot;longtable&quot;</span>, <span class="dt">file=</span><span class="st">&quot;tableSNPs&quot;</span>,</span>
+<span id="cb199-13"><a href="single-association-analysis.html#cb199-13"></a>      <span class="dt">floating=</span><span class="ot">FALSE</span>,  <span class="dt">include.rownames =</span> <span class="ot">FALSE</span>, </span>
+<span id="cb199-14"><a href="single-association-analysis.html#cb199-14"></a>      <span class="dt">hline.after=</span> hlines, <span class="dt">sanitize.text.function=</span>identity)</span></code></pre></div>
 </div>
 <div id="gene-environment-and-gene-gene-interactions" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Gene-environment and gene-gene interactions</h2>
 <p>Gene-enviroment (GxE) analyses can be performed within <code>SNPassoc</code> using <em>association</em> function. Assume that we are interested in testing whether the risk of rs1422993 for asthma under the dominant model is different among smokers (variable smoke; 0=never, 1=ever). This code fits a model with an interaction term where the environmental variable is required to be a factor factor variable.</p>
-<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="single-association-analysis.html#cb199-1"></a><span class="kw">association</span>(casecontrol <span class="op">~</span><span class="st"> </span><span class="kw">dominant</span>(rs1422993)<span class="op">*</span><span class="kw">factor</span>(smoke), </span>
-<span id="cb199-2"><a href="single-association-analysis.html#cb199-2"></a>            <span class="dt">data=</span>asthma.s)</span></code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="single-association-analysis.html#cb200-1"></a><span class="kw">association</span>(casecontrol <span class="op">~</span><span class="st"> </span><span class="kw">dominant</span>(rs1422993)<span class="op">*</span><span class="kw">factor</span>(smoke), </span>
+<span id="cb200-2"><a href="single-association-analysis.html#cb200-2"></a>            <span class="dt">data=</span>asthma.s)</span></code></pre></div>
 <pre><code>
       SNP: dominant(rs1422993  adjusted by: 
  Interaction 
@@ -710,8 +710,8 @@ G/T-T/T 16 7 1.25  0.36  4.31
 p trend: 0.278 </code></pre>
 <p>The result is an interaction table showing that the risk of individuals carrying the T allele increases the risk of asthma in never smokers (OR=1.35; CI: 1.02-1.79) while it is not significant in ever smokers (OR=0.95; CI: 0.63-1.42). However, the interaction is not statistically significant (<span class="math inline">\(P\)</span>-interaction=0.8513). The output also shows the stratified ORs that can help in interpreting the results.</p>
 <p>In a similar way, gene-gene interaction (GxG) of a given SNP epistasis model can also be fitted using the same function. In that case, the genetic model of the interacting SNP must be indicated in the <em>model.inteaction</em> argument.</p>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="single-association-analysis.html#cb201-1"></a><span class="kw">association</span>(casecontrol <span class="op">~</span><span class="st"> </span>rs1422993<span class="op">*</span><span class="kw">factor</span>(rs184448), </span>
-<span id="cb201-2"><a href="single-association-analysis.html#cb201-2"></a>            <span class="dt">data=</span>asthma.s, <span class="dt">model.interaction =</span> <span class="st">&quot;dominant&quot;</span> )</span></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="single-association-analysis.html#cb202-1"></a><span class="kw">association</span>(casecontrol <span class="op">~</span><span class="st"> </span>rs1422993<span class="op">*</span><span class="kw">factor</span>(rs184448), </span>
+<span id="cb202-2"><a href="single-association-analysis.html#cb202-2"></a>            <span class="dt">data=</span>asthma.s, <span class="dt">model.interaction =</span> <span class="st">&quot;dominant&quot;</span> )</span></code></pre></div>
 <pre><code>
       SNP: rs1422993  adjusted by: 
  Interaction 
@@ -761,16 +761,16 @@ G/T-T/T  78 38 2.08  1.19  3.62
 p trend: 0.12743 </code></pre>
 <p>We observe that the interaction between these two SNPs is not statistically significant (P-value=0.24). However, the OR of GG genotype of rs184448 differs across individuals between the GG and GT-TT genotypes of rs1422993 (see ORs for GG in the second table of the output).</p>
 <p>The user also can perform GxG for a set of SNPs using this code. Let us assume we are interested in assessing interaction between the SNPs that are significant at 10% level</p>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="single-association-analysis.html#cb203-1"></a>ans &lt;-<span class="st"> </span><span class="kw">WGassociation</span>(casecontrol, <span class="dt">data=</span>asthma.s)</span>
-<span id="cb203-2"><a href="single-association-analysis.html#cb203-2"></a>mask &lt;-<span class="st"> </span><span class="kw">apply</span>(ans, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">min</span>(x, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)<span class="op">&lt;</span><span class="fl">0.1</span>)</span>
-<span id="cb203-3"><a href="single-association-analysis.html#cb203-3"></a>sig.snps &lt;-<span class="st"> </span><span class="kw">names</span>(mask[mask])</span>
-<span id="cb203-4"><a href="single-association-analysis.html#cb203-4"></a>sig.snps</span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="single-association-analysis.html#cb204-1"></a>ans &lt;-<span class="st"> </span><span class="kw">WGassociation</span>(casecontrol, <span class="dt">data=</span>asthma.s)</span>
+<span id="cb204-2"><a href="single-association-analysis.html#cb204-2"></a>mask &lt;-<span class="st"> </span><span class="kw">apply</span>(ans, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">min</span>(x, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)<span class="op">&lt;</span><span class="fl">0.1</span>)</span>
+<span id="cb204-3"><a href="single-association-analysis.html#cb204-3"></a>sig.snps &lt;-<span class="st"> </span><span class="kw">names</span>(mask[mask])</span>
+<span id="cb204-4"><a href="single-association-analysis.html#cb204-4"></a>sig.snps</span></code></pre></div>
 <pre><code> [1] &quot;rs1430094&quot; &quot;rs1422993&quot; &quot;rs765023&quot;  &quot;rs184448&quot;  &quot;rs324396&quot; 
  [6] &quot;rs324957&quot;  &quot;rs324960&quot;  &quot;rs324981&quot;  &quot;rs727162&quot;  &quot;rs6084432&quot;</code></pre>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="single-association-analysis.html#cb205-1"></a>idx &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">colnames</span>(asthma)<span class="op">%in%</span>sig.snps)</span>
-<span id="cb205-2"><a href="single-association-analysis.html#cb205-2"></a>asthma.s2 &lt;-<span class="st"> </span><span class="kw">setupSNP</span>(asthma, <span class="dt">colSNPs =</span> idx, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb205-3"><a href="single-association-analysis.html#cb205-3"></a>ans.int &lt;-<span class="st"> </span><span class="kw">interactionPval</span>(casecontrol <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data=</span>asthma.s2)</span>
-<span id="cb205-4"><a href="single-association-analysis.html#cb205-4"></a>ans.int</span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="single-association-analysis.html#cb206-1"></a>idx &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">colnames</span>(asthma)<span class="op">%in%</span>sig.snps)</span>
+<span id="cb206-2"><a href="single-association-analysis.html#cb206-2"></a>asthma.s2 &lt;-<span class="st"> </span><span class="kw">setupSNP</span>(asthma, <span class="dt">colSNPs =</span> idx, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb206-3"><a href="single-association-analysis.html#cb206-3"></a>ans.int &lt;-<span class="st"> </span><span class="kw">interactionPval</span>(casecontrol <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data=</span>asthma.s2)</span>
+<span id="cb206-4"><a href="single-association-analysis.html#cb206-4"></a>ans.int</span></code></pre></div>
 <pre><code>            rs1430094   rs1422993    rs765023    rs184448    rs324396
 rs1430094 0.132526514 0.653457029 0.816154586 0.787386835 0.694311497
 rs1422993 0.140433948 0.016719949 0.133131712 0.375246182 0.683959376
@@ -794,7 +794,7 @@ rs324981  0.657378128 0.533095852 0.117043376 0.463436271 0.862291944
 rs727162  0.174960014 0.500811687 0.167364803 0.206131411 0.885294485
 rs6084432 0.174006927 0.146808311 0.210647392 0.203957720 0.193711884</code></pre>
 <p>we can visualize the results by</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="single-association-analysis.html#cb207-1"></a><span class="kw">plot</span>(ans.int)</span></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="single-association-analysis.html#cb208-1"></a><span class="kw">plot</span>(ans.int)</span></code></pre></div>
 <div class="figure"><span id="fig:plotInf"></span>
 <img src="fig/plotInf-1.png" alt="Interaction plot. Interaction plot of SNPs significant al 10\% significant level (see help of 'interactionPval'  function to see what is represented in the plot). " width="672" />
 <p class="caption">
@@ -809,11 +809,11 @@ Figure 3.5: Interaction plot. Interaction plot of SNPs significant al 10% signif
 <div id="haplotype-estimation" class="section level3" number="3.5.1">
 <h3><span class="header-section-number">3.5.1</span> Haplotype estimation</h3>
 <p>We now illustrate how to perform haplotype estimation from genotype data using the EM algorithm and how to integrate haplotype uncertainty when evaluating the association between traits and haplotypes. Haplotype inference is performed with <code>haplo.stats</code>, for which genotypes are encoded in a different format. <em>make.geno</em>, from <code>SNPassoc</code>, formats data for <code>haplo.stats</code>. The function <em>haplo.em</em> computes the haplotype frequency in the data for the SNPs of interest. Here we illustrate how to estimate haplotypes built from the SNPs rs714588, rs1023555 and rs898070:</p>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="single-association-analysis.html#cb208-1"></a><span class="kw">library</span>(haplo.stats)</span>
-<span id="cb208-2"><a href="single-association-analysis.html#cb208-2"></a>snpsH &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;rs714588&quot;</span>, <span class="st">&quot;rs1023555&quot;</span>,  <span class="st">&quot;rs898070&quot;</span>)</span>
-<span id="cb208-3"><a href="single-association-analysis.html#cb208-3"></a>genoH &lt;-<span class="st"> </span><span class="kw">make.geno</span>(asthma.s, snpsH)</span>
-<span id="cb208-4"><a href="single-association-analysis.html#cb208-4"></a>em &lt;-<span class="st"> </span><span class="kw">haplo.em</span>(genoH, <span class="dt">locus.label =</span> snpsH, <span class="dt">miss.val =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="ot">NA</span>))</span>
-<span id="cb208-5"><a href="single-association-analysis.html#cb208-5"></a>em</span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="single-association-analysis.html#cb209-1"></a><span class="kw">library</span>(haplo.stats)</span>
+<span id="cb209-2"><a href="single-association-analysis.html#cb209-2"></a>snpsH &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;rs714588&quot;</span>, <span class="st">&quot;rs1023555&quot;</span>,  <span class="st">&quot;rs898070&quot;</span>)</span>
+<span id="cb209-3"><a href="single-association-analysis.html#cb209-3"></a>genoH &lt;-<span class="st"> </span><span class="kw">make.geno</span>(asthma.s, snpsH)</span>
+<span id="cb209-4"><a href="single-association-analysis.html#cb209-4"></a>em &lt;-<span class="st"> </span><span class="kw">haplo.em</span>(genoH, <span class="dt">locus.label =</span> snpsH, <span class="dt">miss.val =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="ot">NA</span>))</span>
+<span id="cb209-5"><a href="single-association-analysis.html#cb209-5"></a>em</span></code></pre></div>
 <pre><code>====================================================================== 
                               Haplotypes                               
 ====================================================================== 
@@ -836,13 +836,13 @@ lr stat for no LD =  774.5411 , df =  4 , p-val =  0 </code></pre>
 <div id="haplotype-association" class="section level3" number="3.5.2">
 <h3><span class="header-section-number">3.5.2</span> Haplotype association</h3>
 <p>We then want to assess if any of these haplotypes significantly associates with asthma. The <em>haplo.glm</em> fits a regression model between the phenotype and the haplotypes, incorporating the uncertainty for the probable haplotypes of individuals. The function <em>intervals</em> of <code>SNPassoc</code> provides a nice summary of the results</p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="single-association-analysis.html#cb210-1"></a>trait &lt;-<span class="st"> </span>asthma.s<span class="op">$</span>casecontrol</span>
-<span id="cb210-2"><a href="single-association-analysis.html#cb210-2"></a>mod &lt;-<span class="st"> </span><span class="kw">haplo.glm</span>(trait <span class="op">~</span><span class="st"> </span>genoH,           </span>
-<span id="cb210-3"><a href="single-association-analysis.html#cb210-3"></a>                 <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, </span>
-<span id="cb210-4"><a href="single-association-analysis.html#cb210-4"></a>                 <span class="dt">locus.label=</span>snpsH,</span>
-<span id="cb210-5"><a href="single-association-analysis.html#cb210-5"></a>                 <span class="dt">allele.lev=</span><span class="kw">attributes</span>(genoH)<span class="op">$</span>unique.alleles,</span>
-<span id="cb210-6"><a href="single-association-analysis.html#cb210-6"></a>                 <span class="dt">control =</span> <span class="kw">haplo.glm.control</span>(<span class="dt">haplo.freq.min=</span><span class="fl">0.05</span>))   </span>
-<span id="cb210-7"><a href="single-association-analysis.html#cb210-7"></a><span class="kw">intervals</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="single-association-analysis.html#cb211-1"></a>trait &lt;-<span class="st"> </span>asthma.s<span class="op">$</span>casecontrol</span>
+<span id="cb211-2"><a href="single-association-analysis.html#cb211-2"></a>mod &lt;-<span class="st"> </span><span class="kw">haplo.glm</span>(trait <span class="op">~</span><span class="st"> </span>genoH,           </span>
+<span id="cb211-3"><a href="single-association-analysis.html#cb211-3"></a>                 <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, </span>
+<span id="cb211-4"><a href="single-association-analysis.html#cb211-4"></a>                 <span class="dt">locus.label=</span>snpsH,</span>
+<span id="cb211-5"><a href="single-association-analysis.html#cb211-5"></a>                 <span class="dt">allele.lev=</span><span class="kw">attributes</span>(genoH)<span class="op">$</span>unique.alleles,</span>
+<span id="cb211-6"><a href="single-association-analysis.html#cb211-6"></a>                 <span class="dt">control =</span> <span class="kw">haplo.glm.control</span>(<span class="dt">haplo.freq.min=</span><span class="fl">0.05</span>))   </span>
+<span id="cb211-7"><a href="single-association-analysis.html#cb211-7"></a><span class="kw">intervals</span>(mod)</span></code></pre></div>
 <pre><code>               freq   or   95%   C.I.   P-val 
          ATG 0.4405   1.00 Reference haplotype 
          GAA 0.0827   1.09 (   0.77 -   1.56 )  0.6160 
@@ -856,24 +856,24 @@ lr stat for no LD =  774.5411 , df =  4 , p-val =  0 </code></pre>
 <h3><span class="header-section-number">3.5.3</span> Sliding window approach</h3>
 <p>The inference of haplotypes depends on a predefined region or sets of SNPs. For instance, in the last section, we selected three SNPs that were in high LD. However, when no previous knowledge is available about the region or SNPs for which haplotypes should be inferred, we can apply a sliding window for haplotype inference .</p>
 <p>To illustrate this type of analysis, we now consider a second block of 10 SNPs in our asthma example (from 6th to 15th SNP). Considering large haplotypes, however, increases the number of possible haplotypes in the sample, decreasing the power of finding real associations. In addition, in predefined blocks, it is possible to miss the most efficient length of the susceptible haplotype, incrementing the loss of power. This is overcome using a sliding window. We thus ask which is the haplotype combination from any of 4, 5, 6 or 7 consecutive SNPs that gives the highest association with asthma status. We then reformat SNP genotypes in the region with the <em>make.geno</em> function and perform an association analysis for multiple haplotypes of <em>i</em> SNPs sliding from the 6th to the 15th SNP in the data. We perform an analysis for each window length <em>i</em> varying from 4 to 7 SNPs.</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="single-association-analysis.html#cb212-1"></a>snpsH2 &lt;-<span class="st"> </span><span class="kw">labels</span>(asthma.s)[<span class="dv">6</span><span class="op">:</span><span class="dv">15</span>]</span>
-<span id="cb212-2"><a href="single-association-analysis.html#cb212-2"></a>genoH2 &lt;-<span class="st"> </span><span class="kw">make.geno</span>(asthma.s, snpsH2)</span>
-<span id="cb212-3"><a href="single-association-analysis.html#cb212-3"></a>haplo.score &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
-<span id="cb212-4"><a href="single-association-analysis.html#cb212-4"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">4</span><span class="op">:</span><span class="dv">7</span>) {</span>
-<span id="cb212-5"><a href="single-association-analysis.html#cb212-5"></a> trait &lt;-<span class="st"> </span>asthma.s<span class="op">$</span>casecontrol</span>
-<span id="cb212-6"><a href="single-association-analysis.html#cb212-6"></a> haplo.score[[i<span class="dv">-3</span>]] &lt;-<span class="st"> </span><span class="kw">haplo.score.slide</span>(trait, genoH2, </span>
-<span id="cb212-7"><a href="single-association-analysis.html#cb212-7"></a>                          <span class="dt">trait.type=</span><span class="st">&quot;binomial&quot;</span>,</span>
-<span id="cb212-8"><a href="single-association-analysis.html#cb212-8"></a>                          <span class="dt">n.slide=</span>i,</span>
-<span id="cb212-9"><a href="single-association-analysis.html#cb212-9"></a>                          <span class="dt">simulate=</span><span class="ot">TRUE</span>,</span>
-<span id="cb212-10"><a href="single-association-analysis.html#cb212-10"></a>                          <span class="dt">sim.control=</span><span class="kw">score.sim.control</span>(<span class="dt">min.sim=</span><span class="dv">100</span>,</span>
-<span id="cb212-11"><a href="single-association-analysis.html#cb212-11"></a>                                       <span class="dt">max.sim=</span><span class="dv">200</span>)) </span>
-<span id="cb212-12"><a href="single-association-analysis.html#cb212-12"></a> }</span></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="single-association-analysis.html#cb213-1"></a>snpsH2 &lt;-<span class="st"> </span><span class="kw">labels</span>(asthma.s)[<span class="dv">6</span><span class="op">:</span><span class="dv">15</span>]</span>
+<span id="cb213-2"><a href="single-association-analysis.html#cb213-2"></a>genoH2 &lt;-<span class="st"> </span><span class="kw">make.geno</span>(asthma.s, snpsH2)</span>
+<span id="cb213-3"><a href="single-association-analysis.html#cb213-3"></a>haplo.score &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
+<span id="cb213-4"><a href="single-association-analysis.html#cb213-4"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">4</span><span class="op">:</span><span class="dv">7</span>) {</span>
+<span id="cb213-5"><a href="single-association-analysis.html#cb213-5"></a> trait &lt;-<span class="st"> </span>asthma.s<span class="op">$</span>casecontrol</span>
+<span id="cb213-6"><a href="single-association-analysis.html#cb213-6"></a> haplo.score[[i<span class="dv">-3</span>]] &lt;-<span class="st"> </span><span class="kw">haplo.score.slide</span>(trait, genoH2, </span>
+<span id="cb213-7"><a href="single-association-analysis.html#cb213-7"></a>                          <span class="dt">trait.type=</span><span class="st">&quot;binomial&quot;</span>,</span>
+<span id="cb213-8"><a href="single-association-analysis.html#cb213-8"></a>                          <span class="dt">n.slide=</span>i,</span>
+<span id="cb213-9"><a href="single-association-analysis.html#cb213-9"></a>                          <span class="dt">simulate=</span><span class="ot">TRUE</span>,</span>
+<span id="cb213-10"><a href="single-association-analysis.html#cb213-10"></a>                          <span class="dt">sim.control=</span><span class="kw">score.sim.control</span>(<span class="dt">min.sim=</span><span class="dv">100</span>,</span>
+<span id="cb213-11"><a href="single-association-analysis.html#cb213-11"></a>                                       <span class="dt">max.sim=</span><span class="dv">200</span>)) </span>
+<span id="cb213-12"><a href="single-association-analysis.html#cb213-12"></a> }</span></code></pre></div>
 <p>The results can be visualized with the following plot</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="single-association-analysis.html#cb213-1"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb213-2"><a href="single-association-analysis.html#cb213-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">4</span><span class="op">:</span><span class="dv">7</span>) {</span>
-<span id="cb213-3"><a href="single-association-analysis.html#cb213-3"></a>    <span class="kw">plot</span>(haplo.score[[i<span class="dv">-3</span>]])</span>
-<span id="cb213-4"><a href="single-association-analysis.html#cb213-4"></a>    <span class="kw">title</span>(<span class="kw">paste</span>(<span class="st">&quot;Sliding Window=&quot;</span>, i, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>))</span>
-<span id="cb213-5"><a href="single-association-analysis.html#cb213-5"></a> }</span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="single-association-analysis.html#cb214-1"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb214-2"><a href="single-association-analysis.html#cb214-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">4</span><span class="op">:</span><span class="dv">7</span>) {</span>
+<span id="cb214-3"><a href="single-association-analysis.html#cb214-3"></a>    <span class="kw">plot</span>(haplo.score[[i<span class="dv">-3</span>]])</span>
+<span id="cb214-4"><a href="single-association-analysis.html#cb214-4"></a>    <span class="kw">title</span>(<span class="kw">paste</span>(<span class="st">&quot;Sliding Window=&quot;</span>, i, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>))</span>
+<span id="cb214-5"><a href="single-association-analysis.html#cb214-5"></a> }</span></code></pre></div>
 <div class="figure"><span id="fig:plotSliding"></span>
 <img src="fig/plotSliding-1.png" alt="Sliding window approach. Results obtained of varying haplotype size from 4 up to 7 of  6th to the 15th SNP from asthma data example" width="672" />
 <p class="caption">
@@ -881,14 +881,14 @@ Figure 3.6: Sliding window approach. Results obtained of varying haplotype size 
 </p>
 </div>
 <p>We observe that the highest -log10(P-value) is obtained for a haplotype of 4 SNP length starting at the 4th SNP of the selected SNPs. After deciding the best combination of SNPs, the haplotype association with asthma can be estimated by</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="single-association-analysis.html#cb214-1"></a>snpsH3 &lt;-<span class="st"> </span>snpsH2[<span class="dv">4</span><span class="op">:</span><span class="dv">7</span>]</span>
-<span id="cb214-2"><a href="single-association-analysis.html#cb214-2"></a>genoH3 &lt;-<span class="st"> </span><span class="kw">make.geno</span>(asthma.s, snpsH3)</span>
-<span id="cb214-3"><a href="single-association-analysis.html#cb214-3"></a>mod &lt;-<span class="st"> </span><span class="kw">haplo.glm</span>(trait<span class="op">~</span>genoH3,           </span>
-<span id="cb214-4"><a href="single-association-analysis.html#cb214-4"></a>                 <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, </span>
-<span id="cb214-5"><a href="single-association-analysis.html#cb214-5"></a>                 <span class="dt">locus.label=</span>snpsH3,</span>
-<span id="cb214-6"><a href="single-association-analysis.html#cb214-6"></a>                 <span class="dt">allele.lev=</span><span class="kw">attributes</span>(genoH3)<span class="op">$</span>unique.alleles,</span>
-<span id="cb214-7"><a href="single-association-analysis.html#cb214-7"></a>                 <span class="dt">control =</span> <span class="kw">haplo.glm.control</span>(<span class="dt">haplo.freq.min=</span><span class="fl">0.05</span>))      </span>
-<span id="cb214-8"><a href="single-association-analysis.html#cb214-8"></a><span class="kw">intervals</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="single-association-analysis.html#cb215-1"></a>snpsH3 &lt;-<span class="st"> </span>snpsH2[<span class="dv">4</span><span class="op">:</span><span class="dv">7</span>]</span>
+<span id="cb215-2"><a href="single-association-analysis.html#cb215-2"></a>genoH3 &lt;-<span class="st"> </span><span class="kw">make.geno</span>(asthma.s, snpsH3)</span>
+<span id="cb215-3"><a href="single-association-analysis.html#cb215-3"></a>mod &lt;-<span class="st"> </span><span class="kw">haplo.glm</span>(trait<span class="op">~</span>genoH3,           </span>
+<span id="cb215-4"><a href="single-association-analysis.html#cb215-4"></a>                 <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, </span>
+<span id="cb215-5"><a href="single-association-analysis.html#cb215-5"></a>                 <span class="dt">locus.label=</span>snpsH3,</span>
+<span id="cb215-6"><a href="single-association-analysis.html#cb215-6"></a>                 <span class="dt">allele.lev=</span><span class="kw">attributes</span>(genoH3)<span class="op">$</span>unique.alleles,</span>
+<span id="cb215-7"><a href="single-association-analysis.html#cb215-7"></a>                 <span class="dt">control =</span> <span class="kw">haplo.glm.control</span>(<span class="dt">haplo.freq.min=</span><span class="fl">0.05</span>))      </span>
+<span id="cb215-8"><a href="single-association-analysis.html#cb215-8"></a><span class="kw">intervals</span>(mod)</span></code></pre></div>
 <pre><code>               freq   or   95%   C.I.   P-val 
         TCCC 0.3521   1.00 Reference haplotype 
         GCCC 0.2963   1.01 (   0.82 -   1.24 )  0.9495 
@@ -896,20 +896,20 @@ Figure 3.6: Sliding window approach. Results obtained of varying haplotype size 
         TTTA 0.1830   1.12 (   0.87 -   1.43 )  0.3796 
  genoH3.rare 0.0502   0.78 (   0.50 -   1.22 )  0.2750 </code></pre>
 <p>Here, we observe that individuals carrying the haplotype GCAC have a 53% increased risk of asthma relative to those having the reference haplotype TCGT (OR=1.53, p=0.0021). The haplotype GTCA is also significantly associated with the disease (p=0.0379). A likelihood ratio test for haplotype status can be extracted from the results of the <em>haplo.glme</em> function:</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="single-association-analysis.html#cb216-1"></a>lrt &lt;-<span class="st"> </span>mod<span class="op">$</span>lrt</span>
-<span id="cb216-2"><a href="single-association-analysis.html#cb216-2"></a><span class="kw">pchisq</span>(lrt<span class="op">$</span>lrt, lrt<span class="op">$</span>df, <span class="dt">lower=</span><span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="single-association-analysis.html#cb217-1"></a>lrt &lt;-<span class="st"> </span>mod<span class="op">$</span>lrt</span>
+<span id="cb217-2"><a href="single-association-analysis.html#cb217-2"></a><span class="kw">pchisq</span>(lrt<span class="op">$</span>lrt, lrt<span class="op">$</span>df, <span class="dt">lower=</span><span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>[1] 0.5044641</code></pre>
 <p>We can also test the association between asthma and the haplotype adjusted for smoking status</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="single-association-analysis.html#cb218-1"></a>smoke &lt;-<span class="st"> </span>asthma.s<span class="op">$</span>smoke</span>
-<span id="cb218-2"><a href="single-association-analysis.html#cb218-2"></a>mod.adj.ref &lt;-<span class="st"> </span><span class="kw">glm</span>(trait <span class="op">~</span><span class="st"> </span>smoke, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb218-3"><a href="single-association-analysis.html#cb218-3"></a>mod.adj &lt;-<span class="st"> </span><span class="kw">haplo.glm</span>(trait <span class="op">~</span><span class="st"> </span>genoH3 <span class="op">+</span><span class="st"> </span>smoke ,           </span>
-<span id="cb218-4"><a href="single-association-analysis.html#cb218-4"></a>                 <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, </span>
-<span id="cb218-5"><a href="single-association-analysis.html#cb218-5"></a>                 <span class="dt">locus.label=</span>snpsH3,</span>
-<span id="cb218-6"><a href="single-association-analysis.html#cb218-6"></a>                 <span class="dt">allele.lev=</span><span class="kw">attributes</span>(genoH3)<span class="op">$</span>unique.alleles,</span>
-<span id="cb218-7"><a href="single-association-analysis.html#cb218-7"></a>                 <span class="dt">control =</span> <span class="kw">haplo.glm.control</span>(<span class="dt">haplo.freq.min=</span><span class="fl">0.05</span>))</span>
-<span id="cb218-8"><a href="single-association-analysis.html#cb218-8"></a></span>
-<span id="cb218-9"><a href="single-association-analysis.html#cb218-9"></a>lrt.adj &lt;-<span class="st"> </span>mod.adj.ref<span class="op">$</span>deviance <span class="op">-</span><span class="st"> </span>mod.adj<span class="op">$</span>deviance</span>
-<span id="cb218-10"><a href="single-association-analysis.html#cb218-10"></a><span class="kw">pchisq</span>(lrt.adj, mod.adj<span class="op">$</span>lrt<span class="op">$</span>df, <span class="dt">lower=</span><span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="single-association-analysis.html#cb219-1"></a>smoke &lt;-<span class="st"> </span>asthma.s<span class="op">$</span>smoke</span>
+<span id="cb219-2"><a href="single-association-analysis.html#cb219-2"></a>mod.adj.ref &lt;-<span class="st"> </span><span class="kw">glm</span>(trait <span class="op">~</span><span class="st"> </span>smoke, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb219-3"><a href="single-association-analysis.html#cb219-3"></a>mod.adj &lt;-<span class="st"> </span><span class="kw">haplo.glm</span>(trait <span class="op">~</span><span class="st"> </span>genoH3 <span class="op">+</span><span class="st"> </span>smoke ,           </span>
+<span id="cb219-4"><a href="single-association-analysis.html#cb219-4"></a>                 <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, </span>
+<span id="cb219-5"><a href="single-association-analysis.html#cb219-5"></a>                 <span class="dt">locus.label=</span>snpsH3,</span>
+<span id="cb219-6"><a href="single-association-analysis.html#cb219-6"></a>                 <span class="dt">allele.lev=</span><span class="kw">attributes</span>(genoH3)<span class="op">$</span>unique.alleles,</span>
+<span id="cb219-7"><a href="single-association-analysis.html#cb219-7"></a>                 <span class="dt">control =</span> <span class="kw">haplo.glm.control</span>(<span class="dt">haplo.freq.min=</span><span class="fl">0.05</span>))</span>
+<span id="cb219-8"><a href="single-association-analysis.html#cb219-8"></a></span>
+<span id="cb219-9"><a href="single-association-analysis.html#cb219-9"></a>lrt.adj &lt;-<span class="st"> </span>mod.adj.ref<span class="op">$</span>deviance <span class="op">-</span><span class="st"> </span>mod.adj<span class="op">$</span>deviance</span>
+<span id="cb219-10"><a href="single-association-analysis.html#cb219-10"></a><span class="kw">pchisq</span>(lrt.adj, mod.adj<span class="op">$</span>lrt<span class="op">$</span>df, <span class="dt">lower=</span><span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>[1] 0.6497138</code></pre>
 </div>
 </div>
@@ -917,11 +917,11 @@ Figure 3.6: Sliding window approach. Results obtained of varying haplotype size 
 <h2><span class="header-section-number">3.6</span> Genetic score</h2>
 <p>A genetic score, also called a polygenic risk score or genetic risk score, is given by the number of risk alleles that an individual carries <span class="citation">(Dudbridge <a href="#ref-dudbridge2013power" role="doc-biblioref">2013</a>)</span>. Genetic scores aim to assess the collective prediction of the phenotype risk associated with multiple SNPs. The SNPs to be included in a genetic score can be selected from different sources. They may be selected from candidate genes, from reported SNPs associated with the trait, or from significant SNPs from a given analysis.</p>
 <p>We illustrate how to perform a genetic risk score analysis with the asthma study, using the package <code>PredictABEL</code>. We start by performing the single SNP analysis, as previously discussed</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="single-association-analysis.html#cb220-1"></a>ans &lt;-<span class="st"> </span><span class="kw">WGassociation</span>(casecontrol, asthma.s, <span class="dt">model=</span><span class="st">&quot;log-add&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="single-association-analysis.html#cb221-1"></a>ans &lt;-<span class="st"> </span><span class="kw">WGassociation</span>(casecontrol, asthma.s, <span class="dt">model=</span><span class="st">&quot;log-add&quot;</span>)</span></code></pre></div>
 <p>We choose the SNPs that show an association at 0.1 level to be included in a multivariate model,</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="single-association-analysis.html#cb221-1"></a>sel &lt;-<span class="st"> </span><span class="kw">labels</span>(asthma.s)[<span class="kw">additive</span>(ans)<span class="op">&lt;</span><span class="fl">0.1</span>]</span>
-<span id="cb221-2"><a href="single-association-analysis.html#cb221-2"></a>asthma.sel &lt;-<span class="st"> </span>asthma.s[,sel]</span>
-<span id="cb221-3"><a href="single-association-analysis.html#cb221-3"></a><span class="kw">head</span>(asthma.sel)</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="single-association-analysis.html#cb222-1"></a>sel &lt;-<span class="st"> </span><span class="kw">labels</span>(asthma.s)[<span class="kw">additive</span>(ans)<span class="op">&lt;</span><span class="fl">0.1</span>]</span>
+<span id="cb222-2"><a href="single-association-analysis.html#cb222-2"></a>asthma.sel &lt;-<span class="st"> </span>asthma.s[,sel]</span>
+<span id="cb222-3"><a href="single-association-analysis.html#cb222-3"></a><span class="kw">head</span>(asthma.sel)</span></code></pre></div>
 <pre><code>  rs1422993 rs184448 rs324957 rs324960 rs324981 rs727162 rs6084432
 1       G/G      T/T      G/G      C/T      A/T      G/G       G/G
 2       G/T      G/G      A/A      C/C      A/A      G/G       G/G
@@ -930,9 +930,9 @@ Figure 3.6: Sliding window approach. Results obtained of varying haplotype size 
 5       G/T      T/T      G/G      C/C      A/T      G/G       G/G
 6       G/G      T/T      G/G      C/T      A/T      G/C       G/G</code></pre>
 <p>We join the SNPs and case/control variable in a single data.frame. Using the <code>additive()</code>, we recode the SNP genotypes as 0, 1 or 2 where the homozygous for the alternative allele is 2. As such, the genetic score is the sum of alternative alleles over selected SNPs</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="single-association-analysis.html#cb223-1"></a>asthma.sel &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">lapply</span>(asthma.sel, additive))</span>
-<span id="cb223-2"><a href="single-association-analysis.html#cb223-2"></a>dd.end &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">casecontrol=</span>asthma.s<span class="op">$</span>casecontrol, asthma.sel)</span>
-<span id="cb223-3"><a href="single-association-analysis.html#cb223-3"></a><span class="kw">head</span>(dd.end)</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="single-association-analysis.html#cb224-1"></a>asthma.sel &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">lapply</span>(asthma.sel, additive))</span>
+<span id="cb224-2"><a href="single-association-analysis.html#cb224-2"></a>dd.end &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">casecontrol=</span>asthma.s<span class="op">$</span>casecontrol, asthma.sel)</span>
+<span id="cb224-3"><a href="single-association-analysis.html#cb224-3"></a><span class="kw">head</span>(dd.end)</span></code></pre></div>
 <pre><code>  casecontrol rs1422993 rs184448 rs324957 rs324960 rs324981 rs727162
 1           0         0        0        0        1        1        0
 2           0         1        2        2        0        0        0
@@ -948,13 +948,13 @@ Figure 3.6: Sliding window approach. Results obtained of varying haplotype size 
 5         0
 6         0</code></pre>
 <p>A multivariate regression model is fitted with all the SNPs to further select those that best predict the asthma status. An automatic variable selection, based on Akaike information criteria (AIC), can be applied to the model using the <code>stepAIC()</code> function from library <code>MASS</code>. Note that the function does not support missing values and requires having complete cases (i.e. no missing values on genotypes).</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="single-association-analysis.html#cb225-1"></a><span class="kw">library</span>(MASS)</span>
-<span id="cb225-2"><a href="single-association-analysis.html#cb225-2"></a>dd.end.complete &lt;-<span class="st"> </span>dd.end[<span class="kw">complete.cases</span>(dd.end),]</span>
-<span id="cb225-3"><a href="single-association-analysis.html#cb225-3"></a>mod &lt;-<span class="st"> </span><span class="kw">stepAIC</span>(<span class="kw">glm</span>(casecontrol <span class="op">~</span><span class="st"> </span>., dd.end.complete,</span>
-<span id="cb225-4"><a href="single-association-analysis.html#cb225-4"></a>                   <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>),</span>
-<span id="cb225-5"><a href="single-association-analysis.html#cb225-5"></a>               <span class="dt">method=</span><span class="st">&quot;forward&quot;</span>, <span class="dt">trace=</span><span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="single-association-analysis.html#cb226-1"></a><span class="kw">library</span>(MASS)</span>
+<span id="cb226-2"><a href="single-association-analysis.html#cb226-2"></a>dd.end.complete &lt;-<span class="st"> </span>dd.end[<span class="kw">complete.cases</span>(dd.end),]</span>
+<span id="cb226-3"><a href="single-association-analysis.html#cb226-3"></a>mod &lt;-<span class="st"> </span><span class="kw">stepAIC</span>(<span class="kw">glm</span>(casecontrol <span class="op">~</span><span class="st"> </span>., dd.end.complete,</span>
+<span id="cb226-4"><a href="single-association-analysis.html#cb226-4"></a>                   <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>),</span>
+<span id="cb226-5"><a href="single-association-analysis.html#cb226-5"></a>               <span class="dt">method=</span><span class="st">&quot;forward&quot;</span>, <span class="dt">trace=</span><span class="dv">0</span>)</span></code></pre></div>
 <p>The selected SNPs, from the multivariate model, in <code>snps.score</code> are then used to create the genetic score. First, a summary shows the SNPs’ associations of the selected SNPs with the trait</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="single-association-analysis.html#cb226-1"></a><span class="kw">summary</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="single-association-analysis.html#cb227-1"></a><span class="kw">summary</span>(mod)</span></code></pre></div>
 <pre><code>
 Call:
 glm(formula = casecontrol ~ rs1422993 + rs324957 + rs727162 + 
@@ -982,25 +982,25 @@ AIC: 1579.2
 
 Number of Fisher Scoring iterations: 4</code></pre>
 <p>This is the code to retrieve the selected SNPs to create the genetic score:</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="single-association-analysis.html#cb228-1"></a>snps.score &lt;-<span class="st"> </span><span class="kw">names</span>(<span class="kw">coef</span>(mod))[<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb228-2"><a href="single-association-analysis.html#cb228-2"></a>snps.score</span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="single-association-analysis.html#cb229-1"></a>snps.score &lt;-<span class="st"> </span><span class="kw">names</span>(<span class="kw">coef</span>(mod))[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb229-2"><a href="single-association-analysis.html#cb229-2"></a>snps.score</span></code></pre></div>
 <pre><code>[1] &quot;rs1422993&quot; &quot;rs324957&quot;  &quot;rs727162&quot;  &quot;rs6084432&quot;</code></pre>
 <p>The function <code>riskScore()</code> of the <code>PredictABEL</code> package creates the risk score</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="single-association-analysis.html#cb230-1"></a>pos &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">names</span>(dd.end.complete)<span class="op">%in%</span>snps.score)</span>
-<span id="cb230-2"><a href="single-association-analysis.html#cb230-2"></a><span class="kw">names</span>(dd.end.complete)</span></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="single-association-analysis.html#cb231-1"></a>pos &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">names</span>(dd.end.complete)<span class="op">%in%</span>snps.score)</span>
+<span id="cb231-2"><a href="single-association-analysis.html#cb231-2"></a><span class="kw">names</span>(dd.end.complete)</span></code></pre></div>
 <pre><code>[1] &quot;casecontrol&quot; &quot;rs1422993&quot;   &quot;rs184448&quot;    &quot;rs324957&quot;   
 [5] &quot;rs324960&quot;    &quot;rs324981&quot;    &quot;rs727162&quot;    &quot;rs6084432&quot;  </code></pre>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="single-association-analysis.html#cb232-1"></a>pos</span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="single-association-analysis.html#cb233-1"></a>pos</span></code></pre></div>
 <pre><code>[1] 2 4 7 8</code></pre>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="single-association-analysis.html#cb234-1"></a>score &lt;-<span class="st"> </span><span class="kw">riskScore</span>(mod, <span class="dt">data=</span>dd.end.complete, </span>
-<span id="cb234-2"><a href="single-association-analysis.html#cb234-2"></a>                      <span class="dt">cGenPreds=</span>pos,</span>
-<span id="cb234-3"><a href="single-association-analysis.html#cb234-3"></a>                      <span class="dt">Type=</span><span class="st">&quot;unweighted&quot;</span>)</span>
-<span id="cb234-4"><a href="single-association-analysis.html#cb234-4"></a><span class="kw">table</span>(score)</span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="single-association-analysis.html#cb235-1"></a>score &lt;-<span class="st"> </span><span class="kw">riskScore</span>(mod, <span class="dt">data=</span>dd.end.complete, </span>
+<span id="cb235-2"><a href="single-association-analysis.html#cb235-2"></a>                      <span class="dt">cGenPreds=</span>pos,</span>
+<span id="cb235-3"><a href="single-association-analysis.html#cb235-3"></a>                      <span class="dt">Type=</span><span class="st">&quot;unweighted&quot;</span>)</span>
+<span id="cb235-4"><a href="single-association-analysis.html#cb235-4"></a><span class="kw">table</span>(score)</span></code></pre></div>
 <pre><code>score
   0   1   2   3   4   5   6 
 101 389 491 347 139  44   7 </code></pre>
 <p>The distribution of the score across individuals can be seen in Figure <a href="single-association-analysis.html#fig:histGS">3.7</a></p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="single-association-analysis.html#cb236-1"></a><span class="kw">hist</span>(score, <span class="dt">col=</span><span class="st">&quot;gray90&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="single-association-analysis.html#cb237-1"></a><span class="kw">hist</span>(score, <span class="dt">col=</span><span class="st">&quot;gray90&quot;</span>)</span></code></pre></div>
 <div class="figure"><span id="fig:histGS"></span>
 <img src="fig/histGS-1.png" alt="Distribution of the genetic score used to predict case/control status in the asthma example." width="672" />
 <p class="caption">
@@ -1008,9 +1008,9 @@ Figure 3.7: Distribution of the genetic score used to predict case/control statu
 </p>
 </div>
 <p>Once the genetic score is created, we test its association with asthma status using a general linear model</p>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="single-association-analysis.html#cb237-1"></a>mod.lin &lt;-<span class="st"> </span><span class="kw">glm</span>(casecontrol<span class="op">~</span>score, dd.end.complete,</span>
-<span id="cb237-2"><a href="single-association-analysis.html#cb237-2"></a>               <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb237-3"><a href="single-association-analysis.html#cb237-3"></a>mod.lin</span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="single-association-analysis.html#cb238-1"></a>mod.lin &lt;-<span class="st"> </span><span class="kw">glm</span>(casecontrol<span class="op">~</span>score, dd.end.complete,</span>
+<span id="cb238-2"><a href="single-association-analysis.html#cb238-2"></a>               <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb238-3"><a href="single-association-analysis.html#cb238-3"></a>mod.lin</span></code></pre></div>
 <pre><code>
 Call:  glm(formula = casecontrol ~ score, family = &quot;binomial&quot;, data = dd.end.complete)
 
@@ -1021,13 +1021,13 @@ Coefficients:
 Degrees of Freedom: 1517 Total (i.e. Null);  1516 Residual
 Null Deviance:	    1587 
 Residual Deviance: 1570 	AIC: 1574</code></pre>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="single-association-analysis.html#cb239-1"></a><span class="kw">exp</span>(<span class="kw">coef</span>(mod.lin)[<span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="single-association-analysis.html#cb240-1"></a><span class="kw">exp</span>(<span class="kw">coef</span>(mod.lin)[<span class="dv">2</span>])</span></code></pre></div>
 <pre><code>   score 
 1.240039 </code></pre>
 <p>We observe that the risk of asthma increases 24% per each risk allele. The predictive power of the genetic score can be assessed by computing the area under the ROC curve (AUC).</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="single-association-analysis.html#cb241-1"></a>predrisk &lt;-<span class="st"> </span><span class="kw">predRisk</span>(mod.lin, dd.end.complete)</span>
-<span id="cb241-2"><a href="single-association-analysis.html#cb241-2"></a><span class="kw">plotROC</span>(<span class="dt">data=</span>dd.end.complete, <span class="dt">cOutcome=</span><span class="dv">1</span>,</span>
-<span id="cb241-3"><a href="single-association-analysis.html#cb241-3"></a>        <span class="dt">predrisk =</span> predrisk)</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="single-association-analysis.html#cb242-1"></a>predrisk &lt;-<span class="st"> </span><span class="kw">predRisk</span>(mod.lin, dd.end.complete)</span>
+<span id="cb242-2"><a href="single-association-analysis.html#cb242-2"></a><span class="kw">plotROC</span>(<span class="dt">data=</span>dd.end.complete, <span class="dt">cOutcome=</span><span class="dv">1</span>,</span>
+<span id="cb242-3"><a href="single-association-analysis.html#cb242-3"></a>        <span class="dt">predrisk =</span> predrisk)</span></code></pre></div>
 <div class="figure"><span id="fig:rocGS"></span>
 <img src="fig/rocGS-1.png" alt="ROC curve of the genetic score used to predict case/control status in the asthma example." width="672" />
 <p class="caption">

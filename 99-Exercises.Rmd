@@ -115,12 +115,12 @@ Answer the following questions:
      
      
      
-## Microarray data analysis   
+## Microarray data analysis {#Microarray-exerc}  
 
 **EXERCISE 9**: To be supplied
 
 
-## RNAseq data analysis
+## RNAseq data analysis {#RNAseq-exerc}
 
 **EXERICSE 10**: Download the data SRP029880 from recount2: http://duffel.rail.bio/recount/v2/SRP029880/rse_gene.Rdata. This file contains a `RangedSummarizedExperiment` object. Do the following tasks:
 
@@ -134,6 +134,7 @@ Answer the following questions:
 5. Create a volcano plot
 6. Examine the counts of reads for a single gene (most associated with CASES). Hint: use `DESeq2::plotCounts ()`
 7. Do the same plot for the top-10 genes (this tries to mimic your supplementary material in your paper!)
-8. Re-do the differential expression analysis using `edgeR` (`voom`) package. Find out how much `DESeq2` and `edgeR` agree on the list of differentally expressed genes. 
+8. Investigate whether there the analyses must be adjusted for other covariates.
+9. Re-do the differential expression analysis using `edgeR` (`voom`) package. Find out how much `DESeq2` and `edgeR` agree on the list of differentially expressed genes. 
      
 

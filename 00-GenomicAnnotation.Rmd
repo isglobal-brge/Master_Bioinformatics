@@ -173,12 +173,18 @@ genoCtrl
 
 ### `ExpressionSet`
 
-`ExpressionSet`was one of the first implementations of Bioconductor to manage *omic* experiments. Although its use is discouraged in Bioconductor's guidelines for the development of current and future packages, most publicly available data is available in this structure while future packages are still required to be able to upload and operate with it. The GEO repository contains thousands of transcriptomic experiments that are available in `ExpressionSet` format. Data available in [GEO repository](https://www.ncbi.nlm.nih.gov/geo/) can be donwloaded into R as an `ExpressionSet` using `GEOquery` package. Let us donwload the experiment with accession number GSE63061 from the GEO website
+`ExpressionSet`was one of the first implementations of Bioconductor to manage *omic* experiments. This figure illustrates how it is implemented
+
+```{r eSetfig, fig.cap='ExpressionSet scheme.', out.width='100%', fig.align='center', echo=FALSE}
+knitr::include_graphics('figures/eSet_vs_dataframe.png')
+```
+
+Although its use is discouraged in Bioconductor's guidelines for the development of current and future packages, most publicly available data is available in this structure while future packages are still required to be able to upload and operate with it. The GEO repository contains thousands of transcriptomic experiments that are available in `ExpressionSet` format. Data available in [GEO repository](https://www.ncbi.nlm.nih.gov/geo/) can be donwloaded into R as an `ExpressionSet` using `GEOquery` package. Let us donwload the experiment with accession number GSE63061 from the GEO website
 
 ```{r genoquerych3}
 library(GEOquery)
 gsm.expr <- getGEO("GSE63061", destdir = ".")[[1]]
-gsm.expr <- gsm.expr
+gsm.expr 
 ```
  
 `gsm.expr` is an object of class `ExpressionSet` that has three main slots. Transcriptomic data is stored in the `assayData` slot, phenotypes are in `phenoData` and probe annotation in `featuredData`. There are three other slots `protocolData`, `experimentData` and `annotation` that specify equipment-generated information about protocols, resulting publications and the platform on which the samples were assayed. Methods are implemented to extract the data from each slot of the object. For instance `exprs` extracts the transcriptomic data in a matrix where subjects are columns and probes are rows
