@@ -24,7 +24,7 @@
 <meta name="author" content="Juan R González" />
 
 
-<meta name="date" content="2021-01-21" />
+<meta name="date" content="2021-01-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -284,8 +284,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>EXERCISE 8</strong>: Researchers are interested in detecting new SNPs associated with BMI (body mass index). To do so, they performed a GWAS using DNA information about 425 individuals. Genotype information is available in plink format (files ‘coronary.bed’, ‘coronary.bim’, ‘coronary.fam’) while phenotypic information can be found in the file ‘coronary.txt’.</p>
 <pre><code> 1. Read genotypes using `snpStats` library
  2. Verify that both data sets are in the same order (NOTE: &#39;id&#39; variable in the file &#39;coronary.txt&#39; must be used since it corresponds to the unique patient number)
- 3. Perform some QC filtering of individuals
- 4. Remove those SNPs that do not pass QC  (HWE and low MAF)
+ 3. Remove those SNPs that do not pass QC
+ 4. Perform QC filtering of individuals
  5. Assess association between BMI&#39; and the SNPs  (NOTE: remember that you are analyzing a **quantitative trait**)
  6. Calculate &#39;lambda&#39; and create a Q-Q plot to assess population stratification
  7. Assess association between BMI&#39; and the SNPs adjusting for population stratification (variables &#39;ev3&#39; and &#39;ev4&#39; in the file &#39;coronary.txt&#39;) (NOTE: remember that you are analyzing a **quantitative trait**). Are there differences with crude analysis?
