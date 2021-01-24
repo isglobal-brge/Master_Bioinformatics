@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8 Gene expression-based enrichment analysis | Master in Bioinformatics and Omic Data Analysis</title>
+  <meta name="description" content="8 Gene expression-based enrichment analysis | Master in Bioinformatics and Omic Data Analysis" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8 Gene expression-based enrichment analysis | Master in Bioinformatics and Omic Data Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8 Gene expression-based enrichment analysis | Master in Bioinformatics and Omic Data Analysis" />
+  
+  
+  
+
+<meta name="author" content="Juan R González" />
+
+
+<meta name="date" content="2021-01-24" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="enrichment-analysis.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bioinformatics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="bioconductor.html"><a href="bioconductor.html"><i class="fa fa-check"></i><b>2</b> Bioconductor</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="bioconductor.html"><a href="bioconductor.html#bioconductors-overview"><i class="fa fa-check"></i><b>2.1</b> Bioconductor’s overview</a></li>
+<li class="chapter" data-level="2.2" data-path="bioconductor.html"><a href="bioconductor.html#bioconductor-infrastructures"><i class="fa fa-check"></i><b>2.2</b> Bioconductor infrastructures</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="bioconductor.html"><a href="bioconductor.html#snpmatrix"><i class="fa fa-check"></i><b>2.2.1</b> <code>snpMatrix</code></a></li>
+<li class="chapter" data-level="2.2.2" data-path="bioconductor.html"><a href="bioconductor.html#expressionset"><i class="fa fa-check"></i><b>2.2.2</b> <code>ExpressionSet</code></a></li>
+<li class="chapter" data-level="2.2.3" data-path="bioconductor.html"><a href="bioconductor.html#summarizedexperiment"><i class="fa fa-check"></i><b>2.2.3</b> <code>SummarizedExperiment</code></a></li>
+<li class="chapter" data-level="2.2.4" data-path="bioconductor.html"><a href="bioconductor.html#genomic-ranges-granges"><i class="fa fa-check"></i><b>2.2.4</b> <code>Genomic Ranges (GRanges)</code></a></li>
+<li class="chapter" data-level="2.2.5" data-path="bioconductor.html"><a href="bioconductor.html#rangedsummarizedexperiment"><i class="fa fa-check"></i><b>2.2.5</b> <code>RangedSummarizedExperiment</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="bioconductor.html"><a href="bioconductor.html#annotation"><i class="fa fa-check"></i><b>2.3</b> Annotation</a></li>
+<li class="chapter" data-level="2.4" data-path="bioconductor.html"><a href="bioconductor.html#annotate-package"><i class="fa fa-check"></i><b>2.4</b> <code>annotate</code> package</a></li>
+<li class="chapter" data-level="2.5" data-path="bioconductor.html"><a href="bioconductor.html#biomart"><i class="fa fa-check"></i><b>2.5</b> BioMart</a></li>
+<li class="chapter" data-level="2.6" data-path="bioconductor.html"><a href="bioconductor.html#annotate-snps"><i class="fa fa-check"></i><b>2.6</b> Annotate SNPs</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="single-association-analysis.html"><a href="single-association-analysis.html"><i class="fa fa-check"></i><b>3</b> Single association analysis</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="single-association-analysis.html"><a href="single-association-analysis.html#descriptive-analysis"><i class="fa fa-check"></i><b>3.1</b> Descriptive analysis</a></li>
+<li class="chapter" data-level="3.2" data-path="single-association-analysis.html"><a href="single-association-analysis.html#hardy-weinberg-equilibrium"><i class="fa fa-check"></i><b>3.2</b> Hardy-Weinberg equilibrium</a></li>
+<li class="chapter" data-level="3.3" data-path="single-association-analysis.html"><a href="single-association-analysis.html#single-snp-association-analysis"><i class="fa fa-check"></i><b>3.3</b> Single SNP association analysis</a></li>
+<li class="chapter" data-level="3.4" data-path="single-association-analysis.html"><a href="single-association-analysis.html#gene-environment-and-gene-gene-interactions"><i class="fa fa-check"></i><b>3.4</b> Gene-environment and gene-gene interactions</a></li>
+<li class="chapter" data-level="3.5" data-path="single-association-analysis.html"><a href="single-association-analysis.html#haplotype-analysis"><i class="fa fa-check"></i><b>3.5</b> Haplotype analysis</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="single-association-analysis.html"><a href="single-association-analysis.html#haplotype-estimation"><i class="fa fa-check"></i><b>3.5.1</b> Haplotype estimation</a></li>
+<li class="chapter" data-level="3.5.2" data-path="single-association-analysis.html"><a href="single-association-analysis.html#haplotype-association"><i class="fa fa-check"></i><b>3.5.2</b> Haplotype association</a></li>
+<li class="chapter" data-level="3.5.3" data-path="single-association-analysis.html"><a href="single-association-analysis.html#sliding-window-approach"><i class="fa fa-check"></i><b>3.5.3</b> Sliding window approach</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="single-association-analysis.html"><a href="single-association-analysis.html#genetic-score"><i class="fa fa-check"></i><b>3.6</b> Genetic score</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="genome-wide-association-studies.html"><a href="genome-wide-association-studies.html"><i class="fa fa-check"></i><b>4</b> Genome-wide association studies</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="genome-wide-association-studies.html"><a href="genome-wide-association-studies.html#quality-control-of-snps"><i class="fa fa-check"></i><b>4.1</b> Quality control of SNPs</a></li>
+<li class="chapter" data-level="4.2" data-path="genome-wide-association-studies.html"><a href="genome-wide-association-studies.html#quality-control-of-individuals"><i class="fa fa-check"></i><b>4.2</b> Quality control of individuals</a></li>
+<li class="chapter" data-level="4.3" data-path="genome-wide-association-studies.html"><a href="genome-wide-association-studies.html#population-ancestry"><i class="fa fa-check"></i><b>4.3</b> Population ancestry</a></li>
+<li class="chapter" data-level="4.4" data-path="genome-wide-association-studies.html"><a href="genome-wide-association-studies.html#genome-wide-association-analysis"><i class="fa fa-check"></i><b>4.4</b> Genome-wide association analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="microarray-data-analysis.html"><a href="microarray-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Microarray data analysis</a></li>
+<li class="chapter" data-level="6" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html"><i class="fa fa-check"></i><b>6</b> RNAseq data analysis</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#within-sample-normalization-of-read-counts"><i class="fa fa-check"></i><b>6.2</b> Within sample normalization of read counts</a></li>
+<li class="chapter" data-level="6.3" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#exploratory-analysis-of-the-read-counts-table"><i class="fa fa-check"></i><b>6.3</b> Exploratory analysis of the read counts table</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#clustering"><i class="fa fa-check"></i><b>6.3.1</b> Clustering</a></li>
+<li class="chapter" data-level="6.3.2" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#pca"><i class="fa fa-check"></i><b>6.3.2</b> PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#differential-expression-analysis"><i class="fa fa-check"></i><b>6.4</b> Differential expression analysis</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#deseq2"><i class="fa fa-check"></i><b>6.4.1</b> DESeq2</a></li>
+<li class="chapter" data-level="6.4.2" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#voom"><i class="fa fa-check"></i><b>6.4.2</b> voom</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#accounting-for-additional-sources-of-variation"><i class="fa fa-check"></i><b>6.5</b> Accounting for additional sources of variation</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#accounting-for-covariates-using-deseq2"><i class="fa fa-check"></i><b>6.5.1</b> Accounting for covariates using <code>DESeq2</code></a></li>
+<li class="chapter" data-level="6.5.2" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#accounting-for-estimated-covariates-using-ruvseq"><i class="fa fa-check"></i><b>6.5.2</b> Accounting for estimated covariates using RUVSeq</a></li>
+<li class="chapter" data-level="6.5.3" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#removing-unwanted-variation-from-the-data"><i class="fa fa-check"></i><b>6.5.3</b> Removing unwanted variation from the data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="enrichment-analysis.html"><a href="enrichment-analysis.html"><i class="fa fa-check"></i><b>7</b> Enrichment Analysis</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="gene-expression-based-enrichment-analysis.html"><a href="gene-expression-based-enrichment-analysis.html"><i class="fa fa-check"></i><b>8</b> Gene expression-based enrichment analysis</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="gene-expression-based-enrichment-analysis.html"><a href="gene-expression-based-enrichment-analysis.html#a-primer-on-terminology-existing-methods-statistical-theory"><i class="fa fa-check"></i><b>8.1</b> A primer on terminology, existing methods &amp; statistical theory</a></li>
+<li class="chapter" data-level="8.2" data-path="gene-expression-based-enrichment-analysis.html"><a href="gene-expression-based-enrichment-analysis.html#basic-analysis-using-gostats"><i class="fa fa-check"></i><b>8.2</b> Basic analysis using <code>GOstats</code></a></li>
+<li class="chapter" data-level="8.3" data-path="gene-expression-based-enrichment-analysis.html"><a href="gene-expression-based-enrichment-analysis.html#analysis-using-clusterprofiler"><i class="fa fa-check"></i><b>8.3</b> Analysis using <code>clusterProfiler</code></a></li>
+<li class="chapter" data-level="8.4" data-path="gene-expression-based-enrichment-analysis.html"><a href="gene-expression-based-enrichment-analysis.html#visualization"><i class="fa fa-check"></i><b>8.4</b> Visualization</a></li>
+<li class="chapter" data-level="8.5" data-path="gene-expression-based-enrichment-analysis.html"><a href="gene-expression-based-enrichment-analysis.html#genomic-region-enrichment-analysis"><i class="fa fa-check"></i><b>8.5</b> Genomic region enrichment analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>9</b> References</a></li>
+<li class="chapter" data-level="10" data-path="exercises.html"><a href="exercises.html"><i class="fa fa-check"></i><b>10</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="exercises.html"><a href="exercises.html#BioCEx"><i class="fa fa-check"></i><b>10.1</b> Bioconductor</a></li>
+<li class="chapter" data-level="10.2" data-path="exercises.html"><a href="exercises.html#genetic-association-studies"><i class="fa fa-check"></i><b>10.2</b> Genetic association studies</a></li>
+<li class="chapter" data-level="10.3" data-path="exercises.html"><a href="exercises.html#gwas"><i class="fa fa-check"></i><b>10.3</b> GWAS</a></li>
+<li class="chapter" data-level="10.4" data-path="exercises.html"><a href="exercises.html#Microarray-exerc"><i class="fa fa-check"></i><b>10.4</b> Microarray data analysis</a></li>
+<li class="chapter" data-level="10.5" data-path="exercises.html"><a href="exercises.html#RNAseq-exerc"><i class="fa fa-check"></i><b>10.5</b> RNAseq data analysis</a></li>
+<li class="chapter" data-level="10.6" data-path="exercises.html"><a href="exercises.html#enrichment-exerc"><i class="fa fa-check"></i><b>10.6</b> Enrichment Analysis</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Master in Bioinformatics and Omic Data Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="gene-expression-based-enrichment-analysis" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Gene expression-based enrichment analysis</h1>
+<p>This methodology can be extended to the analysis of multiple gene sets available in different databases such as GO or KEGG among others. Next sections illustrate how to perform such analyses using different BioC packages.</p>
+<div id="a-primer-on-terminology-existing-methods-statistical-theory" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> A primer on terminology, existing methods &amp; statistical theory</h2>
+<p><strong>Gene sets, pathways &amp; regulatory networks</strong></p>
+<p>Gene sets are simple lists of usually functionally related genes without further
+specification of relationships between genes.</p>
+<p>Pathways can be interpreted as specific gene sets, typically representing a
+group of genes that work together in a biological process. Pathways are commonly divided in metabolic and signaling pathways.
+Metabolic pathways such as glycolysis represent biochemical substrate conversions
+by specific enzymes. Signaling pathways such as the MAPK signaling pathway describe
+signal transduction cascades from receptor proteins to transcription factors,
+resulting in activation or inhibition of specific target genes.</p>
+<p>Gene regulatory networks describe the interplay and effects of regulatory
+factors (such as transcription factors and microRNAs) on the expression of their
+target genes.</p>
+<p><strong>Resources</strong></p>
+<p><a href="http://www.geneontology.org">GO</a>, <a href="http://www.genome.jp/kegg">KEGG</a> and <a href="http://software.broadinstitute.org/gsea/msigdb/collections.jsp">MSigDB</a>
+annotations are most frequently used for the enrichment analysis of
+functional gene sets. Despite an increasing number of gene set and pathway
+databases, they are typically the first choice due to their long-standing
+curation and availability for a wide range of species.</p>
+<p><em>GO</em>: The Gene Ontology (GO) consists of three major sub-ontologies that classify
+gene products according to molecular function (MF), biological process (BP) and
+cellular component (CC). Each ontology consists of GO terms that define MFs, BPs
+or CCs to which specific genes are annotated. The terms are organized in a
+directed acyclic graph, where edges between the terms represent
+relationships of different types. They relate the terms according to a parent-child
+scheme, i.e. parent terms denote more general entities, whereas child terms represent
+more specific entities.</p>
+<p><em>KEGG</em>: The Kyoto Encyclopedia of Genes and Genomes (KEGG) is a collection of
+manually drawn pathway maps representing molecular interaction and reaction networks.
+These pathways cover a wide range of biochemical processes that can be divided in
+7 broad categories: metabolism, genetic and environmental information processing,
+cellular processes, organismal systems, human diseases, and drug development.
+Metabolism and drug development pathways differ from pathways of the other 5
+categories by illustrating reactions between chemical compounds.
+Pathways of the other 5 categories illustrate molecular interactions between
+genes and gene products.</p>
+<p><em>MSigDB</em>: Molecular Signatures Database (MSigDB) are divided into 8 major collections, and several sub-collections. These include:</p>
+<ul>
+<li><p><em>H: hallmark gene sets</em>: Hallmark gene sets summarize and represent specific well-defined biological states or processes and display coherent expression.</p></li>
+<li><p><em>C1: positional gene sets</em>: Gene sets corresponding to each human chromosome and each cytogenetic band that has at least one gene.</p></li>
+<li><p><em>C2: curated gene sets</em>: Gene sets curated from various sources such as online pathway databases, the biomedical literature, and knowledge of domain experts. It contains 5 sub-collections.</p></li>
+<li><p><em>C3 motif gene sets</em>: Gene sets representing potential targets of regulation by transcription factors or microRNAs. It has 2 sub-collections.</p></li>
+<li><p><em>C4 computational gene sets</em>: Computational gene sets defined by mining large collections of cancer-oriented microarray data. It has 4 sub-collections.</p></li>
+<li><p><em>C5 GO gene sets</em>: Gene sets that contain genes annotated by the same GO term. The C5 collection is divided into three sub-collections based on GO ontologies: BP, CC, and MF.</p></li>
+<li><p><em>C6 oncogenic signatures</em>: Gene sets that represent signatures of cellular pathways which are often dis-regulated in cancer.</p></li>
+<li><p><em>C7 inmunologic signatures</em>: Gene sets that represent cell states and perturbations within the immune system.</p></li>
+</ul>
+<p><strong>Statistical approaches</strong></p>
+<p>The two predominantly used enrichment methods are:</p>
+<ul>
+<li>Overrepresentation analysis (ORA), testing whether a gene set contains
+disproportional many genes of significant expression change, based on the
+procedure outlined in the first section.</li>
+<li>Gene set enrichment analysis (GSEA), testing whether genes of a gene set
+accumulate at the top or bottom of the full gene vector ordered by direction
+and magnitude of expression change
+<a href="https://doi.org/10.1073/pnas.0506580102">Subramanian et al., 2005</a>. However, the term <em>gene set enrichment analysis</em> nowadays subsumes a general
+strategy implemented by a wide range of methods
+<a href="https://doi.org/10.1093/nar/gkn923">Huang et al., 2009</a>.
+Those methods have in common the same goal, although approach and statistical
+model can vary substantially
+<a href="https://doi.org/10.1093/bioinformatics/btm051">Goeman and Buehlmann, 2007</a>,
+<a href="https://doi.org/10.1371/journal.pcbi.1002375">Khatri et al., 2012</a>.</li>
+</ul>
+<p>To better distinguish from the specific method, some authors use the term
+<em>gene set analysis</em> to denote the general strategy.
+However, there is also a specific method from
+<a href="https://doi.org/10.1214/07-AOAS101">Efron and Tibshirani, 2007</a> of this name.</p>
+<p>Goeman and Buehlmann further raise several critical issues concerning the 2x2 ORA:</p>
+<ul>
+<li>rather arbitrary classification of genes in DE / not DE</li>
+<li>based on gene sampling, although sampling of subjects is appropriate</li>
+<li>unrealistic independence assumption between genes, resulting in highly
+anti-conservative <em>p</em>-values</li>
+</ul>
+<p>With regard to these statistical concerns, GSEA is considered superior:</p>
+<ul>
+<li>takes all measured genes into account</li>
+<li>subject sampling via permutation of class labels<br />
+</li>
+<li>the incorporated permutation procedure implicitly accounts for correlations
+between genes</li>
+</ul>
+<p>However, the simplicity and general applicability of ORA is unmet by subsequent
+methods improving on these issues. For instance, GSEA requires the expression data
+as input, which is not available for gene lists derived from other experiment types.
+On the other hand, the involved sample permutation procedure has been proven
+inaccurate and time-consuming
+<a href="https://doi.org/10.1214/07-AOAS101">Efron and Tibshirani, 2007</a>,
+<a href="https://doi.org/10.2202/1544-6115.1585">Phipson and Smyth, 2010</a>,
+<a href="https://doi.org/10.1186/s12859-015-0571-7">Larson and Owen, 2015</a>.</p>
+<p><a href="https://doi.org/10.1371/journal.pcbi.1002375">Khatri et al., 2012</a> have taken a
+slightly different approach by classifying methods along the timeline of
+development into three generations:</p>
+<ol style="list-style-type: decimal">
+<li>Generation: ORA methods based on the 2x2 contingency table test,</li>
+<li>Generation: functional class scoring (FCS) methods such as GSEA, which compute
+gene set (= functional class) scores by summarizing per-gene DE statistics,</li>
+<li>Generation: topology-based methods, explicitly taking into account interactions
+between genes as defined in signaling pathways and gene regulatory networks
+(<a href="https://doi.org/10.1093/bioinformatics/btr228">Geistlinger et al., 2011</a> for an example).</li>
+</ol>
+<p>Although topology-based (also: network-based) methods appear to be most realistic,
+their straightforward application can be impaired by features that are not-detectable
+on the transcriptional level (such as protein-protein interactions) and insufficient network knowledge
+<a href="https://doi.org/10.1093/nar/gkt631">Geistlinger et al., 2013</a>,
+<a href="https://doi.org/10.1186/s12859-015-0751-5">Bayerlova et al., 2015</a>.</p>
+<p>Given the individual benefits and limitations of existing methods,
+cautious interpretation of results is required to derive valid conclusions.
+Whereas no single method is best suited for all application scenarios, applying multiple methods can be beneficial.
+This has been shown to filter out spurious hits of individual methods, thereby reducing the outcome to gene sets accumulating evidence from different methods
+<a href="https://doi.org/10.1186/s12859-016-0884-1">Geistlinger et al., 2016</a>,
+<a href="https://doi.org/10.1093/bioinformatics/btw623">Alhamdoosh et al., 2017</a>.</p>
+</div>
+<div id="basic-analysis-using-gostats" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Basic analysis using <code>GOstats</code></h2>
+<p>Let us illustrate how to perform ORA (enrichment analysis) using gene expression data. First, we need to perform DE analysis. Our interest is to compare gene expression between cell lines that have been treated with dexamethasone or not.</p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="gene-expression-based-enrichment-analysis.html#cb399-1"></a><span class="kw">library</span>(airway)</span>
+<span id="cb399-2"><a href="gene-expression-based-enrichment-analysis.html#cb399-2"></a><span class="kw">data</span>(airway)</span>
+<span id="cb399-3"><a href="gene-expression-based-enrichment-analysis.html#cb399-3"></a>airway</span></code></pre></div>
+<pre><code>class: RangedSummarizedExperiment 
+dim: 64102 8 
+metadata(1): &#39;&#39;
+assays(1): counts
+rownames(64102): ENSG00000000003 ENSG00000000005 ... LRG_98 LRG_99
+rowData names(0):
+colnames(8): SRR1039508 SRR1039509 ... SRR1039520 SRR1039521
+colData names(9): SampleName cell ... Sample BioSample</code></pre>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="gene-expression-based-enrichment-analysis.html#cb401-1"></a><span class="kw">table</span>(airway<span class="op">$</span>dex)</span></code></pre></div>
+<pre><code>
+  trt untrt 
+    4     4 </code></pre>
+<p>Then, let us analyzed the RNA-seq count data using <code>DESeq2</code> that uses generalized linear models (negative binomial) (<code>voom</code>, <code>edgeR</code> or any other method could be used instead). <strong>NOTES:</strong> 1) we avoid normalization step which is normally required (<code>DESeq2</code> incorporates this step in its pipeline); 2) we also avoid to investigate whether unwanted variability should be removed; 3) Our aim is to get a list of DE genes that may have ‘some sense’</p>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="gene-expression-based-enrichment-analysis.html#cb403-1"></a><span class="kw">library</span>(DESeq2)</span>
+<span id="cb403-2"><a href="gene-expression-based-enrichment-analysis.html#cb403-2"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeqDataSetFromMatrix</span>(<span class="dt">countData =</span> <span class="kw">assay</span>(airway, <span class="st">&quot;counts&quot;</span>), </span>
+<span id="cb403-3"><a href="gene-expression-based-enrichment-analysis.html#cb403-3"></a>                              <span class="dt">colData =</span> <span class="kw">colData</span>(airway), </span>
+<span id="cb403-4"><a href="gene-expression-based-enrichment-analysis.html#cb403-4"></a>                              <span class="dt">design =</span> <span class="kw">as.formula</span>( <span class="op">~</span><span class="st"> </span>dex))</span>
+<span id="cb403-5"><a href="gene-expression-based-enrichment-analysis.html#cb403-5"></a>dds &lt;-<span class="st"> </span>dds[ <span class="kw">rowSums</span>(<span class="kw">counts</span>(dds)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>, ]</span>
+<span id="cb403-6"><a href="gene-expression-based-enrichment-analysis.html#cb403-6"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds)</span>
+<span id="cb403-7"><a href="gene-expression-based-enrichment-analysis.html#cb403-7"></a></span>
+<span id="cb403-8"><a href="gene-expression-based-enrichment-analysis.html#cb403-8"></a>res &lt;-<span class="st"> </span><span class="kw">results</span>(dds, <span class="dt">contrast =</span> <span class="kw">c</span>(<span class="st">&quot;dex&quot;</span>, <span class="st">&#39;trt&#39;</span>, <span class="st">&#39;untrt&#39;</span>))</span>
+<span id="cb403-9"><a href="gene-expression-based-enrichment-analysis.html#cb403-9"></a>res &lt;-<span class="st"> </span>res[<span class="kw">order</span>(res<span class="op">$</span>pvalue), ]</span>
+<span id="cb403-10"><a href="gene-expression-based-enrichment-analysis.html#cb403-10"></a>res</span></code></pre></div>
+<pre><code>log2 fold change (MLE): dex trt vs untrt 
+Wald test p-value: dex trt vs untrt 
+DataFrame with 24345 rows and 6 columns
+                 baseMean log2FoldChange     lfcSE       stat       pvalue         padj
+                &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt;    &lt;numeric&gt;    &lt;numeric&gt;
+ENSG00000152583   997.440        4.60253 0.2117509    21.7356 9.46071e-105 1.71787e-100
+ENSG00000148175 11193.719        1.45147 0.0852982    17.0164  6.20890e-65  5.63706e-61
+ENSG00000179094   776.597        3.18386 0.2015137    15.7997  3.12585e-56  1.89197e-52
+ENSG00000134686  2737.982        1.38715 0.0920523    15.0691  2.58489e-51  1.17341e-47
+ENSG00000125148  3656.253        2.20344 0.1475941    14.9290  2.13337e-50  7.74754e-47
+...                   ...            ...       ...        ...          ...          ...
+ENSG00000258486  330.4721     -0.1421492  0.943248 -0.1507019           NA           NA
+ENSG00000260910   26.1850      1.6795123  0.821286  2.0449778           NA           NA
+ENSG00000261239   10.2232     -0.2123196  2.486879 -0.0853759           NA           NA
+ENSG00000262902  439.5753      0.2233259  1.970163  0.1133540           NA           NA
+ENSG00000265735  143.3031     -0.0906931  1.001134 -0.0905904           NA           NA</code></pre>
+<p>We call DE genes with a minimum 1.2-fold change of expression at
+a maximum FDR of 1%:</p>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="gene-expression-based-enrichment-analysis.html#cb405-1"></a>mask &lt;-<span class="st"> </span>res<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(res<span class="op">$</span>padj) <span class="op">&amp;</span></span>
+<span id="cb405-2"><a href="gene-expression-based-enrichment-analysis.html#cb405-2"></a><span class="st">        </span><span class="kw">abs</span>(res<span class="op">$</span>log2FoldChange) <span class="op">&gt;</span><span class="st"> </span><span class="kw">log2</span>(<span class="dv">2</span>)</span>
+<span id="cb405-3"><a href="gene-expression-based-enrichment-analysis.html#cb405-3"></a>deGenes &lt;-<span class="st"> </span><span class="kw">rownames</span>(res[mask, ])</span>
+<span id="cb405-4"><a href="gene-expression-based-enrichment-analysis.html#cb405-4"></a><span class="kw">head</span>(deGenes)</span></code></pre></div>
+<pre><code>[1] &quot;ENSG00000152583&quot; &quot;ENSG00000148175&quot; &quot;ENSG00000179094&quot; &quot;ENSG00000134686&quot; &quot;ENSG00000125148&quot; &quot;ENSG00000120129&quot;</code></pre>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="gene-expression-based-enrichment-analysis.html#cb407-1"></a><span class="kw">length</span>(deGenes)</span></code></pre></div>
+<pre><code>[1] 676</code></pre>
+<p>The gene universe is obtained by (number of calculated tests):</p>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="gene-expression-based-enrichment-analysis.html#cb409-1"></a>geneUniverse &lt;-<span class="st"> </span><span class="kw">rownames</span>(res[<span class="op">!</span><span class="kw">is.na</span>(res<span class="op">$</span>pvalue), ])</span>
+<span id="cb409-2"><a href="gene-expression-based-enrichment-analysis.html#cb409-2"></a><span class="kw">length</span>(geneUniverse)</span></code></pre></div>
+<pre><code>[1] 24294</code></pre>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="gene-expression-based-enrichment-analysis.html#cb411-1"></a><span class="kw">nrow</span>(res)</span></code></pre></div>
+<pre><code>[1] 24345</code></pre>
+<p>In order to asses functional enrichment, both DE gene list and gene universe must be annotated in Entrez IDs:</p>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="gene-expression-based-enrichment-analysis.html#cb413-1"></a><span class="kw">library</span>(org.Hs.eg.db)</span>
+<span id="cb413-2"><a href="gene-expression-based-enrichment-analysis.html#cb413-2"></a>deGenes &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">mget</span>(deGenes, <span class="dt">envir=</span>org.Hs.egENSEMBL2EG,</span>
+<span id="cb413-3"><a href="gene-expression-based-enrichment-analysis.html#cb413-3"></a>                       <span class="dt">ifnotfound =</span> <span class="ot">NA</span>))</span>
+<span id="cb413-4"><a href="gene-expression-based-enrichment-analysis.html#cb413-4"></a></span>
+<span id="cb413-5"><a href="gene-expression-based-enrichment-analysis.html#cb413-5"></a>geneUniverse &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">mget</span>(geneUniverse, <span class="dt">envir=</span>org.Hs.egENSEMBL2EG,</span>
+<span id="cb413-6"><a href="gene-expression-based-enrichment-analysis.html#cb413-6"></a>                       <span class="dt">ifnotfound =</span> <span class="ot">NA</span>))</span></code></pre></div>
+<p>Now, the enrichment analysis for GO is performed by</p>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="gene-expression-based-enrichment-analysis.html#cb414-1"></a><span class="kw">library</span>(GOstats)</span>
+<span id="cb414-2"><a href="gene-expression-based-enrichment-analysis.html#cb414-2"></a>params &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">&quot;GOHyperGParams&quot;</span>, <span class="dt">geneIds=</span>deGenes,</span>
+<span id="cb414-3"><a href="gene-expression-based-enrichment-analysis.html#cb414-3"></a>              <span class="dt">universeGeneIds=</span>geneUniverse,</span>
+<span id="cb414-4"><a href="gene-expression-based-enrichment-analysis.html#cb414-4"></a>              <span class="dt">annotation=</span><span class="st">&quot;org.Hs.eg.db&quot;</span>, <span class="dt">ontology=</span><span class="st">&quot;BP&quot;</span>,</span>
+<span id="cb414-5"><a href="gene-expression-based-enrichment-analysis.html#cb414-5"></a>              <span class="dt">pvalueCutoff=</span><span class="fl">0.05</span>, <span class="dt">conditional=</span><span class="ot">FALSE</span>,</span>
+<span id="cb414-6"><a href="gene-expression-based-enrichment-analysis.html#cb414-6"></a>              <span class="dt">testDirection=</span><span class="st">&quot;over&quot;</span>)</span>
+<span id="cb414-7"><a href="gene-expression-based-enrichment-analysis.html#cb414-7"></a></span>
+<span id="cb414-8"><a href="gene-expression-based-enrichment-analysis.html#cb414-8"></a>hgOver &lt;-<span class="st"> </span><span class="kw">hyperGTest</span>(params)</span>
+<span id="cb414-9"><a href="gene-expression-based-enrichment-analysis.html#cb414-9"></a>hgOver</span></code></pre></div>
+<pre><code>Gene to GO BP  test for over-representation 
+6327 GO BP ids tested (1513 have p &lt; 0.05)
+Selected gene set size: 547 
+    Gene universe size: 13655 
+    Annotation package: org.Hs.eg </code></pre>
+<p>The table can be generated by</p>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="gene-expression-based-enrichment-analysis.html#cb416-1"></a><span class="kw">head</span>(<span class="kw">summary</span>(hgOver))</span></code></pre></div>
+<pre><code>      GOBPID       Pvalue OddsRatio  ExpCount Count Size                                                     Term
+1 GO:0050896 4.004729e-13  1.901455 271.99780   354 6790                                     response to stimulus
+2 GO:0009653 1.305943e-12  2.080880  87.36778   151 2181                       anatomical structure morphogenesis
+3 GO:0051239 1.464489e-12  2.020228 100.50699   167 2509           regulation of multicellular organismal process
+4 GO:0051094 1.936645e-12  2.459144  44.62527    94 1114             positive regulation of developmental process
+5 GO:0048646 1.671464e-11  2.542808  35.85244    79  895 anatomical structure formation involved in morphogenesis
+6 GO:0050793 2.019617e-11  2.017808  84.76397   144 2116                      regulation of developmental process</code></pre>
+<p>We can alos explore the results by generating an html report:</p>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="gene-expression-based-enrichment-analysis.html#cb418-1"></a><span class="kw">htmlReport</span>(hgOver, <span class="dt">file=</span><span class="st">&quot;goBPuncond.html&quot;</span>)</span></code></pre></div>
+<p>The KEGG enrichment is performed by:</p>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="gene-expression-based-enrichment-analysis.html#cb419-1"></a><span class="kw">library</span>(KEGG.db)</span>
+<span id="cb419-2"><a href="gene-expression-based-enrichment-analysis.html#cb419-2"></a>params.kegg &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">&quot;KEGGHyperGParams&quot;</span>, <span class="dt">geneIds=</span>deGenes,</span>
+<span id="cb419-3"><a href="gene-expression-based-enrichment-analysis.html#cb419-3"></a>                   <span class="dt">universeGeneIds=</span>geneUniverse,</span>
+<span id="cb419-4"><a href="gene-expression-based-enrichment-analysis.html#cb419-4"></a>                   <span class="dt">annotation=</span><span class="st">&quot;org.Hs.eg.db&quot;</span>, </span>
+<span id="cb419-5"><a href="gene-expression-based-enrichment-analysis.html#cb419-5"></a>                   <span class="dt">pvalueCutoff=</span><span class="fl">0.05</span>, </span>
+<span id="cb419-6"><a href="gene-expression-based-enrichment-analysis.html#cb419-6"></a>                   <span class="dt">testDirection=</span><span class="st">&quot;over&quot;</span>)</span>
+<span id="cb419-7"><a href="gene-expression-based-enrichment-analysis.html#cb419-7"></a></span>
+<span id="cb419-8"><a href="gene-expression-based-enrichment-analysis.html#cb419-8"></a>hgOver.kegg &lt;-<span class="st"> </span><span class="kw">hyperGTest</span>(params.kegg)</span>
+<span id="cb419-9"><a href="gene-expression-based-enrichment-analysis.html#cb419-9"></a><span class="kw">head</span>(<span class="kw">summary</span>(hgOver.kegg))</span></code></pre></div>
+<pre><code>  KEGGID       Pvalue OddsRatio  ExpCount Count Size                                   Term
+1  04060 0.0009526255  2.519903 8.0269137    18  161 Cytokine-cytokine receptor interaction
+2  04977 0.0014798039  7.473025 0.8974189     5   18       Vitamin digestion and absorption
+3  00750 0.0021867795 19.300448 0.2991396     3    6                  Vitamin B6 metabolism
+4  05414 0.0030336333  3.118754 3.6395323    10   73                 Dilated cardiomyopathy
+5  04512 0.0044995301  2.929795 3.8389587    10   77               ECM-receptor interaction
+6  04350 0.0049414310  2.886029 3.8888154    10   78             TGF-beta signaling pathway</code></pre>
+</div>
+<div id="analysis-using-clusterprofiler" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Analysis using <code>clusterProfiler</code></h2>
+<p><a href="">clusterProfiler</a> performs statistical analysis and visualization of functional profiles for genes and gene clusters. It includes GO, KEEG and a general function to perform ORA for any database such as <a href="http://www.gsea-msigdb.org/gsea/msigdb/index.jsp">MSigDB</a> or <a href="http://www.disgenet.org/">DisGeNET</a> among others.</p>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="gene-expression-based-enrichment-analysis.html#cb421-1"></a><span class="kw">library</span>(clusterProfiler)</span>
+<span id="cb421-2"><a href="gene-expression-based-enrichment-analysis.html#cb421-2"></a>ans.go &lt;-<span class="st"> </span><span class="kw">enrichGO</span>(<span class="dt">gene =</span> deGenes, <span class="dt">ont =</span> <span class="st">&quot;BP&quot;</span>,</span>
+<span id="cb421-3"><a href="gene-expression-based-enrichment-analysis.html#cb421-3"></a>                   <span class="dt">OrgDb =</span><span class="st">&quot;org.Hs.eg.db&quot;</span>,</span>
+<span id="cb421-4"><a href="gene-expression-based-enrichment-analysis.html#cb421-4"></a>                   <span class="dt">readable=</span><span class="ot">TRUE</span>,</span>
+<span id="cb421-5"><a href="gene-expression-based-enrichment-analysis.html#cb421-5"></a>                   <span class="dt">pvalueCutoff =</span> <span class="fl">0.05</span>)</span>
+<span id="cb421-6"><a href="gene-expression-based-enrichment-analysis.html#cb421-6"></a>tab.go &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(ans.go)</span>
+<span id="cb421-7"><a href="gene-expression-based-enrichment-analysis.html#cb421-7"></a>tab.go&lt;-<span class="st"> </span><span class="kw">subset</span>(tab.go, Count<span class="op">&gt;</span><span class="dv">5</span>)</span>
+<span id="cb421-8"><a href="gene-expression-based-enrichment-analysis.html#cb421-8"></a>tab.go[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>]</span></code></pre></div>
+<pre><code>                   ID                          Description GeneRatio   BgRatio       pvalue     p.adjust
+GO:0007411 GO:0007411                        axon guidance    26/547 276/18670 1.776070e-07 0.0004337162
+GO:0097485 GO:0097485           neuron projection guidance    26/547 277/18670 1.907283e-07 0.0004337162
+GO:0030198 GO:0030198    extracellular matrix organization    30/547 368/18670 4.818478e-07 0.0005802757
+GO:0043062 GO:0043062 extracellular structure organization    30/547 369/18670 5.103568e-07 0.0005802757
+GO:0045444 GO:0045444             fat cell differentiation    22/547 223/18670 7.186823e-07 0.0006537134</code></pre>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="gene-expression-based-enrichment-analysis.html#cb423-1"></a>ans.kegg &lt;-<span class="st"> </span><span class="kw">enrichKEGG</span>(<span class="dt">gene =</span> deGenes,</span>
+<span id="cb423-2"><a href="gene-expression-based-enrichment-analysis.html#cb423-2"></a>                       <span class="dt">organism =</span> <span class="st">&#39;hsa&#39;</span>,</span>
+<span id="cb423-3"><a href="gene-expression-based-enrichment-analysis.html#cb423-3"></a>                       <span class="dt">pvalueCutoff =</span> <span class="fl">0.05</span>)</span>
+<span id="cb423-4"><a href="gene-expression-based-enrichment-analysis.html#cb423-4"></a>tab.kegg &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(ans.kegg)</span>
+<span id="cb423-5"><a href="gene-expression-based-enrichment-analysis.html#cb423-5"></a>tab.kegg&lt;-<span class="st"> </span><span class="kw">subset</span>(tab.kegg, Count<span class="op">&gt;</span><span class="dv">5</span>)</span>
+<span id="cb423-6"><a href="gene-expression-based-enrichment-analysis.html#cb423-6"></a>tab.kegg[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>]</span></code></pre></div>
+<pre><code>               ID                                          Description GeneRatio  BgRatio       pvalue    p.adjust
+hsa04923 hsa04923                Regulation of lipolysis in adipocytes    10/286  57/8087 2.587664e-05 0.007074392
+hsa04213 hsa04213      Longevity regulating pathway - multiple species    10/286  62/8087 5.510596e-05 0.007074392
+hsa04360 hsa04360                                        Axon guidance    18/286 182/8087 7.318336e-05 0.007074392
+hsa04933 hsa04933 AGE-RAGE signaling pathway in diabetic complications    12/286 100/8087 1.975759e-04 0.011981969
+hsa04068 hsa04068                               FoxO signaling pathway    14/286 131/8087 2.065857e-04 0.011981969</code></pre>
+<p>For external databases such as DisGeNET or MSigDB collections, databases must be imported into R. This is how <a href="https://www.disgenet.org/">DisGeNET</a> is imported into R</p>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="gene-expression-based-enrichment-analysis.html#cb425-1"></a>gda &lt;-<span class="st"> </span><span class="kw">read.delim</span>(<span class="st">&quot;data/curated_gene_disease_associations.tsv.gz&quot;</span>)</span>
+<span id="cb425-2"><a href="gene-expression-based-enrichment-analysis.html#cb425-2"></a>disease2gene &lt;-<span class="st"> </span>gda[, <span class="kw">c</span>(<span class="st">&quot;diseaseId&quot;</span>, <span class="st">&quot;geneId&quot;</span>)]</span>
+<span id="cb425-3"><a href="gene-expression-based-enrichment-analysis.html#cb425-3"></a>disease2name &lt;-<span class="st"> </span>gda[, <span class="kw">c</span>(<span class="st">&quot;diseaseId&quot;</span>, <span class="st">&quot;diseaseName&quot;</span>)]</span></code></pre></div>
+<p>Then, the enrichment is perform using <code>enricher</code> function:</p>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="gene-expression-based-enrichment-analysis.html#cb426-1"></a>ans.dis &lt;-<span class="st"> </span><span class="kw">enricher</span>(deGenes, <span class="dt">TERM2GENE=</span>disease2gene,</span>
+<span id="cb426-2"><a href="gene-expression-based-enrichment-analysis.html#cb426-2"></a>                    <span class="dt">TERM2NAME=</span>disease2name)</span>
+<span id="cb426-3"><a href="gene-expression-based-enrichment-analysis.html#cb426-3"></a>tab.dis &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(ans.dis)</span>
+<span id="cb426-4"><a href="gene-expression-based-enrichment-analysis.html#cb426-4"></a>tab.dis&lt;-<span class="st"> </span><span class="kw">subset</span>(tab.dis, Count<span class="op">&gt;</span><span class="dv">5</span>)</span>
+<span id="cb426-5"><a href="gene-expression-based-enrichment-analysis.html#cb426-5"></a>tab.dis[,<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>]</span></code></pre></div>
+<pre><code>               ID         Description GeneRatio  BgRatio       pvalue     p.adjust
+C0014175 C0014175       Endometriosis    25/334 156/8948 5.455196e-10 8.319175e-07
+C0151744 C0151744 Myocardial Ischemia    21/334 171/8948 1.415760e-06 1.079517e-03</code></pre>
+<p>This is the R code for transcription factors which is one of the sub-collection of C3 available at <a href="http://software.broadinstitute.org/gsea/msigdb">MSigDb</a> for
+additional gene set collections.</p>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="gene-expression-based-enrichment-analysis.html#cb428-1"></a>c3.tf &lt;-<span class="st"> </span><span class="kw">read.gmt</span>(<span class="st">&quot;c:/Juan/CREAL/HELIX/pathways/GSEA/c3.tft.v6.2.entrez.gmt&quot;</span>)</span>
+<span id="cb428-2"><a href="gene-expression-based-enrichment-analysis.html#cb428-2"></a></span>
+<span id="cb428-3"><a href="gene-expression-based-enrichment-analysis.html#cb428-3"></a>ans.tf &lt;-<span class="st"> </span><span class="kw">enricher</span>(deGenes, <span class="dt">TERM2GENE=</span>c3.tf)</span>
+<span id="cb428-4"><a href="gene-expression-based-enrichment-analysis.html#cb428-4"></a>tab.tf &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(ans.tf)</span>
+<span id="cb428-5"><a href="gene-expression-based-enrichment-analysis.html#cb428-5"></a>tab.tf&lt;-<span class="st"> </span><span class="kw">subset</span>(tab.tf, Count<span class="op">&gt;</span><span class="dv">5</span>)</span>
+<span id="cb428-6"><a href="gene-expression-based-enrichment-analysis.html#cb428-6"></a>tab.tf[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>               ID Description GeneRatio   BgRatio       pvalue
+HNF3_Q6   HNF3_Q6     HNF3_Q6    20/459 189/12774 1.520418e-05
+SRF_Q6     SRF_Q6      SRF_Q6    23/459 241/12774 1.947737e-05
+CEBPB_02 CEBPB_02    CEBPB_02    24/459 258/12774 1.972855e-05
+CEBP_Q2   CEBP_Q2     CEBP_Q2    22/459 234/12774 3.707975e-05
+OCT1_05   OCT1_05     OCT1_05    23/459 254/12774 4.481583e-05</code></pre>
+</div>
+<div id="visualization" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Visualization</h2>
+<p>All analyses performed with <code>clusterProfiler</code> can be visualize by different plots:</p>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="gene-expression-based-enrichment-analysis.html#cb430-1"></a><span class="kw">library</span>(enrichplot)</span>
+<span id="cb430-2"><a href="gene-expression-based-enrichment-analysis.html#cb430-2"></a>p1 &lt;-<span class="st"> </span><span class="kw">barplot</span>(ans.dis, <span class="dt">showCategory=</span><span class="dv">10</span>)</span>
+<span id="cb430-3"><a href="gene-expression-based-enrichment-analysis.html#cb430-3"></a>p1</span></code></pre></div>
+<p><img src="fig/plot-1.png" width="672" /></p>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="gene-expression-based-enrichment-analysis.html#cb431-1"></a>p2 &lt;-<span class="st"> </span><span class="kw">dotplot</span>(ans.kegg, <span class="dt">showCategory=</span><span class="dv">20</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;KEGG&quot;</span>)</span>
+<span id="cb431-2"><a href="gene-expression-based-enrichment-analysis.html#cb431-2"></a>p3 &lt;-<span class="st"> </span><span class="kw">dotplot</span>(ans.dis, <span class="dt">showCategory=</span><span class="dv">20</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Disease&quot;</span>)</span>
+<span id="cb431-3"><a href="gene-expression-based-enrichment-analysis.html#cb431-3"></a><span class="kw">plot_grid</span>(p2, p3, <span class="dt">nrow=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="fig/plot2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="gene-expression-based-enrichment-analysis.html#cb432-1"></a>p4 &lt;-<span class="st"> </span><span class="kw">upsetplot</span>(ans.dis)</span>
+<span id="cb432-2"><a href="gene-expression-based-enrichment-analysis.html#cb432-2"></a>p4</span></code></pre></div>
+<p><img src="fig/plot3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="gene-expression-based-enrichment-analysis.html#cb433-1"></a>p5 &lt;-<span class="st"> </span><span class="kw">emapplot</span>(ans.kegg)</span>
+<span id="cb433-2"><a href="gene-expression-based-enrichment-analysis.html#cb433-2"></a>p5</span></code></pre></div>
+<p><img src="fig/plot4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="gene-expression-based-enrichment-analysis.html#cb434-1"></a>cowplot<span class="op">::</span><span class="kw">plot_grid</span>(p1, p3, p5, <span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">labels=</span>LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</span></code></pre></div>
+<p><img src="fig/plot5-1.png" width="960" /></p>
+</div>
+<div id="genomic-region-enrichment-analysis" class="section level2" number="8.5">
+<h2><span class="header-section-number">8.5</span> Genomic region enrichment analysis</h2>
+<p>Microarrays and next-generation sequencing are also widely applied for
+large-scale detection of variable and regulatory genomic regions, e.g. single
+nucleotide polymorphisms, copy number variations, and transcription factor
+binding sites. Such experimentally-derived genomic region sets are raising similar questions
+regarding functional enrichment as in gene expression data analysis. Of particular interest is thereby whether experimentally-derived regions
+overlap more (enrichment) or less (depletion) than expected by chance with
+regions representing known functional features such as genes or
+promoters.</p>
+<p>The <code>regioneR</code> package implements a general framework for testing
+overlaps of genomic regions based on permutation sampling.
+This allows to repeatedly sample random regions from the genome, matching size
+and chromosomal distribution of the region set under study.
+By recomputing the overlap with the functional features in each permutation,
+statistical significance of the observed overlap can be assessed. To demonstrate the basic functionality of the package, we consider the analysis of copy number variants (CNV).</p>
+<p>Let us assume, we want to assess the overlap between the significant CNV regions obtained after comparing normal vs tumor samples from <a href="https://www.cancer.gov/about-nci/organization/ccg/research/structural-genomics/tcga">TCGA</a> and protein-coding regions. We now recall the results we obtained in the association analysis</p>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="gene-expression-based-enrichment-analysis.html#cb435-1"></a><span class="kw">load</span>(<span class="st">&quot;data/brcaSigCNV.Rdata&quot;</span>)</span>
+<span id="cb435-2"><a href="gene-expression-based-enrichment-analysis.html#cb435-2"></a>brca.gr.sig</span></code></pre></div>
+<pre><code>GRanges object with 7362 ranges and 3 metadata columns:
+         seqnames              ranges strand |   counts      pvalue          BH
+            &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;matrix&gt;   &lt;numeric&gt;   &lt;numeric&gt;
+     [1]     chr1 149898951-150333087      * |     1:30 9.17197e-07 6.85697e-06
+     [2]     chr1 150335347-151170789      * |     0:30 4.02901e-08 3.69843e-07
+     [3]     chr1 154984468-155005476      * |     0:21 6.60494e-06 4.05859e-05
+     [4]     chr1 155006954-155050185      * |     0:22 3.64040e-06 2.34224e-05
+     [5]    chr11   60943071-61361689      * |     0:16 1.38665e-04 6.54493e-04
+     ...      ...                 ...    ... .      ...         ...         ...
+  [7358]    chr11   69559601-69650887      * |     0:66 2.94814e-17 9.70149e-16
+  [7359]    chr11   70695866-71002410      * |     1:53 1.24305e-12 2.43117e-11
+  [7360]    chr11   73552530-73878688      * |     0:22 3.64040e-06 2.34224e-05
+  [7361]    chr11   74853813-74901601      * |     0:21 6.60494e-06 4.05859e-05
+  [7362]    chr16      653459-2025678      * |     1:16 1.01825e-03 3.99168e-03
+  -------
+  seqinfo: 23 sequences from an unspecified genome; no seqlengths</code></pre>
+<p>To obtain the location of protein-coding genes, we query available Human annotation from Ensembl</p>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="gene-expression-based-enrichment-analysis.html#cb437-1"></a><span class="kw">library</span>(AnnotationHub)</span>
+<span id="cb437-2"><a href="gene-expression-based-enrichment-analysis.html#cb437-2"></a>ah &lt;-<span class="st"> </span><span class="kw">AnnotationHub</span>()</span>
+<span id="cb437-3"><a href="gene-expression-based-enrichment-analysis.html#cb437-3"></a>ahDb &lt;-<span class="st"> </span><span class="kw">query</span>(ah, <span class="dt">pattern =</span> <span class="kw">c</span>(<span class="st">&quot;Homo sapiens&quot;</span>, <span class="st">&quot;EnsDb&quot;</span>))</span>
+<span id="cb437-4"><a href="gene-expression-based-enrichment-analysis.html#cb437-4"></a>ahDb</span></code></pre></div>
+<p>and retrieve gene coordinates in the UMD3.1 assembly (Ensembl 92).</p>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="gene-expression-based-enrichment-analysis.html#cb438-1"></a>ahEdb &lt;-<span class="st"> </span>ahDb[[<span class="st">&quot;AH60977&quot;</span>]]</span>
+<span id="cb438-2"><a href="gene-expression-based-enrichment-analysis.html#cb438-2"></a>hg.genes &lt;-<span class="st"> </span><span class="kw">genes</span>(ahEdb)</span></code></pre></div>
+<p>We then need to verify that the <code>seqlevels</code> annotation of both <code>GenomicRanges</code> are the same:</p>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="gene-expression-based-enrichment-analysis.html#cb439-1"></a><span class="kw">seqnames</span>(hg.genes)</span></code></pre></div>
+<pre><code>factor-Rle of length 65256 with 423 runs
+  Lengths:                          5349                          2236 ...                           518
+  Values :                          chr1                         chr10 ...                          chrY
+Levels(423): chr1 chr10 chr11 chr12 chr13 chr14 chr15 ... chrLRG_721 chrLRG_741 chrLRG_763 chrLRG_93 chrMT chrX chrY</code></pre>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="gene-expression-based-enrichment-analysis.html#cb441-1"></a><span class="kw">seqnames</span>(brca.gr.sig)</span></code></pre></div>
+<pre><code>factor-Rle of length 7362 with 1548 runs
+  Lengths:     4     9     3    11     1    45     1     1    16 ...     1     1     9    21     1     2     8     1
+  Values :  chr1 chr11 chr12 chr20 chr11 chr17 chr20  chr5  chr8 ...  chr8 chr16  chr8 chr11 chr17 chr10 chr11 chr16
+Levels(23): chr1 chr2 chr3 chr10 chr14 chr4 chr11 chr12 chr20 ... chr15 chr17 chrX chr8 chr16 chr19 chr13 chr22 chr18</code></pre>
+<p>otherwise we need to re-assign the <code>seqlevels</code></p>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="gene-expression-based-enrichment-analysis.html#cb443-1"></a><span class="kw">seqlevels</span>(hg.genes) &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;chr&quot;</span>, <span class="kw">seqlevels</span>(hg.genes))</span></code></pre></div>
+<p>Let us run the enrichment in chromosome 1:</p>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="gene-expression-based-enrichment-analysis.html#cb444-1"></a>sel.protein &lt;-<span class="st"> </span>hg.genes[<span class="kw">seqnames</span>(hg.genes)<span class="op">%in%</span><span class="kw">c</span>(<span class="st">&quot;chr1&quot;</span>)]</span>
+<span id="cb444-2"><a href="gene-expression-based-enrichment-analysis.html#cb444-2"></a>sel.protein &lt;-<span class="st"> </span>sel.protein[sel.protein<span class="op">$</span>gene_biotype <span class="op">==</span></span>
+<span id="cb444-3"><a href="gene-expression-based-enrichment-analysis.html#cb444-3"></a><span class="st">                             &quot;protein_coding&quot;</span>]</span>
+<span id="cb444-4"><a href="gene-expression-based-enrichment-analysis.html#cb444-4"></a>sel.cnvs &lt;-<span class="st"> </span>brca.gr.sig[<span class="kw">seqnames</span>(brca.gr.sig)<span class="op">%in%</span><span class="kw">c</span>(<span class="st">&quot;chr1&quot;</span>)]</span>
+<span id="cb444-5"><a href="gene-expression-based-enrichment-analysis.html#cb444-5"></a><span class="kw">length</span>(sel.cnvs)</span></code></pre></div>
+<pre><code>[1] 234</code></pre>
+<p>We then apply an overlap permutation test with 100 permutations (<code>ntimes=100</code>), while maintaining chromosomal distribution of the CNV region set (<code>per.chromosome=TRUE</code>). Setting the option <code>count.once=TRUE</code> counts an overlapping CNV region only once. To randomly sample regions from the entire genome no masking is required (<code>mask=NA</code>) and to draw robust conclusions a minimum of 1000 permutations should be performed</p>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="gene-expression-based-enrichment-analysis.html#cb446-1"></a><span class="kw">library</span>(regioneR)</span>
+<span id="cb446-2"><a href="gene-expression-based-enrichment-analysis.html#cb446-2"></a><span class="kw">library</span>(BSgenome.Hsapiens.UCSC.hg19.masked)</span>
+<span id="cb446-3"><a href="gene-expression-based-enrichment-analysis.html#cb446-3"></a>res.prot &lt;-<span class="st"> </span><span class="kw">overlapPermTest</span>(<span class="dt">A=</span>sel.cnvs, <span class="dt">B=</span>sel.protein, </span>
+<span id="cb446-4"><a href="gene-expression-based-enrichment-analysis.html#cb446-4"></a>                            <span class="dt">mask=</span><span class="ot">NA</span>, <span class="dt">genome=</span><span class="st">&quot;hg19&quot;</span>,</span>
+<span id="cb446-5"><a href="gene-expression-based-enrichment-analysis.html#cb446-5"></a>                            <span class="dt">ntimes=</span><span class="dv">100</span>,</span>
+<span id="cb446-6"><a href="gene-expression-based-enrichment-analysis.html#cb446-6"></a>                            <span class="dt">per.chromosome=</span><span class="ot">TRUE</span>,</span>
+<span id="cb446-7"><a href="gene-expression-based-enrichment-analysis.html#cb446-7"></a>                            <span class="dt">count.once=</span><span class="ot">TRUE</span>)</span>
+<span id="cb446-8"><a href="gene-expression-based-enrichment-analysis.html#cb446-8"></a>res.prot</span></code></pre></div>
+<pre><code>$numOverlaps
+P-value: 0.0099009900990099
+Z-score: 8.1252
+Number of iterations: 100
+Alternative: greater
+Evaluation of the original region set: 220
+Evaluation function: numOverlaps
+Randomization function: randomizeRegions
+
+attr(,&quot;class&quot;)
+[1] &quot;permTestResultsList&quot;</code></pre>
+<p>The permutation <span class="math inline">\(P\)</span>-value indicates a statistically significant overlaps of CNVs with protein coding regions. From 234 CNVs, 220 overlap with at least one protein coding gene. We can also repeat the analysis for promoters from UCSC defined as -2000 to +200 base pairs to the TSS according to the genome assembly hg19. Analyzing chromosome 1</p>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="gene-expression-based-enrichment-analysis.html#cb448-1"></a>file.prom &lt;-<span class="st"> &quot;http://gattaca.imppc.org/regioner/data/UCSC.promoters.hg19.bed&quot;</span> </span>
+<span id="cb448-2"><a href="gene-expression-based-enrichment-analysis.html#cb448-2"></a>promoters &lt;-<span class="st"> </span><span class="kw">toGRanges</span>(file.prom)</span>
+<span id="cb448-3"><a href="gene-expression-based-enrichment-analysis.html#cb448-3"></a>sel.prom &lt;-<span class="st"> </span>promoters[<span class="kw">seqnames</span>(promoters) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;chr1&quot;</span>)]</span></code></pre></div>
+<p>we obtain</p>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="gene-expression-based-enrichment-analysis.html#cb449-1"></a>res.prom &lt;-<span class="st"> </span><span class="kw">overlapPermTest</span>(sel.cnvs, sel.prom, </span>
+<span id="cb449-2"><a href="gene-expression-based-enrichment-analysis.html#cb449-2"></a>                            <span class="dt">ntimes=</span><span class="dv">100</span>, <span class="dt">genome=</span><span class="st">&quot;hg19&quot;</span>, </span>
+<span id="cb449-3"><a href="gene-expression-based-enrichment-analysis.html#cb449-3"></a>                            <span class="dt">count.once=</span><span class="ot">TRUE</span>)</span>
+<span id="cb449-4"><a href="gene-expression-based-enrichment-analysis.html#cb449-4"></a>res.prom</span></code></pre></div>
+<pre><code>$numOverlaps
+P-value: 0.0099009900990099
+Z-score: 43.6248
+Number of iterations: 100
+Alternative: greater
+Evaluation of the original region set: 184
+Evaluation function: numOverlaps
+Randomization function: randomizeRegions
+
+attr(,&quot;class&quot;)
+[1] &quot;permTestResultsList&quot;</code></pre>
+<p>We also observe significant overlap of CNVs in regions with promoters. Notice that the function <code>permTest</code> allows user-defined functions for randomizing control and for evaluating additional genomic measures.</p>
+<p>Note #1: The function <code>regioneR::permTest</code> allows to incorporate user-defined
+functions for randomizing regions and evaluating additional measures of overlap
+such as total genomic size in bp.</p>
+<p>Note #2: The <em><a href="https://bioconductor.org/packages/3.11/LOLA">LOLA</a></em> package implements a genomic region ORA, which
+assesses genomic region overlap based on the hypergeometric distribution using
+a library of pre-defined functional region sets.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="enrichment-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/isglobal-brge/Master_Bioinformatics/tree/master/docs05-Enrichment_analysis.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>8 References | Master in Bioinformatics and Omic Data Analysis</title>
-  <meta name="description" content="8 References | Master in Bioinformatics and Omic Data Analysis" />
+  <title>9 Exercises | Master in Bioinformatics and Omic Data Analysis</title>
+  <meta name="description" content="9 Exercises | Master in Bioinformatics and Omic Data Analysis" />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="8 References | Master in Bioinformatics and Omic Data Analysis" />
+  <meta property="og:title" content="9 Exercises | Master in Bioinformatics and Omic Data Analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="8 References | Master in Bioinformatics and Omic Data Analysis" />
+  <meta name="twitter:title" content="9 Exercises | Master in Bioinformatics and Omic Data Analysis" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="rnaseq-data-analysis.html"/>
-<link rel="next" href="exercises.html"/>
+<link rel="prev" href="references.html"/>
+
 <script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -245,9 +245,150 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> References</h1>
-<div id="refs">
+<div id="exercises" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Exercises</h1>
+<p>Here we propose several exercises whose answers will have to be deliver through the Moodle. The data are in a folder called <code>data_for_exercises</code>. The answers will also be available in the Moodle site.</p>
+<div id="BioCEx" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Bioconductor</h2>
+<blockquote>
+<p><strong>EXERCISE 1</strong>: Read PLINK data (‘obesity.bed’, ‘obesity.fam’, ‘obesity.bim’) that are available <a href="https://github.com/isglobal-brge/brgedata/tree/master/inst/extdata">here</a></p>
+<ol style="list-style-type: decimal">
+<li>How many samples are genotyped?</li>
+<li>How many SNPs are in the chromosome 10?</li>
+<li>Get the SNP names available in the region chr2:134500-2300000.</li>
+<li>In which chromosome is located the SNP rs1527354?</li>
+<li>Get the number of individuals of each genoytpe corresponding to the SNP rs7859525. Which the homozygous normal genotype?</li>
+</ol>
+</blockquote>
+<blockquote>
+<p><strong>EXERCISE 2:</strong> Install the Bioconductor package called <code>airway</code> and load the data <code>airway</code> which is a <code>SummarizedExperiment</code> by executing:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="exercises.html#cb1-1"></a><span class="kw">library</span>(airway)</span>
+<span id="cb1-2"><a href="exercises.html#cb1-2"></a><span class="kw">data</span>(airway)</span></code></pre></div>
+<ol style="list-style-type: decimal">
+<li>Print the object {} and interpret the output.</li>
+<li>Get the table of counts (use {} data) and the variables of the experiment (use {} function).</li>
+<li>Verify that {} objects check the dimension of the tables (think about the dimensions that should match).</li>
+<li>Compare the number of counts of the gene ENSG00000000419 between treated and untreated cells (variable ‘dex’) using {} function.</li>
+</ol>
+</blockquote>
+<blockquote>
+<p><strong>EXERCISE 3:</strong> <a href="https://jhubiostatistics.shinyapps.io/recount/">Recount2</a> provides data for different RNA-seq experiments. These includes data from GTEx or TCGA projects. We have downloaded a subset of data corresponding to breast cancer and created a variable called <code>er</code> which encodes the estrogen receptor status (Negative and Positive). The <code>SummarizedExperiment</code> object is called <code>breast</code> and is available in the file ‘breast_tcga.Rdata’. Load the data into R and answer the next questions</p>
+<ol style="list-style-type: decimal">
+<li>How many samples are in the <code>SummarizedExperiment</code> object?</li>
+<li>And how many genes?</li>
+<li>Which is the number of samples with positive estrogen receptor status (variable <code>er</code>)?</li>
+<li>Subset the individuals having Negative strogen receptor status and draw a boxplot of the first gene.</li>
+<li>Create a <code>SummarizedExperiment</code> object of the genomic region chr6:151.2-151.8Mb. How many genes are in that region? How many of them are annotated? That is, how many of them have a gene symbol name? (HINT: use <code>rowRanges()</code> function and remember that <code>mcols()</code> function is used to get acccess to columns in a <code>GRanges</code> object)</li>
+</ol>
+</blockquote>
+<blockquote>
+<p><strong>EXERCISE 4</strong>: The file <code>snpsGWAS.Rdata</code> contains information about 28 SNPs that were called as a significantly associated with a given disease after performing a GWAS study.</p>
+<ol style="list-style-type: decimal">
+<li>Load this data into R.</li>
+<li>Create a data.frame with the name of the SNP, its chromosome, its position and the allele name.</li>
+<li>Add another column to this data.frame with the minor allele frequency (MAF) estimated from 1000 genomes (HINT: use <code>listAttributes</code> to retrieve the name of the attribute we are interested in).</li>
+<li>Annotate the variants and get the gene symbol</li>
+<li>How many SNPs are located in promoter regions?</li>
+</ol>
+</blockquote>
+</div>
+<div id="genetic-association-studies" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Genetic association studies</h2>
+<blockquote>
+<p><strong>EXERCISE 5</strong>: Researchers are interested in assessing possible association between candidate SNPs and the response to treatment in patients diagnosed with major depression (file ‘DM.txt’ - NOTE: check how alleles are separated). The file also includes clinical information about other covariates of interest such as:</p>
+<ul>
+<li>HDRS: Hamilton Depression Rating Scale (continuous variable)</li>
+<li>PSICOT: Was the patient psychotic? (No and Yes)</li>
+<li>MELANCOL: Was the patient melancholic? (No and Yes)</li>
+<li>EPD_PREV: Number of previous episodes of depression (continuous variable)</li>
+<li>RESP: Response to treatment (outcome)</li>
+</ul>
+<p>Answer the following questions:</p>
+<ol style="list-style-type: decimal">
+<li>Is it necessary to check HWE hypothesis for this example?</li>
+<li>Is there any SNP associated with the response to the treatment? If so, write a sentence interpreting the results of that association (only for one SNP)</li>
+<li>Does the result change after adjusting for other clinical covariates?</li>
+<li>Create a plot with the p-values only for dominant, recessive and additive models</li>
+<li>Compute the p-values using MAX-statistic for all SNPs</li>
+</ol>
+</blockquote>
+<blockquote>
+<p><strong>EXERCISE 6</strong>: Researchers are now interested in assessing the effect of haplotypes on the response to treatment. Answer the following questions:</p>
+<ol style="list-style-type: decimal">
+<li>Which is the combination of SNPs (e.g. number of consecutive haplotypes) that is more associated with the response to treatment? (NOTE1: Try only haplotypes of length 2 up to 4)</li>
+<li>Which is the most frequent haplotype?</li>
+<li>Compute the OR of association and its 95% confidence intervals between the estimate haplotypes and the response to treatment</li>
+</ol>
+</blockquote>
+<blockquote>
+<p><strong>EXERCISE 7</strong>: Researchers are now interested in creating a genetic score to predict the response to the treatment</p>
+<ol style="list-style-type: decimal">
+<li>Perform all the required steps to get such score and evaluate its performance using a ROC curve</li>
+</ol>
+</blockquote>
+</div>
+<div id="gwas" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> GWAS</h2>
+<blockquote>
+<p><strong>EXERCISE 8</strong>: Researchers are interested in detecting new SNPs associated with BMI (body mass index). To do so, they performed a GWAS using DNA information about 425 individuals. Genotype information is available in plink format (files ‘coronary.bed’, ‘coronary.bim’, ‘coronary.fam’) while phenotypic information can be found in the file ‘coronary.txt’.</p>
+<ol style="list-style-type: decimal">
+<li>Read genotypes using <code>snpStats</code> library</li>
+<li>Verify that both data sets are in the same order (NOTE: ‘id’ variable in the file ‘coronary.txt’ must be used since it corresponds to the unique patient number)</li>
+<li>Remove those SNPs that do not pass QC</li>
+<li>Perform QC filtering of individuals</li>
+<li>Assess association between BMI’ and the SNPs (NOTE: remember that you are analyzing a <strong>quantitative trait</strong>)</li>
+<li>Calculate ‘lambda’ and create a Q-Q plot to assess population stratification</li>
+<li>Assess association between BMI’ and the SNPs adjusting for population stratification (variables ‘ev3’ and ‘ev4’ in the file ‘coronary.txt’) (NOTE: remember that you are analyzing a <strong>quantitative trait</strong>). Are there differences with crude analysis?</li>
+<li>Create a Manhattan plot</li>
+</ol>
+</blockquote>
+</div>
+<div id="Microarray-exerc" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Microarray data analysis</h2>
+<blockquote>
+<p><strong>EXERCISE 9</strong>: To be supplied</p>
+</blockquote>
+</div>
+<div id="RNAseq-exerc" class="section level2" number="9.5">
+<h2><span class="header-section-number">9.5</span> RNAseq data analysis</h2>
+<blockquote>
+<p><strong>EXERICSE 10</strong>: Download the data SRP029880 from recount2: <a href="http://duffel.rail.bio/recount/v2/SRP029880/rse_gene.Rdata" class="uri">http://duffel.rail.bio/recount/v2/SRP029880/rse_gene.Rdata</a>. This file contains a <code>RangedSummarizedExperiment</code> object. Do the following tasks:</p>
+<ol start="0" style="list-style-type: decimal">
+<li>Get the <code>counts</code> and <code>colData</code> tables.</li>
+<li>Normalize the counts using CPM, RPKM, TPM and TMM methods.</li>
+<li>Create the RLE and PCA plots for each method as well as for the raw data (do not forget to log-transform the data).</li>
+<li>Using TPM normalized data:</li>
+</ol>
+<ul>
+<li>Plot a heatmap of the top 500 most variable genes. Compare with the heatmap obtained using the 100 most variable genes.</li>
+<li>Re-do the heatmaps setting the scale argument to <code>none</code>, and <code>column</code>. Compare the results with <code>scale = 'row'</code>.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Create a new variable called <strong>group</strong> by renaming the variable <strong>title</strong> as: <code>normal</code>, <code>primary</code> and <code>metastasis</code>.</li>
+<li>Perform a differential expression analysis using the variable <code>group</code> and get the list of differentially expressed genes comparing <code>metastasis vs normal</code> and <code>primary vs normal</code>.</li>
+<li>Create two MA and volcano plots to describe the previous comparisons.</li>
+<li>Examine the distribution of counts for a single gene (most associated with <code>metastasis</code>). Hint: use <code>DESeq2::plotCounts ()</code></li>
+<li>Do the same plot for the top-10 genes (this tries to mimic your supplementary material in your paper!)</li>
+<li>Investigate whether the analysis should be adjusted for other covariates.</li>
+<li>Repeat differential expression analysis accounting for unwanted variability using <code>RUV</code> and <code>sva</code> packages.</li>
+</ol>
+</blockquote>
+</div>
+<div id="enrichment-exerc" class="section level2" number="9.6">
+<h2><span class="header-section-number">9.6</span> Enrichment Analysis</h2>
+<blockquote>
+<p><strong>EXERCISE 11</strong>: Library <code>tweeDEseqCountData</code> contains data corresponding to an RNA-seq experiment described in Pickrell et al. (2010). Data correspond to lymphoblastoid cell lines about 69 non-related Nigerian individuals. This information as well as phenotypic data is available as an object of class <code>eSet</code> called <code>pickrell.eset</code> that can be loaded after typing:</p>
+<pre><code>data(pickrell)</code></pre>
+<ol style="list-style-type: decimal">
+<li><p>Use limma-voom method to detect those genes that are differentially expressed (DE) between males and females (variale <code>gender</code>).</p></li>
+<li><p>Select those genes that are DE at 5% FDR with a minimum fold-change of 1.5</p></li>
+<li><p>Create a gene set of sex-expecific genes by</p></li>
+</ol>
+<pre><code>geneUniverse &lt;- featureNames(pickrell.eset)
+geneSex &lt;- unique(intersect(geneUniverse,
+c(msYgenes, XiEgenes)))</code></pre>
+<p>and test whether the list of DE genes is enriched in that gene set.</p>
+</blockquote>
 
 </div>
 </div>
@@ -256,8 +397,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="rnaseq-data-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="exercises.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="references.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

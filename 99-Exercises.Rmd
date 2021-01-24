@@ -11,100 +11,92 @@ Here we propose several exercises whose answers will have to be deliver through 
 
 ## Bioconductor {#BioCEx}
 
-
-
-**EXERCISE 1**: Read PLINK data ('obesity.bed', 'obesity.fam', 'obesity.bim') that are available [here](https://github.com/isglobal-brge/brgedata/tree/master/inst/extdata)
-
+>
+>**EXERCISE 1**: Read PLINK data ('obesity.bed', 'obesity.fam', 'obesity.bim') that are available [here](https://github.com/isglobal-brge/brgedata/tree/master/inst/extdata)
+>
      1. How many samples are genotyped?
      2. How many SNPs are in the chromosome 10?
      3. Get the SNP names available in  the region chr2:134500-2300000.
      4. In which chromosome is located the SNP rs1527354?
      5. Get the number of individuals of each genoytpe corresponding to the SNP rs7859525. Which the homozygous normal genotype?
+>
 
 
-
-
-**EXERCISE 2:** Install the Bioconductor package called `airway` and load the data `airway` which is a `SummarizedExperiment` by executing:
-
-```{r eval=FALSE}
+>**EXERCISE 2:** Install the Bioconductor package called `airway` and load the data `airway` which is a `SummarizedExperiment` by executing:
+>
+>```{r eval=FALSE}
 library(airway)
 data(airway)
 ```
-
-     1. Print the object {\tt airway} and interpret the output.
+>
+>    1. Print the object {\tt airway} and interpret the output.
      2. Get the table of counts (use {\tt asssays} data) and the variables of the experiment (use {\tt colData} function).
      3. Verify that {\tt SummarizedExperiment} objects check the dimension of the tables (think about the dimensions that should match).
      4. Compare the number of counts of the gene ENSG00000000419 between treated and untreated cells (variable 'dex') using {\tt t.test} function.
+>
 
 
-
-
-
-**EXERCISE 3:** [Recount2](https://jhubiostatistics.shinyapps.io/recount/) provides data for different RNA-seq experiments. These includes data from GTEx or TCGA projects. We have downloaded a subset of data corresponding to breast cancer and created a variable called `er` which encodes the estrogen receptor status (Negative and Positive). The `SummarizedExperiment` object is called `breast` and is available in the file 'breast_tcga.Rdata'. Load the data into R and answer the next questions
-
-     1. How many samples are in the `SummarizedExperiment` object?
+>
+>**EXERCISE 3:** [Recount2](https://jhubiostatistics.shinyapps.io/recount/) provides data for different RNA-seq experiments. These includes data from GTEx or TCGA projects. We have downloaded a subset of data corresponding to breast cancer and created a variable called `er` which encodes the estrogen receptor status (Negative and Positive). The `SummarizedExperiment` object is called `breast` and is available in the file 'breast_tcga.Rdata'. Load the data into R and answer the next questions
+>
+>    1. How many samples are in the `SummarizedExperiment` object?
      2. And how many genes?
      3. Which is the number of samples with positive estrogen receptor status (variable `er`)?
      4. Subset the individuals having Negative strogen receptor status and draw a boxplot of the first gene. 
      5. Create a `SummarizedExperiment` object of the genomic region chr6:151.2-151.8Mb. How many genes are in that region? How many of them are annotated? That is, how many of them have a gene symbol name? (HINT: use `rowRanges()` function and remember that `mcols()` function is used to get acccess to columns in a `GRanges` object) 
+>
 
 
-
-
-**EXERCISE 4**: The file `snpsGWAS.Rdata` contains information about 28 SNPs that were called as a significantly associated with a given disease after performing a GWAS study.
-
-     1. Load this data into R.
+>
+>**EXERCISE 4**: The file `snpsGWAS.Rdata` contains information about 28 SNPs that were called as a significantly associated with a given disease after performing a GWAS study.
+>
+>    1. Load this data into R.
      2. Create a data.frame with the name of the SNP, its chromosome, its position and the allele name.
      3. Add another column to this data.frame with the minor allele frequency (MAF) estimated from 1000 genomes (HINT: use `listAttributes` to retrieve the name of the attribute we are interested in).
      4. Annotate the variants and get the gene symbol
      5. How many SNPs are located in promoter regions?
-
+>
 
 ## Genetic association studies
 
-
-
-**EXERCISE 5**: Researchers are interested in assessing possible association between candidate SNPs and the response to treatment in patients diagnosed with major depression (file 'DM.txt' - NOTE: check how alleles are separated). The file also includes clinical information about other covariates of interest such as:
-
-     + HDRS: Hamilton Depression Rating Scale (continuous variable)
+>
+>**EXERCISE 5**: Researchers are interested in assessing possible association between candidate SNPs and the response to treatment in patients diagnosed with major depression (file 'DM.txt' - NOTE: check how alleles are separated). The file also includes clinical information about other covariates of interest such as:
+>
+>    + HDRS: Hamilton Depression Rating Scale (continuous variable)
      + PSICOT: Was the patient psychotic? (No and Yes)
      + MELANCOL: Was the patient melancholic? (No and Yes)
      + EPD_PREV: Number of previous episodes of depression (continuous variable)
      + RESP: Response to treatment (outcome)
-
-Answer the following questions:
-
-     1. Is it necessary to check HWE hypothesis for this example?
+>
+>Answer the following questions:
+>
+>    1. Is it necessary to check HWE hypothesis for this example?
      2. Is there any SNP associated with the response to the treatment? If so, write a sentence interpreting the results of that association (only for one SNP)
      3. Does the result change after adjusting for other clinical covariates?
      4. Create a plot with the p-values only for dominant, recessive and additive models
      5. Compute the p-values using MAX-statistic for all SNPs
+>
 
-
-
-
-
-**EXERCISE 6**: Researchers are now interested in assessing the effect of haplotypes on the response to treatment. Answer the following questions:
-
+>**EXERCISE 6**: Researchers are now interested in assessing the effect of haplotypes on the response to treatment. Answer the following questions:
+>
      1. Which is the combination of SNPs (e.g. number of consecutive haplotypes) that is more associated with the response to treatment? (NOTE1: Try only haplotypes of length 2 up to 4)
      2. Which is the most frequent haplotype?
      3. Compute the OR of association and its 95\% confidence intervals between the estimate haplotypes and the response to treatment
+>
 
-
-**EXERCISE 7**: Researchers are now interested in creating a genetic score to predict the response to the treatment
-
-     1. Perform all the required steps to get such score and evaluate its performance using a ROC curve
-     
-     
-     
+>**EXERCISE 7**: Researchers are now interested in creating a genetic score to predict the response to the treatment
+>
+>  1. Perform all the required steps to get such score and evaluate its performance using a ROC curve
+> 
+ 
+ 
      
 ## GWAS
 
-
-
-**EXERCISE 8**: Researchers are interested in detecting new SNPs associated with BMI (body mass index). To do so, they performed a GWAS using DNA information about 425 individuals. Genotype information is available in plink format (files 'coronary.bed', 'coronary.bim', 'coronary.fam') while phenotypic information can be found in the file 'coronary.txt'.
-
-     1. Read genotypes using `snpStats` library
+>
+>**EXERCISE 8**: Researchers are interested in detecting new SNPs associated with BMI (body mass index). To do so, they performed a GWAS using DNA information about 425 individuals. Genotype information is available in plink format (files 'coronary.bed', 'coronary.bim', 'coronary.fam') while phenotypic information can be found in the file 'coronary.txt'.
+>
+>    1. Read genotypes using `snpStats` library
      2. Verify that both data sets are in the same order (NOTE: 'id' variable in the file 'coronary.txt' must be used since it corresponds to the unique patient number)
      3. Remove those SNPs that do not pass QC
      4. Perform QC filtering of individuals
@@ -112,21 +104,23 @@ Answer the following questions:
      6. Calculate 'lambda' and create a Q-Q plot to assess population stratification
      7. Assess association between BMI' and the SNPs adjusting for population stratification (variables 'ev3' and 'ev4' in the file 'coronary.txt') (NOTE: remember that you are analyzing a **quantitative trait**). Are there differences with crude analysis?
      8. Create a Manhattan plot
-     
+>   
      
      
 ## Microarray data analysis {#Microarray-exerc}  
 
-**EXERCISE 9**: To be supplied
-
+>
+>**EXERCISE 9**: To be supplied
+>
 
 ## RNAseq data analysis {#RNAseq-exerc}
 
-**EXERICSE 10**: Download the data SRP029880 from recount2: http://duffel.rail.bio/recount/v2/SRP029880/rse_gene.Rdata. This file contains a `RangedSummarizedExperiment` object. Do the following tasks:
-
-0. Get the `counts` and `colData` tables.
-1. Normalize the counts using CPM, RPKM, TPM and TMM methods.
-2. Create the RLE and PCA plots for each method as well as for the raw data (do not forget to log-transform the data).
+>
+>**EXERICSE 10**: Download the data SRP029880 from recount2: http://duffel.rail.bio/recount/v2/SRP029880/rse_gene.Rdata. This file contains a `RangedSummarizedExperiment` object. Do the following tasks:
+>
+>0. Get the `counts` and `colData` tables.
+>1. Normalize the counts using CPM, RPKM, TPM and TMM methods.
+>2. Create the RLE and PCA plots for each method as well as for the raw data (do not forget to log-transform the data).
 3. Using TPM normalized data:
      - Plot a heatmap of the top 500 most variable genes. Compare with the heatmap obtained using the 100 most variable genes.
      - Re-do the heatmaps setting the scale argument to `none`, and `column`. Compare the results with `scale = 'row'`.
@@ -137,5 +131,35 @@ Answer the following questions:
 7. Do the same plot for the top-10 genes (this tries to mimic your supplementary material in your paper!)
 8. Investigate whether the analysis should be adjusted for other covariates.
 9. Repeat differential expression analysis accounting for unwanted variability using `RUV` and `sva` packages.  
-     
+>
+
+## Enrichment Analysis {#enrichment-exerc}
+
+>
+>**EXERCISE 11**: Library `tweeDEseqCountData` contains data corresponding to an RNA-seq experiment described in  Pickrell et al. (2010). Data correspond to lymphoblastoid cell lines about 69 non-related Nigerian individuals. This information as well as phenotypic data is available as an object of class `eSet` called `pickrell.eset` that can be loaded after typing:
+>
+>```
+>data(pickrell)
+>```
+>
+1. Use limma-voom method to detect those genes that are differentially expressed (DE) between males and females (variale `gender`).
+>
+2. Select those genes that are DE at 5% FDR with a minimum fold-change of 1.5
+>
+3. Create a gene set of sex-expecific genes by
+>
+>```
+>geneUniverse <- featureNames(pickrell.eset)
+>geneSex <- unique(intersect(geneUniverse,
+                  c(msYgenes, XiEgenes)))
+>```
+>
+and test whether the list of DE genes is enriched in that gene set.
+>
+
+>
+>**EXERCISE 12**: Use the data in exercise 10 to obtain a list of genes that are differentially expressed between `metastasis vs normal` samples (you can run the R script that is available in the Moodle - 'Answer exercises')
+>     - Perform an enrichment analysis of GO, KEGG and DisGeNET databases using `clusterProfiler`.
+>     - Investigate whether the DE genes are enriched in protein-coding genes.
+
 
