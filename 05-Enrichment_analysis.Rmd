@@ -87,11 +87,11 @@ as well as genomic regions and disease phenotypes,
 > 
 
 
-# Gene expression-based enrichment analysis
+## Gene expression-based enrichment analysis
 
 This methodology can be extended to the analysis of multiple gene sets available in different databases such as GO or KEGG among others. Next sections illustrate how to perform such analyses using different BioC packages.
 
-## A primer on terminology, existing methods & statistical theory
+### A primer on terminology, existing methods & statistical theory
 
 **Gene sets, pathways & regulatory networks**
 
@@ -227,7 +227,7 @@ This has been shown to filter out spurious hits of individual methods, thereby r
 [Alhamdoosh et al., 2017](https://doi.org/10.1093/bioinformatics/btw623).
 
 
-## Basic analysis using `GOstats`
+### Basic analysis using `GOstats`
 
 Let us illustrate how to perform ORA (enrichment analysis) using gene expression data. First, we need to perform DE analysis. Our interest is to compare gene expression between cell lines that have been treated with dexamethasone or not.
 
@@ -325,7 +325,7 @@ hgOver.kegg <- hyperGTest(params.kegg)
 head(summary(hgOver.kegg))
 ```
 
-## Analysis using `clusterProfiler` 
+### Analysis using `clusterProfiler` 
 
 [clusterProfiler]() performs statistical analysis and visualization of functional profiles for genes and gene clusters. It includes GO, KEEG and a general function to perform ORA for any database such as [MSigDB](http://www.gsea-msigdb.org/gsea/msigdb/index.jsp) or [DisGeNET](http://www.disgenet.org/) among others.
 
@@ -384,7 +384,7 @@ tab.tf<- subset(tab.tf, Count>5)
 tab.tf[1:5,1:5]
 ```
 
-## Visualization
+### Visualization
 
 All analyses performed with `clusterProfiler` can be visualize by different plots:
 
