@@ -24,7 +24,7 @@
 <meta name="author" content="Juan R González" />
 
 
-<meta name="date" content="2021-01-24" />
+<meta name="date" content="2021-01-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -190,8 +190,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#accounting-for-additional-sources-of-variation"><i class="fa fa-check"></i><b>6.5</b> Accounting for additional sources of variation</a>
 <ul>
 <li class="chapter" data-level="6.5.1" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#accounting-for-covariates-using-deseq2"><i class="fa fa-check"></i><b>6.5.1</b> Accounting for covariates using <code>DESeq2</code></a></li>
-<li class="chapter" data-level="6.5.2" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#accounting-for-estimated-covariates-using-ruvseq"><i class="fa fa-check"></i><b>6.5.2</b> Accounting for estimated covariates using RUVSeq</a></li>
-<li class="chapter" data-level="6.5.3" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#removing-unwanted-variation-from-the-data"><i class="fa fa-check"></i><b>6.5.3</b> Removing unwanted variation from the data</a></li>
+<li class="chapter" data-level="6.5.2" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#accounting-for-estimated-covariates-using-sva-and-ruvseq"><i class="fa fa-check"></i><b>6.5.2</b> Accounting for estimated covariates using <code>sva</code> and <code>RUVSeq</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="enrichment-analysis.html"><a href="enrichment-analysis.html"><i class="fa fa-check"></i><b>7</b> Enrichment Analysis</a>
@@ -253,8 +252,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <blockquote>
 <p><strong>EXERCISE 2:</strong> Install the Bioconductor package called <code>airway</code> and load the data <code>airway</code> which is a <code>SummarizedExperiment</code> by executing:</p>
-<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="exercises.html#cb451-1"></a><span class="kw">library</span>(airway)</span>
-<span id="cb451-2"><a href="exercises.html#cb451-2"></a><span class="kw">data</span>(airway)</span></code></pre></div>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="exercises.html#cb466-1"></a><span class="kw">library</span>(airway)</span>
+<span id="cb466-2"><a href="exercises.html#cb466-2"></a><span class="kw">data</span>(airway)</span></code></pre></div>
 <ol style="list-style-type: decimal">
 <li>Print the object {} and interpret the output.</li>
 <li>Get the table of counts (use {} data) and the variables of the experiment (use {} function).</li>
@@ -361,7 +360,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Examine the distribution of counts for a single gene (most associated with <code>metastasis</code>). Hint: use <code>DESeq2::plotCounts ()</code></li>
 <li>Do the same plot for the top-10 genes (this tries to mimic your supplementary material in your paper!)</li>
 <li>Investigate whether the analysis should be adjusted for other covariates.</li>
-<li>Repeat differential expression analysis accounting for unwanted variability using <code>RUV</code> and <code>sva</code> packages.</li>
+<li>Repeat differential expression analysis accounting for unwanted variability using <code>sva</code> package.</li>
 </ol>
 </blockquote>
 </div>
@@ -382,8 +381,8 @@ c(msYgenes, XiEgenes)))</code></pre>
 </blockquote>
 <blockquote>
 <p><strong>EXERCISE 12</strong>: Use the data in exercise 10 to obtain a list of genes that are differentially expressed between <code>metastasis vs normal</code> samples (you can run the R script that is available in the Moodle - ‘Answer exercises’)
-- Perform an enrichment analysis of GO, KEGG and DisGeNET databases using <code>clusterProfiler</code>.
-- Investigate whether the DE genes are enriched in protein-coding genes.</p>
+1. Perform an enrichment analysis of GO, KEGG and DisGeNET databases using <code>clusterProfiler</code>.
+2. Investigate whether the DE genes are enriched in protein-coding genes.</p>
 </blockquote>
 
 </div>

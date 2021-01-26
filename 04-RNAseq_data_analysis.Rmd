@@ -564,11 +564,15 @@ DEresults <- results(dds, contrast = c('group', 'CASE', 'CTRL'))
 ```
 
 
-### Accounting for estimated covariates using RUVSeq
+### Accounting for estimated covariates using `sva` and `RUVSeq` 
 
-In cases when the sources of potential variation are not known, it is worthwhile to use tools such as `RUVSeq` or `sva` that can estimate potential sources of variation and clean up the counts table from those sources of variation. Later on, the estimated covariates can be integrated into `DESeq2`’s design formula.
+In cases when the sources of potential variation are not known, it is worthwhile to use tools such as `sva` or `RUVSeq` that can estimate potential sources of variation and clean up the counts table from those sources of variation. Later on, the estimated covariates can be integrated into `DESeq2`’s design formula.
 
-Let’s see how to utilize the `RUVseq` package to first diagnose the problem and then solve it (**NOTE**: you will practice with `sva` in the exercises). Here, for demonstration purposes, we’ll use a count table from a lung carcinoma study in which a transcription factor (Ets homologous factor - EHF) is overexpressed and compared to the control samples with baseline EHF expression. Again, we only consider protein coding genes and use only five case and five control samples. The original data can be found on the [recount2 database](https://jhubiostatistics.shinyapps.io/recount/) with the accession ‘SRP049988’.
+#### Surrogate variable analysis (`SVA`)
+
+Let us start by illustrating how to use `sva` package to estimate surrogate variables that account for unwanted variability. 
+
+Here, for demonstration purposes, we’ll use a count table from a lung carcinoma study in which a transcription factor (Ets homologous factor - EHF) is overexpressed and compared to the control samples with baseline EHF expression. Again, we only consider protein coding genes and use only five case and five control samples. The original data can be found on the [recount2 database](https://jhubiostatistics.shinyapps.io/recount/) with the accession ‘SRP049988’.
 
 ```{r ruvseq}
 counts_file <- system.file('extdata/rna-seq/SRP049988.raw_counts.tsv', 
@@ -636,14 +640,100 @@ plotPCA(tpm, col=as.numeric(colData$group), adj = 0.5,
 ```
 
 
-Both RLE and PCA plots look better on normalized data  compared to raw data, but still suggest the necessity of further improvement, because the CASE_5 sample still clusters with the control samples. We haven’t yet accounted for the source of unwanted variation.
+Both RLE and PCA plots look better on normalized data  compared to raw data, but still suggest the necessity of further improvement, because the CASE_5 sample still clusters with the control samples. We haven’t yet accounted for the source of unwanted variation. 
+
+This is also reflected when analyzing the data to detect differentially expressed genes:
+
+```{r deseq_sva}
+library(DESeq2)
+dds <- DESeqDataSetFromMatrix(countData = countData,
+                              colData = colData, 
+                              design = ~ group)
+dds <- dds[rowSums(DESeq2::counts(dds)) > 10]
+dds <- DESeq(dds)
+ans <- results(dds, contrast = c("group", 'CASE', 'CTRL'))
+
+ans
+```
+
+Now, if we look at the QQplot we observe that there is huge inflation. 
+
+```{r qqsva, fig.cap='QQ-plot of raw p-values from DE analysis', fig.align='center'}
+GWASTools::qqPlot(ans$pvalue)
+```
+
+This figure indicates that there exists unwanted variability that must be removed from the association analysis. `sva` estimates some variables that can capture hidden or unobserved variables that define hidden groups of samples. The idea is similar to PCA analysis in GWAS studies to capture population stratification. The main difference here is that `sva` iterativelty estimates the required number of surrogate variables that can then be used in the adjusted models. Let us illustrate how to do it. 
+
+The method removes all the existing variability but the one driven by our grouping/condition variable by defining two models
+
+```{r sva_1}
+library(sva)
+mod1 <- model.matrix( ~ group, data=colData)
+mod0 <- model.matrix( ~ 1, data=colData)   
+```
+
+**NOTE**: If there are variables that you want to adjust for (e.g. age, sex, batch) the to models would be (not run) 
 
 
-### Removing unwanted variation from the data
+```{r sva_1b, eval=FALSE}
+mod1 <- model.matrix( ~ group + age + sex + batch, data=colData)
+mod0 <- model.matrix( ~ age + sex + batch, data=colData)   
+```
 
-`RUVSeq` has three main functions for removing unwanted variation: `RUVg()`, `RUVs()`, and `RUVr()`. Here, we will demonstrate how to use `RUVg` and `RUVs`. RUVr will be left as an exercise.
 
-#### Using RUVg
+Then, the surrogate variables are estimated with
+
+```{r sva_2}
+countData <- countData[ rowSums(countData) > 10, ]
+sv <- svaseq(countData, mod1, mod0)
+```
+
+Note that we remove genes with low counts to avoid numerical problems `sva` procedure.
+
+The number of estimated surrogate variables are 
+
+```{r show_nsv}
+sv$n.sv
+```
+
+
+And the surrogate variables are saved in `sv$sv`
+
+```{r show_sv}
+head(sv$sv)
+```
+
+Now we can re-run the DE analysis adjusting for those covariates as following:
+
+```{r add}
+# add surrogate variables to the colData
+temp <- DataFrame(colData, sv$sv)
+colData(dds) <- temp
+head(colData(dds))
+
+# update the design
+design(dds) <- as.formula( ~ group + V1 + V2)
+
+# re-run the analysis
+dds <- dds[rowSums(DESeq2::counts(dds)) > 10]
+dds <- DESeq(dds)
+ans.sv <- results(dds, contrast = c("group", 'CASE', 'CTRL'))
+```
+
+Now, let us verify whether the QQ-plot is showing inflation with regard to the p-values
+
+```{r qqsva2, fig.cap='QQ-plot of p-values from DE analysis adjusted for surrogate variables', fig.align='center'}
+GWASTools::qqPlot(ans.sv$pvalue)
+```
+
+In that case, we still see a huge inflation. This is explain by the fact that we are analyzing gene expression between cases diagnosed with cancer and controls where the transcriptome is highly altered. In practical terms, one can state in the manuscript that DE analysis was adjusted for surrogate variables to guarantee that the differences we observed are not due to technical artifacts. 
+
+
+#### Remove unwanted variability (`RUV`)
+
+Let’s see how to utilize the `RUVseq` package to first diagnose the problem or detecting that unwanted variability is present and then how solve it. `RUVSeq` has three main functions for removing unwanted variation: `RUVg()`, `RUVs()`, and `RUVr()`. Here, we will demonstrate how to use `RUVg` and `RUVs`. RUVr will be left as an exercise.
+
+#### Using RUVg {-}
 
 One way of removing unwanted variation depends on using a set of reference genes that are not expected to change by the sources of technical variation. One strategy along this line is to use spike-in genes, which are artificially introduced into the sequencing run ([Jiang, et al. 2011](https://doi.org/10.1101/gr.121095.111)). However, there are many sequencing datasets that don’t have this spike-in data available. In such cases, an empirical set of genes can be collected from the expression data by doing a differential expression analysis and discovering genes that are unchanged in the given conditions. These unchanged genes are used to clean up the data from systematic shifts in expression due to the unwanted sources of variation. Another strategy could be to use a set of house-keeping genes as negative controls, and use them as a reference to correct the systematic biases in the data. Let’s use a list of ~500 house-keeping genes compiled here: https://www.tau.ac.il/~elieis/HKG/HK_genes.txt.
 
@@ -706,7 +796,7 @@ plotPCA(set_g, col=as.numeric(colData$group), adj = 0.5,
 
 We can observe that using `RUVg()` with house-keeping genes as reference has improved the clusters, however not yielded ideal separation. Probably the effect that is causing the ‘CASE_5’ to cluster with the control samples still hasn’t been completely eliminated.
 
-#### Using RUVs
+#### Using RUVs  {-}
 
 
 There is another strategy of `RUVSeq` that works better in the presence of replicates in the absence of a confounded experimental design, which is the `RUVs()` function. Let’s see how that performs with this data. This time we don’t use the house-keeping genes. We rather use all genes as input to `RUVs ()`. This function estimates the correction factor by assuming that replicates should have constant biological variation, rather, the variation in the replicates are the unwanted variation.
@@ -788,8 +878,6 @@ pheatmap(normCountData[selectedGenes,],
          scale = 'row')
 ```
 
-
-#### Re-run `DESeq2` with the computed variables
 
 Having computed the sources of variation using `RUVs()`, we can actually integrate these variables with DESeq2 to re-do the differential expression analysis. Here the idea is that the comparisons among groups will be ajusted for **unwanted variability**.
 

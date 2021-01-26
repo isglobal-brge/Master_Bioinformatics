@@ -130,7 +130,7 @@ data(airway)
 6. Examine the distribution of counts for a single gene (most associated with `metastasis`). Hint: use `DESeq2::plotCounts ()`
 7. Do the same plot for the top-10 genes (this tries to mimic your supplementary material in your paper!)
 8. Investigate whether the analysis should be adjusted for other covariates.
-9. Repeat differential expression analysis accounting for unwanted variability using `RUV` and `sva` packages.  
+9. Repeat differential expression analysis accounting for unwanted variability using `sva` package.  
 >
 
 ## Enrichment Analysis {#enrichment-exerc}
@@ -159,7 +159,7 @@ and test whether the list of DE genes is enriched in that gene set.
 
 >
 >**EXERCISE 12**: Use the data in exercise 10 to obtain a list of genes that are differentially expressed between `metastasis vs normal` samples (you can run the R script that is available in the Moodle - 'Answer exercises')
->     - Perform an enrichment analysis of GO, KEGG and DisGeNET databases using `clusterProfiler`.
->     - Investigate whether the DE genes are enriched in protein-coding genes.
+>1. Perform an enrichment analysis of GO, KEGG and DisGeNET databases using `clusterProfiler`.
+>2. Investigate whether the DE genes are enriched in protein-coding genes.
 
 

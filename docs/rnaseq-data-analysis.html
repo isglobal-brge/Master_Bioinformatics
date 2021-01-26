@@ -24,7 +24,7 @@
 <meta name="author" content="Juan R González" />
 
 
-<meta name="date" content="2021-01-24" />
+<meta name="date" content="2021-01-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -190,8 +190,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#accounting-for-additional-sources-of-variation"><i class="fa fa-check"></i><b>6.5</b> Accounting for additional sources of variation</a>
 <ul>
 <li class="chapter" data-level="6.5.1" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#accounting-for-covariates-using-deseq2"><i class="fa fa-check"></i><b>6.5.1</b> Accounting for covariates using <code>DESeq2</code></a></li>
-<li class="chapter" data-level="6.5.2" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#accounting-for-estimated-covariates-using-ruvseq"><i class="fa fa-check"></i><b>6.5.2</b> Accounting for estimated covariates using RUVSeq</a></li>
-<li class="chapter" data-level="6.5.3" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#removing-unwanted-variation-from-the-data"><i class="fa fa-check"></i><b>6.5.3</b> Removing unwanted variation from the data</a></li>
+<li class="chapter" data-level="6.5.2" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#accounting-for-estimated-covariates-using-sva-and-ruvseq"><i class="fa fa-check"></i><b>6.5.2</b> Accounting for estimated covariates using <code>sva</code> and <code>RUVSeq</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="enrichment-analysis.html"><a href="enrichment-analysis.html"><i class="fa fa-check"></i><b>7</b> Enrichment Analysis</a>
@@ -838,10 +837,13 @@ Figure 6.15: Visualizing batch effects in an experiment.
 <span id="cb376-3"><a href="rnaseq-data-analysis.html#cb376-3"></a><span class="co"># extract results that are adjusted for &#39;LibrarySelection&#39; </span></span>
 <span id="cb376-4"><a href="rnaseq-data-analysis.html#cb376-4"></a>DEresults &lt;-<span class="st"> </span><span class="kw">results</span>(dds, <span class="dt">contrast =</span> <span class="kw">c</span>(<span class="st">&#39;group&#39;</span>, <span class="st">&#39;CASE&#39;</span>, <span class="st">&#39;CTRL&#39;</span>))</span></code></pre></div>
 </div>
-<div id="accounting-for-estimated-covariates-using-ruvseq" class="section level3" number="6.5.2">
-<h3><span class="header-section-number">6.5.2</span> Accounting for estimated covariates using RUVSeq</h3>
-<p>In cases when the sources of potential variation are not known, it is worthwhile to use tools such as <code>RUVSeq</code> or <code>sva</code> that can estimate potential sources of variation and clean up the counts table from those sources of variation. Later on, the estimated covariates can be integrated into <code>DESeq2</code>’s design formula.</p>
-<p>Let’s see how to utilize the <code>RUVseq</code> package to first diagnose the problem and then solve it (<strong>NOTE</strong>: you will practice with <code>sva</code> in the exercises). Here, for demonstration purposes, we’ll use a count table from a lung carcinoma study in which a transcription factor (Ets homologous factor - EHF) is overexpressed and compared to the control samples with baseline EHF expression. Again, we only consider protein coding genes and use only five case and five control samples. The original data can be found on the <a href="https://jhubiostatistics.shinyapps.io/recount/">recount2 database</a> with the accession ‘SRP049988’.</p>
+<div id="accounting-for-estimated-covariates-using-sva-and-ruvseq" class="section level3" number="6.5.2">
+<h3><span class="header-section-number">6.5.2</span> Accounting for estimated covariates using <code>sva</code> and <code>RUVSeq</code></h3>
+<p>In cases when the sources of potential variation are not known, it is worthwhile to use tools such as <code>sva</code> or <code>RUVSeq</code> that can estimate potential sources of variation and clean up the counts table from those sources of variation. Later on, the estimated covariates can be integrated into <code>DESeq2</code>’s design formula.</p>
+<div id="surrogate-variable-analysis-sva" class="section level4" number="6.5.2.1">
+<h4><span class="header-section-number">6.5.2.1</span> Surrogate variable analysis (<code>SVA</code>)</h4>
+<p>Let us start by illustrating how to use <code>sva</code> package to estimate surrogate variables that account for unwanted variability.</p>
+<p>Here, for demonstration purposes, we’ll use a count table from a lung carcinoma study in which a transcription factor (Ets homologous factor - EHF) is overexpressed and compared to the control samples with baseline EHF expression. Again, we only consider protein coding genes and use only five case and five control samples. The original data can be found on the <a href="https://jhubiostatistics.shinyapps.io/recount/">recount2 database</a> with the accession ‘SRP049988’.</p>
 <div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="rnaseq-data-analysis.html#cb377-1"></a>counts_file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;extdata/rna-seq/SRP049988.raw_counts.tsv&#39;</span>, </span>
 <span id="cb377-2"><a href="rnaseq-data-analysis.html#cb377-2"></a>                           <span class="dt">package =</span> <span class="st">&#39;compGenomRData&#39;</span>)</span>
 <span id="cb377-3"><a href="rnaseq-data-analysis.html#cb377-3"></a>colData_file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;extdata/rna-seq/SRP049988.colData.tsv&#39;</span>, </span>
@@ -904,181 +906,269 @@ Figure 6.18: Diagnostic RLE and PCA plots based on TPM normalized count table.
 </p>
 </div>
 <p>Both RLE and PCA plots look better on normalized data compared to raw data, but still suggest the necessity of further improvement, because the CASE_5 sample still clusters with the control samples. We haven’t yet accounted for the source of unwanted variation.</p>
+<p>This is also reflected when analyzing the data to detect differentially expressed genes:</p>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="rnaseq-data-analysis.html#cb382-1"></a><span class="kw">library</span>(DESeq2)</span>
+<span id="cb382-2"><a href="rnaseq-data-analysis.html#cb382-2"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeqDataSetFromMatrix</span>(<span class="dt">countData =</span> countData,</span>
+<span id="cb382-3"><a href="rnaseq-data-analysis.html#cb382-3"></a>                              <span class="dt">colData =</span> colData, </span>
+<span id="cb382-4"><a href="rnaseq-data-analysis.html#cb382-4"></a>                              <span class="dt">design =</span> <span class="op">~</span><span class="st"> </span>group)</span>
+<span id="cb382-5"><a href="rnaseq-data-analysis.html#cb382-5"></a>dds &lt;-<span class="st"> </span>dds[<span class="kw">rowSums</span>(DESeq2<span class="op">::</span><span class="kw">counts</span>(dds)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>]</span>
+<span id="cb382-6"><a href="rnaseq-data-analysis.html#cb382-6"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds)</span>
+<span id="cb382-7"><a href="rnaseq-data-analysis.html#cb382-7"></a>ans &lt;-<span class="st"> </span><span class="kw">results</span>(dds, <span class="dt">contrast =</span> <span class="kw">c</span>(<span class="st">&quot;group&quot;</span>, <span class="st">&#39;CASE&#39;</span>, <span class="st">&#39;CTRL&#39;</span>))</span>
+<span id="cb382-8"><a href="rnaseq-data-analysis.html#cb382-8"></a></span>
+<span id="cb382-9"><a href="rnaseq-data-analysis.html#cb382-9"></a>ans</span></code></pre></div>
+<pre><code>log2 fold change (MLE): group CASE vs CTRL 
+Wald test p-value: group CASE vs CTRL 
+DataFrame with 18508 rows and 6 columns
+             baseMean log2FoldChange     lfcSE       stat      pvalue        padj
+            &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt;   &lt;numeric&gt;   &lt;numeric&gt;
+TSPAN6     89382.1826      -0.545795 0.0418376  -13.04555 6.73674e-39 2.25551e-36
+DPM1       60432.9217       0.166516 0.1194548    1.39396 1.63328e-01 2.68234e-01
+SCYL3      26767.1487       0.097745 0.0750204    1.30291 1.92604e-01 3.05730e-01
+C1ORF112   16738.9727       0.720767 0.2040321    3.53261 4.11471e-04 1.75710e-03
+FGR           15.2858      -6.043118 3.0119833   -2.00636 4.48180e-02 9.34917e-02
+...               ...            ...       ...        ...         ...         ...
+ETDC          46.8742      0.2189282  1.851210  0.1182622    0.905860    0.942735
+LMLN2        390.4337     -0.5897963  0.871550 -0.6767213    0.498583    0.634202
+AC008687.8   154.7583     -0.0487054  0.511696 -0.0951842    0.924168    0.954562
+MYOCOS        27.2624      1.2110715  2.668909  0.4537703    0.649994    0.762304
+HSFX3       1457.9518      0.0714840  0.272921  0.2619223    0.793381    0.869712</code></pre>
+<p>Now, if we look at the QQplot we observe that there is huge inflation.</p>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="rnaseq-data-analysis.html#cb384-1"></a>GWASTools<span class="op">::</span><span class="kw">qqPlot</span>(ans<span class="op">$</span>pvalue)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:qqsva"></span>
+<img src="fig/qqsva-1.png" alt="QQ-plot of raw p-values from DE analysis" width="672" />
+<p class="caption">
+Figure 6.19: QQ-plot of raw p-values from DE analysis
+</p>
 </div>
-<div id="removing-unwanted-variation-from-the-data" class="section level3" number="6.5.3">
-<h3><span class="header-section-number">6.5.3</span> Removing unwanted variation from the data</h3>
-<p><code>RUVSeq</code> has three main functions for removing unwanted variation: <code>RUVg()</code>, <code>RUVs()</code>, and <code>RUVr()</code>. Here, we will demonstrate how to use <code>RUVg</code> and <code>RUVs</code>. RUVr will be left as an exercise.</p>
-<div id="using-ruvg" class="section level4" number="6.5.3.1">
-<h4><span class="header-section-number">6.5.3.1</span> Using RUVg</h4>
+<p>This figure indicates that there exists unwanted variability that must be removed from the association analysis. <code>sva</code> estimates some variables that can capture hidden or unobserved variables that define hidden groups of samples. The idea is similar to PCA analysis in GWAS studies to capture population stratification. The main difference here is that <code>sva</code> iterativelty estimates the required number of surrogate variables that can then be used in the adjusted models. Let us illustrate how to do it.</p>
+<p>The method removes all the existing variability but the one driven by our grouping/condition variable by defining two models</p>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="rnaseq-data-analysis.html#cb385-1"></a><span class="kw">library</span>(sva)</span>
+<span id="cb385-2"><a href="rnaseq-data-analysis.html#cb385-2"></a>mod1 &lt;-<span class="st"> </span><span class="kw">model.matrix</span>( <span class="op">~</span><span class="st"> </span>group, <span class="dt">data=</span>colData)</span>
+<span id="cb385-3"><a href="rnaseq-data-analysis.html#cb385-3"></a>mod0 &lt;-<span class="st"> </span><span class="kw">model.matrix</span>( <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data=</span>colData)   </span></code></pre></div>
+<p><strong>NOTE</strong>: If there are variables that you want to adjust for (e.g. age, sex, batch) the to models would be (not run)</p>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="rnaseq-data-analysis.html#cb386-1"></a>mod1 &lt;-<span class="st"> </span><span class="kw">model.matrix</span>( <span class="op">~</span><span class="st"> </span>group <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>batch, <span class="dt">data=</span>colData)</span>
+<span id="cb386-2"><a href="rnaseq-data-analysis.html#cb386-2"></a>mod0 &lt;-<span class="st"> </span><span class="kw">model.matrix</span>( <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>batch, <span class="dt">data=</span>colData)   </span></code></pre></div>
+<p>Then, the surrogate variables are estimated with</p>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="rnaseq-data-analysis.html#cb387-1"></a>countData &lt;-<span class="st"> </span>countData[ <span class="kw">rowSums</span>(countData) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>, ]</span>
+<span id="cb387-2"><a href="rnaseq-data-analysis.html#cb387-2"></a>sv &lt;-<span class="st"> </span><span class="kw">svaseq</span>(countData, mod1, mod0)</span></code></pre></div>
+<pre><code>Number of significant surrogate variables is:  2 
+Iteration (out of 5 ):1  2  3  4  5  </code></pre>
+<p>Note that we remove genes with low counts to avoid numerical problems <code>sva</code> procedure.</p>
+<p>The number of estimated surrogate variables are</p>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="rnaseq-data-analysis.html#cb389-1"></a>sv<span class="op">$</span>n.sv</span></code></pre></div>
+<pre><code>[1] 2</code></pre>
+<p>And the surrogate variables are saved in <code>sv$sv</code></p>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="rnaseq-data-analysis.html#cb391-1"></a><span class="kw">head</span>(sv<span class="op">$</span>sv)</span></code></pre></div>
+<pre><code>           [,1]        [,2]
+[1,]  0.1518950 -0.60401773
+[2,]  0.3107944 -0.01966796
+[3,]  0.3185363  0.04966395
+[4,]  0.3496187 -0.18502593
+[5,] -0.5496443  0.28947418
+[6,] -0.3927037 -0.26278458</code></pre>
+<p>Now we can re-run the DE analysis adjusting for those covariates as following:</p>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="rnaseq-data-analysis.html#cb393-1"></a><span class="co"># add surrogate variables to the colData</span></span>
+<span id="cb393-2"><a href="rnaseq-data-analysis.html#cb393-2"></a>temp &lt;-<span class="st"> </span><span class="kw">DataFrame</span>(colData, sv<span class="op">$</span>sv)</span>
+<span id="cb393-3"><a href="rnaseq-data-analysis.html#cb393-3"></a><span class="kw">colData</span>(dds) &lt;-<span class="st"> </span>temp</span>
+<span id="cb393-4"><a href="rnaseq-data-analysis.html#cb393-4"></a><span class="kw">head</span>(<span class="kw">colData</span>(dds))</span></code></pre></div>
+<pre><code>DataFrame with 6 rows and 4 columns
+              source_name    group        V1         V2
+              &lt;character&gt; &lt;factor&gt; &lt;numeric&gt;  &lt;numeric&gt;
+CASE_1 EHF_overexpression     CASE  0.151895 -0.6040177
+CASE_2 EHF_overexpression     CASE  0.310794 -0.0196680
+CASE_3 EHF_overexpression     CASE  0.318536  0.0496639
+CASE_4 EHF_overexpression     CASE  0.349619 -0.1850259
+CASE_5 EHF_overexpression     CASE -0.549644  0.2894742
+CTRL_1       Empty_Vector     CTRL -0.392704 -0.2627846</code></pre>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="rnaseq-data-analysis.html#cb395-1"></a><span class="co"># update the design</span></span>
+<span id="cb395-2"><a href="rnaseq-data-analysis.html#cb395-2"></a><span class="kw">design</span>(dds) &lt;-<span class="st"> </span><span class="kw">as.formula</span>( <span class="op">~</span><span class="st"> </span>group <span class="op">+</span><span class="st"> </span>V1 <span class="op">+</span><span class="st"> </span>V2)</span>
+<span id="cb395-3"><a href="rnaseq-data-analysis.html#cb395-3"></a></span>
+<span id="cb395-4"><a href="rnaseq-data-analysis.html#cb395-4"></a><span class="co"># re-run the analysis</span></span>
+<span id="cb395-5"><a href="rnaseq-data-analysis.html#cb395-5"></a>dds &lt;-<span class="st"> </span>dds[<span class="kw">rowSums</span>(DESeq2<span class="op">::</span><span class="kw">counts</span>(dds)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>]</span>
+<span id="cb395-6"><a href="rnaseq-data-analysis.html#cb395-6"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds)</span>
+<span id="cb395-7"><a href="rnaseq-data-analysis.html#cb395-7"></a>ans.sv &lt;-<span class="st"> </span><span class="kw">results</span>(dds, <span class="dt">contrast =</span> <span class="kw">c</span>(<span class="st">&quot;group&quot;</span>, <span class="st">&#39;CASE&#39;</span>, <span class="st">&#39;CTRL&#39;</span>))</span></code></pre></div>
+<p>Now, let us verify whether the QQ-plot is showing inflation with regard to the p-values</p>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="rnaseq-data-analysis.html#cb396-1"></a>GWASTools<span class="op">::</span><span class="kw">qqPlot</span>(ans.sv<span class="op">$</span>pvalue)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:qqsva2"></span>
+<img src="fig/qqsva2-1.png" alt="QQ-plot of p-values from DE analysis adjusted for surrogate variables" width="672" />
+<p class="caption">
+Figure 6.20: QQ-plot of p-values from DE analysis adjusted for surrogate variables
+</p>
+</div>
+<p>In that case, we still see a huge inflation. This is explain by the fact that we are analyzing gene expression between cases diagnosed with cancer and controls where the transcriptome is highly altered. In practical terms, one can state in the manuscript that DE analysis was adjusted for surrogate variables to guarantee that the differences we observed are not due to technical artifacts.</p>
+</div>
+<div id="remove-unwanted-variability-ruv" class="section level4" number="6.5.2.2">
+<h4><span class="header-section-number">6.5.2.2</span> Remove unwanted variability (<code>RUV</code>)</h4>
+<p>Let’s see how to utilize the <code>RUVseq</code> package to first diagnose the problem or detecting that unwanted variability is present and then how solve it. <code>RUVSeq</code> has three main functions for removing unwanted variation: <code>RUVg()</code>, <code>RUVs()</code>, and <code>RUVr()</code>. Here, we will demonstrate how to use <code>RUVg</code> and <code>RUVs</code>. RUVr will be left as an exercise.</p>
+</div>
+<div id="using-ruvg" class="section level4 unnumbered" number="">
+<h4>Using RUVg</h4>
 <p>One way of removing unwanted variation depends on using a set of reference genes that are not expected to change by the sources of technical variation. One strategy along this line is to use spike-in genes, which are artificially introduced into the sequencing run (<a href="https://doi.org/10.1101/gr.121095.111">Jiang, et al. 2011</a>). However, there are many sequencing datasets that don’t have this spike-in data available. In such cases, an empirical set of genes can be collected from the expression data by doing a differential expression analysis and discovering genes that are unchanged in the given conditions. These unchanged genes are used to clean up the data from systematic shifts in expression due to the unwanted sources of variation. Another strategy could be to use a set of house-keeping genes as negative controls, and use them as a reference to correct the systematic biases in the data. Let’s use a list of ~500 house-keeping genes compiled here: <a href="https://www.tau.ac.il/~elieis/HKG/HK_genes.txt" class="uri">https://www.tau.ac.il/~elieis/HKG/HK_genes.txt</a>.</p>
-<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="rnaseq-data-analysis.html#cb382-1"></a><span class="kw">library</span>(RUVSeq)</span>
-<span id="cb382-2"><a href="rnaseq-data-analysis.html#cb382-2"></a> </span>
-<span id="cb382-3"><a href="rnaseq-data-analysis.html#cb382-3"></a><span class="co">#source for house-keeping genes collection:</span></span>
-<span id="cb382-4"><a href="rnaseq-data-analysis.html#cb382-4"></a><span class="co">#https://m.tau.ac.il/~elieis/HKG/HK_genes.txt</span></span>
-<span id="cb382-5"><a href="rnaseq-data-analysis.html#cb382-5"></a>HK_genes &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">url</span>(<span class="st">&quot;https://m.tau.ac.il/~elieis/HKG/HK_genes.txt&quot;</span>))</span>
-<span id="cb382-6"><a href="rnaseq-data-analysis.html#cb382-6"></a></span>
-<span id="cb382-7"><a href="rnaseq-data-analysis.html#cb382-7"></a><span class="co"># let&#39;s take an intersection of the house-keeping genes with the genes available</span></span>
-<span id="cb382-8"><a href="rnaseq-data-analysis.html#cb382-8"></a><span class="co"># in the count table</span></span>
-<span id="cb382-9"><a href="rnaseq-data-analysis.html#cb382-9"></a>house_keeping_genes &lt;-<span class="st"> </span><span class="kw">intersect</span>(<span class="kw">rownames</span>(set), HK_genes<span class="op">$</span>V1)</span></code></pre></div>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="rnaseq-data-analysis.html#cb397-1"></a><span class="kw">library</span>(RUVSeq)</span>
+<span id="cb397-2"><a href="rnaseq-data-analysis.html#cb397-2"></a> </span>
+<span id="cb397-3"><a href="rnaseq-data-analysis.html#cb397-3"></a><span class="co">#source for house-keeping genes collection:</span></span>
+<span id="cb397-4"><a href="rnaseq-data-analysis.html#cb397-4"></a><span class="co">#https://m.tau.ac.il/~elieis/HKG/HK_genes.txt</span></span>
+<span id="cb397-5"><a href="rnaseq-data-analysis.html#cb397-5"></a>HK_genes &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">url</span>(<span class="st">&quot;https://m.tau.ac.il/~elieis/HKG/HK_genes.txt&quot;</span>))</span>
+<span id="cb397-6"><a href="rnaseq-data-analysis.html#cb397-6"></a></span>
+<span id="cb397-7"><a href="rnaseq-data-analysis.html#cb397-7"></a><span class="co"># let&#39;s take an intersection of the house-keeping genes with the genes available</span></span>
+<span id="cb397-8"><a href="rnaseq-data-analysis.html#cb397-8"></a><span class="co"># in the count table</span></span>
+<span id="cb397-9"><a href="rnaseq-data-analysis.html#cb397-9"></a>house_keeping_genes &lt;-<span class="st"> </span><span class="kw">intersect</span>(<span class="kw">rownames</span>(set), HK_genes<span class="op">$</span>V1)</span></code></pre></div>
 <p>We will now run <code>RUVg()</code> with the different number of factors of unwanted variation. We will plot the PCA after removing the unwanted variation. We should be able to see which <span class="math inline">\(k\)</span> values (e.g. number of factors) produce better separation between sample groups.</p>
-<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="rnaseq-data-analysis.html#cb383-1"></a><span class="co"># now, we use these genes as the empirical set of genes as input to RUVg.</span></span>
-<span id="cb383-2"><a href="rnaseq-data-analysis.html#cb383-2"></a><span class="co"># we try different values of k and see how the PCA plots look </span></span>
-<span id="cb383-3"><a href="rnaseq-data-analysis.html#cb383-3"></a> </span>
-<span id="cb383-4"><a href="rnaseq-data-analysis.html#cb383-4"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb383-5"><a href="rnaseq-data-analysis.html#cb383-5"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) {</span>
-<span id="cb383-6"><a href="rnaseq-data-analysis.html#cb383-6"></a>  set_g &lt;-<span class="st"> </span><span class="kw">RUVg</span>(<span class="dt">x =</span> set, <span class="dt">cIdx =</span> house_keeping_genes, <span class="dt">k =</span> k)</span>
-<span id="cb383-7"><a href="rnaseq-data-analysis.html#cb383-7"></a>  <span class="kw">plotPCA</span>(set_g, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), <span class="dt">cex =</span> <span class="fl">0.9</span>, <span class="dt">adj =</span> <span class="fl">0.5</span>, </span>
-<span id="cb383-8"><a href="rnaseq-data-analysis.html#cb383-8"></a>          <span class="dt">main =</span> <span class="kw">paste0</span>(<span class="st">&#39;with RUVg, k = &#39;</span>,k), </span>
-<span id="cb383-9"><a href="rnaseq-data-analysis.html#cb383-9"></a>          <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), )</span>
-<span id="cb383-10"><a href="rnaseq-data-analysis.html#cb383-10"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="rnaseq-data-analysis.html#cb398-1"></a><span class="co"># now, we use these genes as the empirical set of genes as input to RUVg.</span></span>
+<span id="cb398-2"><a href="rnaseq-data-analysis.html#cb398-2"></a><span class="co"># we try different values of k and see how the PCA plots look </span></span>
+<span id="cb398-3"><a href="rnaseq-data-analysis.html#cb398-3"></a> </span>
+<span id="cb398-4"><a href="rnaseq-data-analysis.html#cb398-4"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb398-5"><a href="rnaseq-data-analysis.html#cb398-5"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) {</span>
+<span id="cb398-6"><a href="rnaseq-data-analysis.html#cb398-6"></a>  set_g &lt;-<span class="st"> </span><span class="kw">RUVg</span>(<span class="dt">x =</span> set, <span class="dt">cIdx =</span> house_keeping_genes, <span class="dt">k =</span> k)</span>
+<span id="cb398-7"><a href="rnaseq-data-analysis.html#cb398-7"></a>  <span class="kw">plotPCA</span>(set_g, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), <span class="dt">cex =</span> <span class="fl">0.9</span>, <span class="dt">adj =</span> <span class="fl">0.5</span>, </span>
+<span id="cb398-8"><a href="rnaseq-data-analysis.html#cb398-8"></a>          <span class="dt">main =</span> <span class="kw">paste0</span>(<span class="st">&#39;with RUVg, k = &#39;</span>,k), </span>
+<span id="cb398-9"><a href="rnaseq-data-analysis.html#cb398-9"></a>          <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), )</span>
+<span id="cb398-10"><a href="rnaseq-data-analysis.html#cb398-10"></a>}</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:plotRUV"></span>
 <img src="fig/plotRUV-1.png" alt="PCA plots on RUVg normalized data with varying number of covariates (k)." width="672" />
 <p class="caption">
-Figure 6.19: PCA plots on RUVg normalized data with varying number of covariates (k).
+Figure 6.21: PCA plots on RUVg normalized data with varying number of covariates (k).
 </p>
 </div>
 <p>Based on the separation of case and control samples in the PCA plots in Figure 8.16, we choose <span class="math inline">\(k = 1\)</span> and re-run the <code>RUVg()</code> function with the house-keeping genes to do more diagnostic plots.</p>
-<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="rnaseq-data-analysis.html#cb384-1"></a>set_g &lt;-<span class="st"> </span><span class="kw">RUVg</span>(<span class="dt">x =</span> set, <span class="dt">cIdx =</span> house_keeping_genes, <span class="dt">k =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="rnaseq-data-analysis.html#cb399-1"></a>set_g &lt;-<span class="st"> </span><span class="kw">RUVg</span>(<span class="dt">x =</span> set, <span class="dt">cIdx =</span> house_keeping_genes, <span class="dt">k =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p>Now let’s do diagnostics: compare the count matrices with or without RUVg processing, comparing RLE plots (Figure @ref{fig:rleRUV}) and PCA plots (Figure @ref{fig:pcaRUV}) to see the effect of RUVg on the normalization and separation of case and control samples.</p>
-<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="rnaseq-data-analysis.html#cb385-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb385-2"><a href="rnaseq-data-analysis.html#cb385-2"></a><span class="kw">plotRLE</span>(set, <span class="dt">outline=</span><span class="ot">FALSE</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>), </span>
-<span id="cb385-3"><a href="rnaseq-data-analysis.html#cb385-3"></a>        <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), <span class="dt">main =</span> <span class="st">&#39;without RUVg&#39;</span>)</span>
-<span id="cb385-4"><a href="rnaseq-data-analysis.html#cb385-4"></a><span class="kw">plotRLE</span>(set_g, <span class="dt">outline=</span><span class="ot">FALSE</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>), </span>
-<span id="cb385-5"><a href="rnaseq-data-analysis.html#cb385-5"></a>        <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), <span class="dt">main =</span> <span class="st">&#39;with RUVg&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="rnaseq-data-analysis.html#cb400-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb400-2"><a href="rnaseq-data-analysis.html#cb400-2"></a><span class="kw">plotRLE</span>(set, <span class="dt">outline=</span><span class="ot">FALSE</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>), </span>
+<span id="cb400-3"><a href="rnaseq-data-analysis.html#cb400-3"></a>        <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), <span class="dt">main =</span> <span class="st">&#39;without RUVg&#39;</span>)</span>
+<span id="cb400-4"><a href="rnaseq-data-analysis.html#cb400-4"></a><span class="kw">plotRLE</span>(set_g, <span class="dt">outline=</span><span class="ot">FALSE</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>), </span>
+<span id="cb400-5"><a href="rnaseq-data-analysis.html#cb400-5"></a>        <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), <span class="dt">main =</span> <span class="st">&#39;with RUVg&#39;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:rleRUV"></span>
 <img src="fig/rleRUV-1.png" alt="RLE plots to observe the effect of RUVg." width="672" />
 <p class="caption">
-Figure 6.20: RLE plots to observe the effect of RUVg.
+Figure 6.22: RLE plots to observe the effect of RUVg.
 </p>
 </div>
-<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="rnaseq-data-analysis.html#cb386-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb386-2"><a href="rnaseq-data-analysis.html#cb386-2"></a><span class="kw">plotPCA</span>(set, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), <span class="dt">adj =</span> <span class="fl">0.5</span>,</span>
-<span id="cb386-3"><a href="rnaseq-data-analysis.html#cb386-3"></a>        <span class="dt">main =</span> <span class="st">&#39;without RUVg&#39;</span>, </span>
-<span id="cb386-4"><a href="rnaseq-data-analysis.html#cb386-4"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="fl">0.5</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>))</span>
-<span id="cb386-5"><a href="rnaseq-data-analysis.html#cb386-5"></a><span class="kw">plotPCA</span>(set_g, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), <span class="dt">adj =</span> <span class="fl">0.5</span>, </span>
-<span id="cb386-6"><a href="rnaseq-data-analysis.html#cb386-6"></a>        <span class="dt">main =</span> <span class="st">&#39;with RUVg&#39;</span>,</span>
-<span id="cb386-7"><a href="rnaseq-data-analysis.html#cb386-7"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="fl">0.5</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="rnaseq-data-analysis.html#cb401-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb401-2"><a href="rnaseq-data-analysis.html#cb401-2"></a><span class="kw">plotPCA</span>(set, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), <span class="dt">adj =</span> <span class="fl">0.5</span>,</span>
+<span id="cb401-3"><a href="rnaseq-data-analysis.html#cb401-3"></a>        <span class="dt">main =</span> <span class="st">&#39;without RUVg&#39;</span>, </span>
+<span id="cb401-4"><a href="rnaseq-data-analysis.html#cb401-4"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="fl">0.5</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>))</span>
+<span id="cb401-5"><a href="rnaseq-data-analysis.html#cb401-5"></a><span class="kw">plotPCA</span>(set_g, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), <span class="dt">adj =</span> <span class="fl">0.5</span>, </span>
+<span id="cb401-6"><a href="rnaseq-data-analysis.html#cb401-6"></a>        <span class="dt">main =</span> <span class="st">&#39;with RUVg&#39;</span>,</span>
+<span id="cb401-7"><a href="rnaseq-data-analysis.html#cb401-7"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="fl">0.5</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:pcaRUV"></span>
 <img src="fig/pcaRUV-1.png" alt="PCA plots to observe the effect of RUVg." width="672" />
 <p class="caption">
-Figure 6.21: PCA plots to observe the effect of RUVg.
+Figure 6.23: PCA plots to observe the effect of RUVg.
 </p>
 </div>
 <p>We can observe that using <code>RUVg()</code> with house-keeping genes as reference has improved the clusters, however not yielded ideal separation. Probably the effect that is causing the ‘CASE_5’ to cluster with the control samples still hasn’t been completely eliminated.</p>
 </div>
-<div id="using-ruvs" class="section level4" number="6.5.3.2">
-<h4><span class="header-section-number">6.5.3.2</span> Using RUVs</h4>
+<div id="using-ruvs" class="section level4 unnumbered" number="">
+<h4>Using RUVs</h4>
 <p>There is another strategy of <code>RUVSeq</code> that works better in the presence of replicates in the absence of a confounded experimental design, which is the <code>RUVs()</code> function. Let’s see how that performs with this data. This time we don’t use the house-keeping genes. We rather use all genes as input to <code>RUVs ()</code>. This function estimates the correction factor by assuming that replicates should have constant biological variation, rather, the variation in the replicates are the unwanted variation.</p>
-<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="rnaseq-data-analysis.html#cb387-1"></a><span class="co"># make a table of sample groups from colData </span></span>
-<span id="cb387-2"><a href="rnaseq-data-analysis.html#cb387-2"></a>differences &lt;-<span class="st"> </span><span class="kw">makeGroups</span>(colData<span class="op">$</span>group)</span>
-<span id="cb387-3"><a href="rnaseq-data-analysis.html#cb387-3"></a></span>
-<span id="cb387-4"><a href="rnaseq-data-analysis.html#cb387-4"></a><span class="co">## looking for two different sources of unwanted variation (k = 2)</span></span>
-<span id="cb387-5"><a href="rnaseq-data-analysis.html#cb387-5"></a><span class="co">## use information from all genes in the expression object</span></span>
-<span id="cb387-6"><a href="rnaseq-data-analysis.html#cb387-6"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb387-7"><a href="rnaseq-data-analysis.html#cb387-7"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) {</span>
-<span id="cb387-8"><a href="rnaseq-data-analysis.html#cb387-8"></a>  set_s &lt;-<span class="st"> </span><span class="kw">RUVs</span>(set, <span class="kw">unique</span>(<span class="kw">rownames</span>(set)), </span>
-<span id="cb387-9"><a href="rnaseq-data-analysis.html#cb387-9"></a>                <span class="dt">k=</span>k, differences) <span class="co">#all genes</span></span>
-<span id="cb387-10"><a href="rnaseq-data-analysis.html#cb387-10"></a>  <span class="kw">plotPCA</span>(set_s, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), </span>
-<span id="cb387-11"><a href="rnaseq-data-analysis.html#cb387-11"></a>          <span class="dt">cex =</span> <span class="fl">0.9</span>, <span class="dt">adj =</span> <span class="fl">0.5</span>, </span>
-<span id="cb387-12"><a href="rnaseq-data-analysis.html#cb387-12"></a>        <span class="dt">main =</span> <span class="kw">paste0</span>(<span class="st">&#39;with RUVs, k = &#39;</span>,k), </span>
-<span id="cb387-13"><a href="rnaseq-data-analysis.html#cb387-13"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.6</span>, <span class="fl">0.6</span>))</span>
-<span id="cb387-14"><a href="rnaseq-data-analysis.html#cb387-14"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="rnaseq-data-analysis.html#cb402-1"></a><span class="co"># make a table of sample groups from colData </span></span>
+<span id="cb402-2"><a href="rnaseq-data-analysis.html#cb402-2"></a>differences &lt;-<span class="st"> </span><span class="kw">makeGroups</span>(colData<span class="op">$</span>group)</span>
+<span id="cb402-3"><a href="rnaseq-data-analysis.html#cb402-3"></a></span>
+<span id="cb402-4"><a href="rnaseq-data-analysis.html#cb402-4"></a><span class="co">## looking for two different sources of unwanted variation (k = 2)</span></span>
+<span id="cb402-5"><a href="rnaseq-data-analysis.html#cb402-5"></a><span class="co">## use information from all genes in the expression object</span></span>
+<span id="cb402-6"><a href="rnaseq-data-analysis.html#cb402-6"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb402-7"><a href="rnaseq-data-analysis.html#cb402-7"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) {</span>
+<span id="cb402-8"><a href="rnaseq-data-analysis.html#cb402-8"></a>  set_s &lt;-<span class="st"> </span><span class="kw">RUVs</span>(set, <span class="kw">unique</span>(<span class="kw">rownames</span>(set)), </span>
+<span id="cb402-9"><a href="rnaseq-data-analysis.html#cb402-9"></a>                <span class="dt">k=</span>k, differences) <span class="co">#all genes</span></span>
+<span id="cb402-10"><a href="rnaseq-data-analysis.html#cb402-10"></a>  <span class="kw">plotPCA</span>(set_s, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), </span>
+<span id="cb402-11"><a href="rnaseq-data-analysis.html#cb402-11"></a>          <span class="dt">cex =</span> <span class="fl">0.9</span>, <span class="dt">adj =</span> <span class="fl">0.5</span>, </span>
+<span id="cb402-12"><a href="rnaseq-data-analysis.html#cb402-12"></a>        <span class="dt">main =</span> <span class="kw">paste0</span>(<span class="st">&#39;with RUVs, k = &#39;</span>,k), </span>
+<span id="cb402-13"><a href="rnaseq-data-analysis.html#cb402-13"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.6</span>, <span class="fl">0.6</span>))</span>
+<span id="cb402-14"><a href="rnaseq-data-analysis.html#cb402-14"></a>}</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:pcaRUVs"></span>
 <img src="fig/pcaRUVs-1.png" alt="PCA plots on RUVs normalized data with varying number of covariates (k)." width="672" />
 <p class="caption">
-Figure 6.22: PCA plots on RUVs normalized data with varying number of covariates (k).
+Figure 6.24: PCA plots on RUVs normalized data with varying number of covariates (k).
 </p>
 </div>
-<p>Based on the separation of case and control samples in the PCA plots in Figure <a href="rnaseq-data-analysis.html#fig:pcaRUVs">6.22</a>, we can see that the samples are better separated even at <code>k = 2</code> when using <code>RUVs()</code>. Here, we re-run the RUVs() function using <code>k = 2</code>, in order to do more diagnostic plots. We try to pick a value of k that is good enough to distinguish the samples by condition of interest. While setting the value of k to higher values could improve the percentage of explained variation by the first principle component to up to 61%, we try to avoid setting the value unnecessarily high to avoid removing factors that might also correlate with important biological differences between conditions.</p>
-<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="rnaseq-data-analysis.html#cb388-1"></a><span class="co"># we set k=2</span></span>
-<span id="cb388-2"><a href="rnaseq-data-analysis.html#cb388-2"></a>set_s &lt;-<span class="st"> </span><span class="kw">RUVs</span>(set, <span class="kw">unique</span>(<span class="kw">rownames</span>(set)), <span class="dt">k=</span><span class="dv">2</span>, differences) </span></code></pre></div>
-<p>Now let’s do diagnostics again: compare the count matrices with or without RUVs processing, comparing RLE plots (Figure <a href="rnaseq-data-analysis.html#fig:rleRUVs">6.23</a>) and PCA plots (Figure <a href="rnaseq-data-analysis.html#fig:pcaRUVs2">6.24</a>) to see the effect of RUVg on the normalization and separation of case and control samples.</p>
-<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="rnaseq-data-analysis.html#cb389-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb389-2"><a href="rnaseq-data-analysis.html#cb389-2"></a><span class="kw">plotRLE</span>(set, <span class="dt">outline=</span><span class="ot">FALSE</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>), </span>
-<span id="cb389-3"><a href="rnaseq-data-analysis.html#cb389-3"></a>        <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), </span>
-<span id="cb389-4"><a href="rnaseq-data-analysis.html#cb389-4"></a>        <span class="dt">main =</span> <span class="st">&#39;without RUVs&#39;</span>)</span>
-<span id="cb389-5"><a href="rnaseq-data-analysis.html#cb389-5"></a><span class="kw">plotRLE</span>(set_s, <span class="dt">outline=</span><span class="ot">FALSE</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>), </span>
-<span id="cb389-6"><a href="rnaseq-data-analysis.html#cb389-6"></a>        <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group),</span>
-<span id="cb389-7"><a href="rnaseq-data-analysis.html#cb389-7"></a>        <span class="dt">main =</span> <span class="st">&#39;with RUVs&#39;</span>)</span></code></pre></div>
+<p>Based on the separation of case and control samples in the PCA plots in Figure <a href="rnaseq-data-analysis.html#fig:pcaRUVs">6.24</a>, we can see that the samples are better separated even at <code>k = 2</code> when using <code>RUVs()</code>. Here, we re-run the RUVs() function using <code>k = 2</code>, in order to do more diagnostic plots. We try to pick a value of k that is good enough to distinguish the samples by condition of interest. While setting the value of k to higher values could improve the percentage of explained variation by the first principle component to up to 61%, we try to avoid setting the value unnecessarily high to avoid removing factors that might also correlate with important biological differences between conditions.</p>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="rnaseq-data-analysis.html#cb403-1"></a><span class="co"># we set k=2</span></span>
+<span id="cb403-2"><a href="rnaseq-data-analysis.html#cb403-2"></a>set_s &lt;-<span class="st"> </span><span class="kw">RUVs</span>(set, <span class="kw">unique</span>(<span class="kw">rownames</span>(set)), <span class="dt">k=</span><span class="dv">2</span>, differences) </span></code></pre></div>
+<p>Now let’s do diagnostics again: compare the count matrices with or without RUVs processing, comparing RLE plots (Figure <a href="rnaseq-data-analysis.html#fig:rleRUVs">6.25</a>) and PCA plots (Figure <a href="rnaseq-data-analysis.html#fig:pcaRUVs2">6.26</a>) to see the effect of RUVg on the normalization and separation of case and control samples.</p>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="rnaseq-data-analysis.html#cb404-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb404-2"><a href="rnaseq-data-analysis.html#cb404-2"></a><span class="kw">plotRLE</span>(set, <span class="dt">outline=</span><span class="ot">FALSE</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>), </span>
+<span id="cb404-3"><a href="rnaseq-data-analysis.html#cb404-3"></a>        <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), </span>
+<span id="cb404-4"><a href="rnaseq-data-analysis.html#cb404-4"></a>        <span class="dt">main =</span> <span class="st">&#39;without RUVs&#39;</span>)</span>
+<span id="cb404-5"><a href="rnaseq-data-analysis.html#cb404-5"></a><span class="kw">plotRLE</span>(set_s, <span class="dt">outline=</span><span class="ot">FALSE</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>), </span>
+<span id="cb404-6"><a href="rnaseq-data-analysis.html#cb404-6"></a>        <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group),</span>
+<span id="cb404-7"><a href="rnaseq-data-analysis.html#cb404-7"></a>        <span class="dt">main =</span> <span class="st">&#39;with RUVs&#39;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:rleRUVs"></span>
 <img src="fig/rleRUVs-1.png" alt="RLE plots to observe the effect of RUVs." width="672" />
 <p class="caption">
-Figure 6.23: RLE plots to observe the effect of RUVs.
+Figure 6.25: RLE plots to observe the effect of RUVs.
 </p>
 </div>
-<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="rnaseq-data-analysis.html#cb390-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb390-2"><a href="rnaseq-data-analysis.html#cb390-2"></a><span class="kw">plotPCA</span>(set, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), </span>
-<span id="cb390-3"><a href="rnaseq-data-analysis.html#cb390-3"></a>        <span class="dt">main =</span> <span class="st">&#39;without RUVs&#39;</span>, <span class="dt">adj =</span> <span class="fl">0.5</span>,</span>
-<span id="cb390-4"><a href="rnaseq-data-analysis.html#cb390-4"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>))</span>
-<span id="cb390-5"><a href="rnaseq-data-analysis.html#cb390-5"></a><span class="kw">plotPCA</span>(set_s, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), </span>
-<span id="cb390-6"><a href="rnaseq-data-analysis.html#cb390-6"></a>        <span class="dt">main =</span> <span class="st">&#39;with RUVs&#39;</span>, <span class="dt">adj =</span> <span class="fl">0.5</span>,</span>
-<span id="cb390-7"><a href="rnaseq-data-analysis.html#cb390-7"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="rnaseq-data-analysis.html#cb405-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb405-2"><a href="rnaseq-data-analysis.html#cb405-2"></a><span class="kw">plotPCA</span>(set, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), </span>
+<span id="cb405-3"><a href="rnaseq-data-analysis.html#cb405-3"></a>        <span class="dt">main =</span> <span class="st">&#39;without RUVs&#39;</span>, <span class="dt">adj =</span> <span class="fl">0.5</span>,</span>
+<span id="cb405-4"><a href="rnaseq-data-analysis.html#cb405-4"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>))</span>
+<span id="cb405-5"><a href="rnaseq-data-analysis.html#cb405-5"></a><span class="kw">plotPCA</span>(set_s, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), </span>
+<span id="cb405-6"><a href="rnaseq-data-analysis.html#cb405-6"></a>        <span class="dt">main =</span> <span class="st">&#39;with RUVs&#39;</span>, <span class="dt">adj =</span> <span class="fl">0.5</span>,</span>
+<span id="cb405-7"><a href="rnaseq-data-analysis.html#cb405-7"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:pcaRUVs2"></span>
 <img src="fig/pcaRUVs2-1.png" alt="PCA plots to observe the effect of RUVs." width="672" />
 <p class="caption">
-Figure 6.24: PCA plots to observe the effect of RUVs.
+Figure 6.26: PCA plots to observe the effect of RUVs.
 </p>
 </div>
 <p>Let’s compare PCA results from RUVs and RUVg with the initial raw counts matrix. We will simply run the <code>plotPCA()</code> function on different normalization schemes. The resulting plots are in Figure <a href="#fig-compareRUV"><strong>??</strong></a>:</p>
-<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="rnaseq-data-analysis.html#cb391-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
-<span id="cb391-2"><a href="rnaseq-data-analysis.html#cb391-2"></a><span class="kw">plotPCA</span>(countData, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), </span>
-<span id="cb391-3"><a href="rnaseq-data-analysis.html#cb391-3"></a>        <span class="dt">main =</span> <span class="st">&#39;without RUV - raw counts&#39;</span>, <span class="dt">adj =</span> <span class="fl">0.5</span>,</span>
-<span id="cb391-4"><a href="rnaseq-data-analysis.html#cb391-4"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>))</span>
-<span id="cb391-5"><a href="rnaseq-data-analysis.html#cb391-5"></a><span class="kw">plotPCA</span>(set_g, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), </span>
-<span id="cb391-6"><a href="rnaseq-data-analysis.html#cb391-6"></a>        <span class="dt">main =</span> <span class="st">&#39;with RUVg&#39;</span>, <span class="dt">adj =</span> <span class="fl">0.5</span>,</span>
-<span id="cb391-7"><a href="rnaseq-data-analysis.html#cb391-7"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>))</span>
-<span id="cb391-8"><a href="rnaseq-data-analysis.html#cb391-8"></a><span class="kw">plotPCA</span>(set_s, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), </span>
-<span id="cb391-9"><a href="rnaseq-data-analysis.html#cb391-9"></a>        <span class="dt">main =</span> <span class="st">&#39;with RUVs&#39;</span>, <span class="dt">adj =</span> <span class="fl">0.5</span>,</span>
-<span id="cb391-10"><a href="rnaseq-data-analysis.html#cb391-10"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="rnaseq-data-analysis.html#cb406-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb406-2"><a href="rnaseq-data-analysis.html#cb406-2"></a><span class="kw">plotPCA</span>(countData, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), </span>
+<span id="cb406-3"><a href="rnaseq-data-analysis.html#cb406-3"></a>        <span class="dt">main =</span> <span class="st">&#39;without RUV - raw counts&#39;</span>, <span class="dt">adj =</span> <span class="fl">0.5</span>,</span>
+<span id="cb406-4"><a href="rnaseq-data-analysis.html#cb406-4"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>))</span>
+<span id="cb406-5"><a href="rnaseq-data-analysis.html#cb406-5"></a><span class="kw">plotPCA</span>(set_g, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), </span>
+<span id="cb406-6"><a href="rnaseq-data-analysis.html#cb406-6"></a>        <span class="dt">main =</span> <span class="st">&#39;with RUVg&#39;</span>, <span class="dt">adj =</span> <span class="fl">0.5</span>,</span>
+<span id="cb406-7"><a href="rnaseq-data-analysis.html#cb406-7"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>))</span>
+<span id="cb406-8"><a href="rnaseq-data-analysis.html#cb406-8"></a><span class="kw">plotPCA</span>(set_s, <span class="dt">col=</span><span class="kw">as.numeric</span>(colData<span class="op">$</span>group), </span>
+<span id="cb406-9"><a href="rnaseq-data-analysis.html#cb406-9"></a>        <span class="dt">main =</span> <span class="st">&#39;with RUVs&#39;</span>, <span class="dt">adj =</span> <span class="fl">0.5</span>,</span>
+<span id="cb406-10"><a href="rnaseq-data-analysis.html#cb406-10"></a>        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.75</span>))</span></code></pre></div>
 <p><img src="fig/compareRUV-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>It looks like <code>RUVs ()</code> has performed better than <code>RUVg()</code> in this case. So, let’s use count data that is processed by <code>RUVs()</code> to re-do the initial heatmap.</p>
-<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="rnaseq-data-analysis.html#cb392-1"></a><span class="kw">library</span>(EDASeq)</span>
-<span id="cb392-2"><a href="rnaseq-data-analysis.html#cb392-2"></a><span class="kw">library</span>(pheatmap)</span>
-<span id="cb392-3"><a href="rnaseq-data-analysis.html#cb392-3"></a><span class="co"># extract normalized counts that are cleared from unwanted variation using RUVs</span></span>
-<span id="cb392-4"><a href="rnaseq-data-analysis.html#cb392-4"></a>normCountData &lt;-<span class="st"> </span><span class="kw">normCounts</span>(set_s)</span>
-<span id="cb392-5"><a href="rnaseq-data-analysis.html#cb392-5"></a>selectedGenes &lt;-<span class="st"> </span><span class="kw">names</span>(<span class="kw">sort</span>(<span class="kw">apply</span>(normCountData, <span class="dv">1</span>, var), </span>
-<span id="cb392-6"><a href="rnaseq-data-analysis.html#cb392-6"></a>                            <span class="dt">decreasing =</span> <span class="ot">TRUE</span>))[<span class="dv">1</span><span class="op">:</span><span class="dv">500</span>]</span>
-<span id="cb392-7"><a href="rnaseq-data-analysis.html#cb392-7"></a><span class="kw">pheatmap</span>(normCountData[selectedGenes,], </span>
-<span id="cb392-8"><a href="rnaseq-data-analysis.html#cb392-8"></a>         <span class="dt">annotation_col =</span> colData, </span>
-<span id="cb392-9"><a href="rnaseq-data-analysis.html#cb392-9"></a>         <span class="dt">show_rownames =</span> <span class="ot">FALSE</span>, </span>
-<span id="cb392-10"><a href="rnaseq-data-analysis.html#cb392-10"></a>         <span class="dt">cutree_cols =</span> <span class="dv">2</span>,</span>
-<span id="cb392-11"><a href="rnaseq-data-analysis.html#cb392-11"></a>         <span class="dt">scale =</span> <span class="st">&#39;row&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="rnaseq-data-analysis.html#cb407-1"></a><span class="kw">library</span>(EDASeq)</span>
+<span id="cb407-2"><a href="rnaseq-data-analysis.html#cb407-2"></a><span class="kw">library</span>(pheatmap)</span>
+<span id="cb407-3"><a href="rnaseq-data-analysis.html#cb407-3"></a><span class="co"># extract normalized counts that are cleared from unwanted variation using RUVs</span></span>
+<span id="cb407-4"><a href="rnaseq-data-analysis.html#cb407-4"></a>normCountData &lt;-<span class="st"> </span><span class="kw">normCounts</span>(set_s)</span>
+<span id="cb407-5"><a href="rnaseq-data-analysis.html#cb407-5"></a>selectedGenes &lt;-<span class="st"> </span><span class="kw">names</span>(<span class="kw">sort</span>(<span class="kw">apply</span>(normCountData, <span class="dv">1</span>, var), </span>
+<span id="cb407-6"><a href="rnaseq-data-analysis.html#cb407-6"></a>                            <span class="dt">decreasing =</span> <span class="ot">TRUE</span>))[<span class="dv">1</span><span class="op">:</span><span class="dv">500</span>]</span>
+<span id="cb407-7"><a href="rnaseq-data-analysis.html#cb407-7"></a><span class="kw">pheatmap</span>(normCountData[selectedGenes,], </span>
+<span id="cb407-8"><a href="rnaseq-data-analysis.html#cb407-8"></a>         <span class="dt">annotation_col =</span> colData, </span>
+<span id="cb407-9"><a href="rnaseq-data-analysis.html#cb407-9"></a>         <span class="dt">show_rownames =</span> <span class="ot">FALSE</span>, </span>
+<span id="cb407-10"><a href="rnaseq-data-analysis.html#cb407-10"></a>         <span class="dt">cutree_cols =</span> <span class="dv">2</span>,</span>
+<span id="cb407-11"><a href="rnaseq-data-analysis.html#cb407-11"></a>         <span class="dt">scale =</span> <span class="st">&#39;row&#39;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:heatRUV"></span>
 <img src="fig/heatRUV-1.png" alt="Clustering samples using the top 500 most variable genes normalized using RUVs (k = 2)." width="672" />
 <p class="caption">
-Figure 6.25: Clustering samples using the top 500 most variable genes normalized using RUVs (k = 2).
+Figure 6.27: Clustering samples using the top 500 most variable genes normalized using RUVs (k = 2).
 </p>
 </div>
-</div>
-<div id="re-run-deseq2-with-the-computed-variables" class="section level4" number="6.5.3.3">
-<h4><span class="header-section-number">6.5.3.3</span> Re-run <code>DESeq2</code> with the computed variables</h4>
 <p>Having computed the sources of variation using <code>RUVs()</code>, we can actually integrate these variables with DESeq2 to re-do the differential expression analysis. Here the idea is that the comparisons among groups will be ajusted for <strong>unwanted variability</strong>.</p>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="rnaseq-data-analysis.html#cb393-1"></a><span class="kw">library</span>(DESeq2)</span>
-<span id="cb393-2"><a href="rnaseq-data-analysis.html#cb393-2"></a><span class="co">#set up DESeqDataSet object</span></span>
-<span id="cb393-3"><a href="rnaseq-data-analysis.html#cb393-3"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeqDataSetFromMatrix</span>(<span class="dt">countData =</span> countData,</span>
-<span id="cb393-4"><a href="rnaseq-data-analysis.html#cb393-4"></a>                              <span class="dt">colData =</span> colData, </span>
-<span id="cb393-5"><a href="rnaseq-data-analysis.html#cb393-5"></a>                              <span class="dt">design =</span> <span class="op">~</span><span class="st"> </span>group)</span>
-<span id="cb393-6"><a href="rnaseq-data-analysis.html#cb393-6"></a><span class="co"># filter for low count genes</span></span>
-<span id="cb393-7"><a href="rnaseq-data-analysis.html#cb393-7"></a>dds &lt;-<span class="st"> </span>dds[<span class="kw">rowSums</span>(DESeq2<span class="op">::</span><span class="kw">counts</span>(dds)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>]</span>
-<span id="cb393-8"><a href="rnaseq-data-analysis.html#cb393-8"></a></span>
-<span id="cb393-9"><a href="rnaseq-data-analysis.html#cb393-9"></a><span class="co"># insert the covariates W1 and W2 (the code shows how to add 1-9)</span></span>
-<span id="cb393-10"><a href="rnaseq-data-analysis.html#cb393-10"></a><span class="co"># computed using RUVs into DESeqDataSet object</span></span>
-<span id="cb393-11"><a href="rnaseq-data-analysis.html#cb393-11"></a><span class="kw">colData</span>(dds) &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">colData</span>(dds), </span>
-<span id="cb393-12"><a href="rnaseq-data-analysis.html#cb393-12"></a>                      <span class="kw">pData</span>(set_s)[<span class="kw">rownames</span>(<span class="kw">colData</span>(dds)), </span>
-<span id="cb393-13"><a href="rnaseq-data-analysis.html#cb393-13"></a>                                   <span class="kw">grep</span>(<span class="st">&#39;W_[0-9]&#39;</span>, </span>
-<span id="cb393-14"><a href="rnaseq-data-analysis.html#cb393-14"></a>                                        <span class="kw">colnames</span>(<span class="kw">pData</span>(set_s)))])</span>
-<span id="cb393-15"><a href="rnaseq-data-analysis.html#cb393-15"></a></span>
-<span id="cb393-16"><a href="rnaseq-data-analysis.html#cb393-16"></a><span class="co"># update the design formula for the DESeq analysis (save the variable of</span></span>
-<span id="cb393-17"><a href="rnaseq-data-analysis.html#cb393-17"></a><span class="co"># interest to the last!)</span></span>
-<span id="cb393-18"><a href="rnaseq-data-analysis.html#cb393-18"></a><span class="kw">design</span>(dds) &lt;-<span class="st"> </span><span class="er">~</span><span class="st"> </span>W_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>W_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span>group </span>
-<span id="cb393-19"><a href="rnaseq-data-analysis.html#cb393-19"></a></span>
-<span id="cb393-20"><a href="rnaseq-data-analysis.html#cb393-20"></a><span class="co"># repeat the analysis </span></span>
-<span id="cb393-21"><a href="rnaseq-data-analysis.html#cb393-21"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds)</span>
-<span id="cb393-22"><a href="rnaseq-data-analysis.html#cb393-22"></a></span>
-<span id="cb393-23"><a href="rnaseq-data-analysis.html#cb393-23"></a><span class="co"># extract deseq results </span></span>
-<span id="cb393-24"><a href="rnaseq-data-analysis.html#cb393-24"></a>res &lt;-<span class="st"> </span><span class="kw">results</span>(dds, <span class="dt">contrast =</span> <span class="kw">c</span>(<span class="st">&#39;group&#39;</span>, <span class="st">&#39;CASE&#39;</span>, <span class="st">&#39;CTRL&#39;</span>))</span>
-<span id="cb393-25"><a href="rnaseq-data-analysis.html#cb393-25"></a>res &lt;-<span class="st"> </span>res[<span class="kw">order</span>(res<span class="op">$</span>padj),]</span>
-<span id="cb393-26"><a href="rnaseq-data-analysis.html#cb393-26"></a><span class="kw">head</span>(res)</span></code></pre></div>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="rnaseq-data-analysis.html#cb408-1"></a><span class="kw">library</span>(DESeq2)</span>
+<span id="cb408-2"><a href="rnaseq-data-analysis.html#cb408-2"></a><span class="co">#set up DESeqDataSet object</span></span>
+<span id="cb408-3"><a href="rnaseq-data-analysis.html#cb408-3"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeqDataSetFromMatrix</span>(<span class="dt">countData =</span> countData,</span>
+<span id="cb408-4"><a href="rnaseq-data-analysis.html#cb408-4"></a>                              <span class="dt">colData =</span> colData, </span>
+<span id="cb408-5"><a href="rnaseq-data-analysis.html#cb408-5"></a>                              <span class="dt">design =</span> <span class="op">~</span><span class="st"> </span>group)</span>
+<span id="cb408-6"><a href="rnaseq-data-analysis.html#cb408-6"></a><span class="co"># filter for low count genes</span></span>
+<span id="cb408-7"><a href="rnaseq-data-analysis.html#cb408-7"></a>dds &lt;-<span class="st"> </span>dds[<span class="kw">rowSums</span>(DESeq2<span class="op">::</span><span class="kw">counts</span>(dds)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>]</span>
+<span id="cb408-8"><a href="rnaseq-data-analysis.html#cb408-8"></a></span>
+<span id="cb408-9"><a href="rnaseq-data-analysis.html#cb408-9"></a><span class="co"># insert the covariates W1 and W2 (the code shows how to add 1-9)</span></span>
+<span id="cb408-10"><a href="rnaseq-data-analysis.html#cb408-10"></a><span class="co"># computed using RUVs into DESeqDataSet object</span></span>
+<span id="cb408-11"><a href="rnaseq-data-analysis.html#cb408-11"></a><span class="kw">colData</span>(dds) &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">colData</span>(dds), </span>
+<span id="cb408-12"><a href="rnaseq-data-analysis.html#cb408-12"></a>                      <span class="kw">pData</span>(set_s)[<span class="kw">rownames</span>(<span class="kw">colData</span>(dds)), </span>
+<span id="cb408-13"><a href="rnaseq-data-analysis.html#cb408-13"></a>                                   <span class="kw">grep</span>(<span class="st">&#39;W_[0-9]&#39;</span>, </span>
+<span id="cb408-14"><a href="rnaseq-data-analysis.html#cb408-14"></a>                                        <span class="kw">colnames</span>(<span class="kw">pData</span>(set_s)))])</span>
+<span id="cb408-15"><a href="rnaseq-data-analysis.html#cb408-15"></a></span>
+<span id="cb408-16"><a href="rnaseq-data-analysis.html#cb408-16"></a><span class="co"># update the design formula for the DESeq analysis (save the variable of</span></span>
+<span id="cb408-17"><a href="rnaseq-data-analysis.html#cb408-17"></a><span class="co"># interest to the last!)</span></span>
+<span id="cb408-18"><a href="rnaseq-data-analysis.html#cb408-18"></a><span class="kw">design</span>(dds) &lt;-<span class="st"> </span><span class="er">~</span><span class="st"> </span>W_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>W_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span>group </span>
+<span id="cb408-19"><a href="rnaseq-data-analysis.html#cb408-19"></a></span>
+<span id="cb408-20"><a href="rnaseq-data-analysis.html#cb408-20"></a><span class="co"># repeat the analysis </span></span>
+<span id="cb408-21"><a href="rnaseq-data-analysis.html#cb408-21"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds)</span>
+<span id="cb408-22"><a href="rnaseq-data-analysis.html#cb408-22"></a></span>
+<span id="cb408-23"><a href="rnaseq-data-analysis.html#cb408-23"></a><span class="co"># extract deseq results </span></span>
+<span id="cb408-24"><a href="rnaseq-data-analysis.html#cb408-24"></a>res &lt;-<span class="st"> </span><span class="kw">results</span>(dds, <span class="dt">contrast =</span> <span class="kw">c</span>(<span class="st">&#39;group&#39;</span>, <span class="st">&#39;CASE&#39;</span>, <span class="st">&#39;CTRL&#39;</span>))</span>
+<span id="cb408-25"><a href="rnaseq-data-analysis.html#cb408-25"></a>res &lt;-<span class="st"> </span>res[<span class="kw">order</span>(res<span class="op">$</span>padj),]</span>
+<span id="cb408-26"><a href="rnaseq-data-analysis.html#cb408-26"></a><span class="kw">head</span>(res)</span></code></pre></div>
 <pre><code>log2 fold change (MLE): group CASE vs CTRL 
 Wald test p-value: group CASE vs CTRL 
 DataFrame with 6 rows and 6 columns
