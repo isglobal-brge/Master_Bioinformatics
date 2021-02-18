@@ -205,7 +205,7 @@ phenoDataFrame <- pData(gsm.expr)
 phenoDataFrame[1:5,1:4]
 
 #Alzheimer's case control variable
-summary(phenoDataFrame$characteristics_ch1)
+table(phenoDataFrame$characteristics_ch1)
 ```
 
 Finally the `fData()` function gets the probes' annotationin a data.frame 

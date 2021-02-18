@@ -24,7 +24,7 @@
 <meta name="author" content="Juan R González" />
 
 
-<meta name="date" content="2021-01-26" />
+<meta name="date" content="2021-02-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -422,7 +422,8 @@ ILMN_1651221   6.121060   6.173167   6.039552   6.111306   6.089542</code></pre>
 <pre><code>An object of class &#39;AnnotatedDataFrame&#39;
   sampleNames: GSM1539409 GSM1539410 ... GSM1539796 (388
     total)
-  varLabels: title geo_accession ... tissue:ch1 (40 total)
+  varLabels: title geo_accession ... tissue:ch1 (40
+    total)
   varMetadata: labelDescription</code></pre>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="bioconductor.html#cb30-1"></a>phenoDataFrame &lt;-<span class="st"> </span><span class="kw">pData</span>(gsm.expr)</span>
 <span id="cb30-2"><a href="bioconductor.html#cb30-2"></a>phenoDataFrame[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</span></code></pre></div>
@@ -439,9 +440,16 @@ GSM1539411     Nov 06 2014
 GSM1539412     Nov 06 2014
 GSM1539413     Nov 06 2014</code></pre>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="bioconductor.html#cb32-1"></a><span class="co">#Alzheimer&#39;s case control variable</span></span>
-<span id="cb32-2"><a href="bioconductor.html#cb32-2"></a><span class="kw">summary</span>(phenoDataFrame<span class="op">$</span>characteristics_ch1)</span></code></pre></div>
-<pre><code>   Length     Class      Mode 
-      388 character character </code></pre>
+<span id="cb32-2"><a href="bioconductor.html#cb32-2"></a><span class="kw">table</span>(phenoDataFrame<span class="op">$</span>characteristics_ch1)</span></code></pre></div>
+<pre><code>
+            status: AD status: borderline MCI 
+                   139                      3 
+           status: CTL      status: CTL to AD 
+                   134                      1 
+           status: MCI     status: MCI to CTL 
+                   109                      1 
+         status: OTHER 
+                     1 </code></pre>
 <p>Finally the <code>fData()</code> function gets the probes’ annotationin a data.frame</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="bioconductor.html#cb34-1"></a>probes &lt;-<span class="st"> </span><span class="kw">fData</span>(gsm.expr)</span>
 <span id="cb34-2"><a href="bioconductor.html#cb34-2"></a>probes[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span></code></pre></div>
