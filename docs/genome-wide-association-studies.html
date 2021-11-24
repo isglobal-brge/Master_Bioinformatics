@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 Genome-wide association studies | Master in Bioinformatics and Omic Data Analysis</title>
   <meta name="description" content="4 Genome-wide association studies | Master in Bioinformatics and Omic Data Analysis" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4 Genome-wide association studies | Master in Bioinformatics and Omic Data Analysis" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Juan R González" />
 
 
-<meta name="date" content="2021-02-18" />
+<meta name="date" content="2021-11-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,8 @@
   
 <link rel="prev" href="single-association-analysis.html"/>
 <link rel="next" href="microarray-data-analysis.html"/>
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -51,13 +51,15 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -118,6 +120,29 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -175,7 +200,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="microarray-data-analysis.html"><a href="microarray-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Microarray data analysis</a></li>
 <li class="chapter" data-level="6" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html"><i class="fa fa-check"></i><b>6</b> RNAseq data analysis</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.1" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#introduction-1"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
 <li class="chapter" data-level="6.2" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#within-sample-normalization-of-read-counts"><i class="fa fa-check"></i><b>6.2</b> Within sample normalization of read counts</a></li>
 <li class="chapter" data-level="6.3" data-path="rnaseq-data-analysis.html"><a href="rnaseq-data-analysis.html#exploratory-analysis-of-the-read-counts-table"><i class="fa fa-check"></i><b>6.3</b> Exploratory analysis of the read counts table</a>
 <ul>
@@ -195,7 +220,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="enrichment-analysis.html"><a href="enrichment-analysis.html"><i class="fa fa-check"></i><b>7</b> Enrichment Analysis</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.1" data-path="enrichment-analysis.html"><a href="enrichment-analysis.html#introduction-2"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
 <li class="chapter" data-level="7.2" data-path="enrichment-analysis.html"><a href="enrichment-analysis.html#gene-expression-based-enrichment-analysis"><i class="fa fa-check"></i><b>7.2</b> Gene expression-based enrichment analysis</a>
 <ul>
 <li class="chapter" data-level="7.2.1" data-path="enrichment-analysis.html"><a href="enrichment-analysis.html#a-primer-on-terminology-existing-methods-statistical-theory"><i class="fa fa-check"></i><b>7.2.1</b> A primer on terminology, existing methods &amp; statistical theory</a></li>
@@ -238,22 +263,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="genome-wide-association-studies" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Genome-wide association studies</h1>
 <p>In this chapter we explain how to perform genome-wide association studies (GWAS), where high-dimensional genomic data is treated. Issues concerning quality control of SNPs and individuals are discussed, as well as association tests and possible sources of confounding such as population stratification. We finish SNP analyses with tools that help to interpret results (e.g. post-omic data analyses).</p>
-<p>GWAS assess the association between the trait of interest and up to millions of SNPs. GWAS have been used to discover thousands of SNPsassociated with several complex diseases <span class="citation">(MacArthur et al. <a href="#ref-macarthur2016new" role="doc-biblioref">2016</a>)</span>. The basic statistical methods are similar to those previously described, in particular, the massive univariate testing. The main issue with GWAS is data management and computation. Most publicly available data is in <a href="https://www.cog-genomics.org/plink/1.9/input">PLINK format</a>, where genomic data is stored in a binary BED file, and phenotype and annotation data in text BIM and FAM files. PLINK data can be loaded into R with the Bioconductor’s package <code>snpStats</code>.</p>
+<p>GWAS assess the association between the trait of interest and up to millions of SNPs. GWAS have been used to discover thousands of SNPsassociated with several complex diseases <span class="citation">(<a href="#ref-macarthur2016new" role="doc-biblioref">MacArthur et al. 2016</a>)</span>. The basic statistical methods are similar to those previously described, in particular, the massive univariate testing. The main issue with GWAS is data management and computation. Most publicly available data is in <a href="https://www.cog-genomics.org/plink/1.9/input">PLINK format</a>, where genomic data is stored in a binary BED file, and phenotype and annotation data in text BIM and FAM files. PLINK data can be loaded into R with the Bioconductor’s package <code>snpStats</code>.</p>
 <p>We illustrate the analysis of a GWAS including 100,000 SNPs that have been simulated using real data from a case-control study. Our phenotype of interest is obesity (0: not obese; 1: obese) that has been created using body mass index information of each individual. We start by loading genotype data that are in PLINK format (<code>obesity.bed</code>, <code>obesity.bim</code>, <code>obesity.fam</code> files).</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="genome-wide-association-studies.html#cb244-1"></a><span class="kw">library</span>(snpStats)</span>
-<span id="cb244-2"><a href="genome-wide-association-studies.html#cb244-2"></a>path &lt;-<span class="st"> &quot;data&quot;</span></span>
-<span id="cb244-3"><a href="genome-wide-association-studies.html#cb244-3"></a>ob.plink &lt;-<span class="st"> </span><span class="kw">read.plink</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;obesity&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="genome-wide-association-studies.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(snpStats)</span>
+<span id="cb244-2"><a href="genome-wide-association-studies.html#cb244-2" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">&quot;data&quot;</span></span>
+<span id="cb244-3"><a href="genome-wide-association-studies.html#cb244-3" aria-hidden="true" tabindex="-1"></a>ob.plink <span class="ot">&lt;-</span> <span class="fu">read.plink</span>(<span class="fu">file.path</span>(path, <span class="st">&quot;obesity&quot;</span>))</span></code></pre></div>
 <p>The imported object is a list containing the genotypes, the family structure and the SNP annotation.</p>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="genome-wide-association-studies.html#cb245-1"></a><span class="kw">names</span>(ob.plink)</span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="genome-wide-association-studies.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ob.plink)</span></code></pre></div>
 <pre><code>[1] &quot;genotypes&quot; &quot;fam&quot;       &quot;map&quot;      </code></pre>
 <p>We store genotype, annotation and family data in different variables for downstream analyses</p>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="genome-wide-association-studies.html#cb247-1"></a>ob.geno &lt;-<span class="st"> </span>ob.plink<span class="op">$</span>genotypes</span>
-<span id="cb247-2"><a href="genome-wide-association-studies.html#cb247-2"></a>ob.geno</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="genome-wide-association-studies.html#cb247-1" aria-hidden="true" tabindex="-1"></a>ob.geno <span class="ot">&lt;-</span> ob.plink<span class="sc">$</span>genotypes</span>
+<span id="cb247-2"><a href="genome-wide-association-studies.html#cb247-2" aria-hidden="true" tabindex="-1"></a>ob.geno</span></code></pre></div>
 <pre><code>A SnpMatrix with  2312 rows and  100000 columns
 Row names:  100 ... 998 
 Col names:  MitoC3993T ... rs28600179 </code></pre>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="genome-wide-association-studies.html#cb249-1"></a>annotation &lt;-<span class="st"> </span>ob.plink<span class="op">$</span>map</span>
-<span id="cb249-2"><a href="genome-wide-association-studies.html#cb249-2"></a><span class="kw">head</span>(annotation)</span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="genome-wide-association-studies.html#cb249-1" aria-hidden="true" tabindex="-1"></a>annotation <span class="ot">&lt;-</span> ob.plink<span class="sc">$</span>map</span>
+<span id="cb249-2"><a href="genome-wide-association-studies.html#cb249-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(annotation)</span></code></pre></div>
 <pre><code>           chromosome   snp.name cM position allele.1 allele.2
 MitoC3993T         NA MitoC3993T NA     3993        T        C
 MitoG4821A         NA MitoG4821A NA     4821        A        G
@@ -261,8 +286,8 @@ MitoG6027A         NA MitoG6027A NA     6027        A        G
 MitoT6153C         NA MitoT6153C NA     6153        C        T
 MitoC7275T         NA MitoC7275T NA     7275        T        C
 MitoT9699C         NA MitoT9699C NA     9699        C        T</code></pre>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="genome-wide-association-studies.html#cb251-1"></a>family &lt;-<span class="st"> </span>ob.plink<span class="op">$</span>fam</span>
-<span id="cb251-2"><a href="genome-wide-association-studies.html#cb251-2"></a><span class="kw">head</span>(family)</span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="genome-wide-association-studies.html#cb251-1" aria-hidden="true" tabindex="-1"></a>family <span class="ot">&lt;-</span> ob.plink<span class="sc">$</span>fam</span>
+<span id="cb251-2"><a href="genome-wide-association-studies.html#cb251-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(family)</span></code></pre></div>
 <pre><code>     pedigree member father mother sex affected
 100    FAM_OB    100     NA     NA   1        1
 1001   FAM_OB   1001     NA     NA   1        1
@@ -271,8 +296,8 @@ MitoT9699C         NA MitoT9699C NA     9699        C        T</code></pre>
 1006   FAM_OB   1006     NA     NA   2        1
 1008   FAM_OB   1008     NA     NA   1        1</code></pre>
 <p>Notice that <code>geno</code> is an object of class <code>SnpMatrix</code>that stores the SNPs in binary (raw) format. While some basic phenotype data is usually available in the <code>fam</code> field of the <code>SnpMatrix</code> object, a more complete phenotypic characterization of the sample is usually distributed in additional text files. In our example, the complete phenotype data is in a tab-delimited file</p>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="genome-wide-association-studies.html#cb253-1"></a>ob.pheno &lt;-<span class="st"> </span><span class="kw">read.delim</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;obesity.txt&quot;</span>))</span>
-<span id="cb253-2"><a href="genome-wide-association-studies.html#cb253-2"></a><span class="kw">head</span>(ob.pheno)</span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="genome-wide-association-studies.html#cb253-1" aria-hidden="true" tabindex="-1"></a>ob.pheno <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="fu">file.path</span>(path, <span class="st">&quot;obesity.txt&quot;</span>))</span>
+<span id="cb253-2"><a href="genome-wide-association-studies.html#cb253-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ob.pheno)</span></code></pre></div>
 <pre><code>  scanID gender obese age smoke country asthma
 1    100   Male     0  48 Never      53      1
 2   1001   Male     1  49 Never      54      1
@@ -281,29 +306,29 @@ MitoT9699C         NA MitoT9699C NA     9699        C        T</code></pre>
 5   1006 Female     0  43    Ex      53      1
 6   1008   Male     1  49 Never      55      1</code></pre>
 <p>The file contains phenotypic information for a different set of individuals that overlap with those in the <code>ob.geno</code> object. Therefore, before analysis, we need to correctly merge and order the individuals across genomic and phenotype datasets. The row names of <code>ob.geno</code> correspond to the individual identifiers (id) variable of <code>ob.pheno</code>. Consequently, we also rename the rows of <code>ob.pheno</code> with the <code>id</code> variable</p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="genome-wide-association-studies.html#cb255-1"></a><span class="kw">rownames</span>(ob.pheno) &lt;-<span class="st"> </span>ob.pheno<span class="op">$</span>scanID</span></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="genome-wide-association-studies.html#cb255-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(ob.pheno) <span class="ot">&lt;-</span> ob.pheno<span class="sc">$</span>scanID</span></code></pre></div>
 <p>We can check if the row names of the datasets match</p>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="genome-wide-association-studies.html#cb256-1"></a><span class="kw">identical</span>(<span class="kw">rownames</span>(ob.pheno), <span class="kw">rownames</span>(ob.geno))</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="genome-wide-association-studies.html#cb256-1" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(<span class="fu">rownames</span>(ob.pheno), <span class="fu">rownames</span>(ob.geno))</span></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
 <p>FALSE indicates that either there are different individuals in both objects or that they are in different order. This can be fixed by selecting common individuals.</p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="genome-wide-association-studies.html#cb258-1"></a>ids &lt;-<span class="st"> </span><span class="kw">intersect</span>(<span class="kw">rownames</span>(ob.pheno), <span class="kw">rownames</span>(ob.geno))</span>
-<span id="cb258-2"><a href="genome-wide-association-studies.html#cb258-2"></a>geno &lt;-<span class="st"> </span>ob.geno[ids, ]</span>
-<span id="cb258-3"><a href="genome-wide-association-studies.html#cb258-3"></a>ob &lt;-<span class="st"> </span>ob.pheno[ids, ]</span>
-<span id="cb258-4"><a href="genome-wide-association-studies.html#cb258-4"></a><span class="kw">identical</span>(<span class="kw">rownames</span>(ob), <span class="kw">rownames</span>(geno))</span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="genome-wide-association-studies.html#cb258-1" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">rownames</span>(ob.pheno), <span class="fu">rownames</span>(ob.geno))</span>
+<span id="cb258-2"><a href="genome-wide-association-studies.html#cb258-2" aria-hidden="true" tabindex="-1"></a>geno <span class="ot">&lt;-</span> ob.geno[ids, ]</span>
+<span id="cb258-3"><a href="genome-wide-association-studies.html#cb258-3" aria-hidden="true" tabindex="-1"></a>ob <span class="ot">&lt;-</span> ob.pheno[ids, ]</span>
+<span id="cb258-4"><a href="genome-wide-association-studies.html#cb258-4" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(<span class="fu">rownames</span>(ob), <span class="fu">rownames</span>(geno))</span></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="genome-wide-association-studies.html#cb260-1"></a>family &lt;-<span class="st"> </span>family[ids, ]</span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="genome-wide-association-studies.html#cb260-1" aria-hidden="true" tabindex="-1"></a>family <span class="ot">&lt;-</span> family[ids, ]</span></code></pre></div>
 <div id="quality-control-of-snps" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Quality control of SNPs</h2>
-<p>We now perform the quality control (QC)of genomic data at the SNP and individual levels, before association testing <span class="citation">(Anderson et al. <a href="#ref-Anderson" role="doc-biblioref">2010</a>)</span>. Different measures can be used to perform QC and remove:</p>
+<p>We now perform the quality control (QC)of genomic data at the SNP and individual levels, before association testing <span class="citation">(<a href="#ref-Anderson" role="doc-biblioref">Anderson et al. 2010</a>)</span>. Different measures can be used to perform QC and remove:</p>
 <ul>
 <li>SNPs with a high rate of missing;</li>
 <li>rare SNPS (e.g. having low minor allele frequency (MAF); and</li>
 <li>SNPs that do not pass the HWE test.</li>
 </ul>
-<p>Typically, markers with a call rate less than 95% are removed from association analyses, although some large studies chose higher call-rate thresholds (99%). Markers of low MAF (<span class="math inline">\(&lt;5\)</span>%) are also filtered. The significance threshold rejecting a SNP for not being in HWE has varied greatly between studies, from thresholds between 0.001 and <span class="math inline">\(5.7 \times 10^{-7}\)</span> <span class="citation">(Clayton et al. <a href="#ref-clayton2005population" role="doc-biblioref">2005</a>)</span>. Including SNPs with extremely low <span class="math inline">\(P\)</span>-values for the HWE test will require individual examination of the SNP genotyping process. A parsimonious threshold of 0.001 may be considered, though robustly genotyped SNPs below this threshold may remain in the study <span class="citation">(Anderson et al. <a href="#ref-Anderson" role="doc-biblioref">2010</a>)</span>, as deviations from HWE may indeed arise from biological processes.</p>
+<p>Typically, markers with a call rate less than 95% are removed from association analyses, although some large studies chose higher call-rate thresholds (99%). Markers of low MAF (<span class="math inline">\(&lt;5\)</span>%) are also filtered. The significance threshold rejecting a SNP for not being in HWE has varied greatly between studies, from thresholds between 0.001 and <span class="math inline">\(5.7 \times 10^{-7}\)</span> <span class="citation">(<a href="#ref-clayton2005population" role="doc-biblioref">Clayton et al. 2005</a>)</span>. Including SNPs with extremely low <span class="math inline">\(P\)</span>-values for the HWE test will require individual examination of the SNP genotyping process. A parsimonious threshold of 0.001 may be considered, though robustly genotyped SNPs below this threshold may remain in the study <span class="citation">(<a href="#ref-Anderson" role="doc-biblioref">Anderson et al. 2010</a>)</span>, as deviations from HWE may indeed arise from biological processes.</p>
 <p>The function <code>col.summary()</code> offers different summaries (at SNP level) that can be used in QC</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="genome-wide-association-studies.html#cb261-1"></a>info.snps &lt;-<span class="st"> </span><span class="kw">col.summary</span>(geno)</span>
-<span id="cb261-2"><a href="genome-wide-association-studies.html#cb261-2"></a><span class="kw">head</span>(info.snps)</span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="genome-wide-association-studies.html#cb261-1" aria-hidden="true" tabindex="-1"></a>info.snps <span class="ot">&lt;-</span> <span class="fu">col.summary</span>(geno)</span>
+<span id="cb261-2"><a href="genome-wide-association-studies.html#cb261-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(info.snps)</span></code></pre></div>
 <pre><code>           Calls Call.rate Certain.calls       RAF          MAF
 MitoC3993T  2286 0.9887543             1 0.9851269 0.0148731409
 MitoG4821A  2282 0.9870242             1 0.9982472 0.0017528484
@@ -320,38 +345,38 @@ MitoC7275T 0.0008661758 0.0000000000 0.9991338 -48.05206
 MitoT9699C 0.0729800174 0.0004344049 0.9265856 -47.82555</code></pre>
 <p><code>snpStats</code> does not compute <span class="math inline">\(P\)</span>-values of the HWE test but computes its <span class="math inline">\(z\)</span>-scores. A <span class="math inline">\(P\)</span>-value of 0.001 corresponds to a <span class="math inline">\(z\)</span>-score of <span class="math inline">\(\pm 3.3\)</span> for a two-tail test. Strictly speaking, the HWE test should be applied to controls only (e.g. obese = 0). However, the default computation is for all samples.</p>
 <p>We thus filter SNPs with a call rate <span class="math inline">\(&gt;95\%\)</span>, MAF of <span class="math inline">\(&gt;5\%\)</span> and <span class="math inline">\(z.HWE&lt;3.3\)</span> in controls</p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="genome-wide-association-studies.html#cb263-1"></a>controls &lt;-<span class="st"> </span>ob<span class="op">$</span>obese <span class="op">==</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(ob<span class="op">$</span>obese)</span>
-<span id="cb263-2"><a href="genome-wide-association-studies.html#cb263-2"></a>geno.controls &lt;-<span class="st"> </span>geno[controls,]</span>
-<span id="cb263-3"><a href="genome-wide-association-studies.html#cb263-3"></a>info.controls &lt;-<span class="st"> </span><span class="kw">col.summary</span>(geno.controls)</span>
-<span id="cb263-4"><a href="genome-wide-association-studies.html#cb263-4"></a></span>
-<span id="cb263-5"><a href="genome-wide-association-studies.html#cb263-5"></a>use &lt;-<span class="st"> </span>info.snps<span class="op">$</span>Call.rate <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.95</span> <span class="op">&amp;</span></span>
-<span id="cb263-6"><a href="genome-wide-association-studies.html#cb263-6"></a><span class="st">       </span>info.snps<span class="op">$</span>MAF <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">&amp;</span></span>
-<span id="cb263-7"><a href="genome-wide-association-studies.html#cb263-7"></a><span class="st">       </span><span class="kw">abs</span>(info.controls<span class="op">$</span>z.HWE <span class="op">&lt;</span><span class="st"> </span><span class="fl">3.3</span>)    </span>
-<span id="cb263-8"><a href="genome-wide-association-studies.html#cb263-8"></a>mask.snps &lt;-<span class="st"> </span>use <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(use)</span>
-<span id="cb263-9"><a href="genome-wide-association-studies.html#cb263-9"></a></span>
-<span id="cb263-10"><a href="genome-wide-association-studies.html#cb263-10"></a>geno.qc.snps &lt;-<span class="st"> </span>geno[ , mask.snps]</span>
-<span id="cb263-11"><a href="genome-wide-association-studies.html#cb263-11"></a>geno.qc.snps</span></code></pre></div>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="genome-wide-association-studies.html#cb263-1" aria-hidden="true" tabindex="-1"></a>controls <span class="ot">&lt;-</span> ob<span class="sc">$</span>obese <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(ob<span class="sc">$</span>obese)</span>
+<span id="cb263-2"><a href="genome-wide-association-studies.html#cb263-2" aria-hidden="true" tabindex="-1"></a>geno.controls <span class="ot">&lt;-</span> geno[controls,]</span>
+<span id="cb263-3"><a href="genome-wide-association-studies.html#cb263-3" aria-hidden="true" tabindex="-1"></a>info.controls <span class="ot">&lt;-</span> <span class="fu">col.summary</span>(geno.controls)</span>
+<span id="cb263-4"><a href="genome-wide-association-studies.html#cb263-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb263-5"><a href="genome-wide-association-studies.html#cb263-5" aria-hidden="true" tabindex="-1"></a>use <span class="ot">&lt;-</span> info.snps<span class="sc">$</span>Call.rate <span class="sc">&gt;</span> <span class="fl">0.95</span> <span class="sc">&amp;</span></span>
+<span id="cb263-6"><a href="genome-wide-association-studies.html#cb263-6" aria-hidden="true" tabindex="-1"></a>       info.snps<span class="sc">$</span>MAF <span class="sc">&gt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span></span>
+<span id="cb263-7"><a href="genome-wide-association-studies.html#cb263-7" aria-hidden="true" tabindex="-1"></a>       <span class="fu">abs</span>(info.controls<span class="sc">$</span>z.HWE <span class="sc">&lt;</span> <span class="fl">3.3</span>)    </span>
+<span id="cb263-8"><a href="genome-wide-association-studies.html#cb263-8" aria-hidden="true" tabindex="-1"></a>mask.snps <span class="ot">&lt;-</span> use <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(use)</span>
+<span id="cb263-9"><a href="genome-wide-association-studies.html#cb263-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb263-10"><a href="genome-wide-association-studies.html#cb263-10" aria-hidden="true" tabindex="-1"></a>geno.qc.snps <span class="ot">&lt;-</span> geno[ , mask.snps]</span>
+<span id="cb263-11"><a href="genome-wide-association-studies.html#cb263-11" aria-hidden="true" tabindex="-1"></a>geno.qc.snps</span></code></pre></div>
 <pre><code>A SnpMatrix with  2312 rows and  88723 columns
 Row names:  100 ... 998 
 Col names:  MitoT9699C ... rs28562204 </code></pre>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="genome-wide-association-studies.html#cb265-1"></a>annotation &lt;-<span class="st"> </span>annotation[mask.snps, ]</span></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="genome-wide-association-studies.html#cb265-1" aria-hidden="true" tabindex="-1"></a>annotation <span class="ot">&lt;-</span> annotation[mask.snps, ]</span></code></pre></div>
 <p>It is common practice to report the number of SNPs that have been removed from the association analyses</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="genome-wide-association-studies.html#cb266-1"></a><span class="co"># number of SNPs removed for bad call rate </span></span>
-<span id="cb266-2"><a href="genome-wide-association-studies.html#cb266-2"></a><span class="kw">sum</span>(info.snps<span class="op">$</span>Call.rate <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="genome-wide-association-studies.html#cb266-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of SNPs removed for bad call rate </span></span>
+<span id="cb266-2"><a href="genome-wide-association-studies.html#cb266-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(info.snps<span class="sc">$</span>Call.rate <span class="sc">&lt;</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>[1] 888</code></pre>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="genome-wide-association-studies.html#cb268-1"></a><span class="co"># number of SNPs removed for low MAF</span></span>
-<span id="cb268-2"><a href="genome-wide-association-studies.html#cb268-2"></a><span class="kw">sum</span>(info.snps<span class="op">$</span>MAF <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="genome-wide-association-studies.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of SNPs removed for low MAF</span></span>
+<span id="cb268-2"><a href="genome-wide-association-studies.html#cb268-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(info.snps<span class="sc">$</span>MAF <span class="sc">&lt;</span> <span class="fl">0.05</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>[1] 10461</code></pre>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="genome-wide-association-studies.html#cb270-1"></a><span class="co">#number of SNPs that do not pass HWE test</span></span>
-<span id="cb270-2"><a href="genome-wide-association-studies.html#cb270-2"></a><span class="kw">sum</span>(<span class="kw">abs</span>(info.controls<span class="op">$</span>z.HWE <span class="op">&gt;</span><span class="st"> </span><span class="fl">3.3</span>), <span class="dt">na.rm=</span><span class="ot">TRUE</span>)    </span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="genome-wide-association-studies.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="co">#number of SNPs that do not pass HWE test</span></span>
+<span id="cb270-2"><a href="genome-wide-association-studies.html#cb270-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">abs</span>(info.controls<span class="sc">$</span>z.HWE <span class="sc">&gt;</span> <span class="fl">3.3</span>), <span class="at">na.rm=</span><span class="cn">TRUE</span>)    </span></code></pre></div>
 <pre><code>[1] 80</code></pre>
-<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="genome-wide-association-studies.html#cb272-1"></a><span class="co"># The total number of SNPs do not pass QC</span></span>
-<span id="cb272-2"><a href="genome-wide-association-studies.html#cb272-2"></a><span class="kw">sum</span>(<span class="op">!</span>mask.snps)</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="genome-wide-association-studies.html#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The total number of SNPs do not pass QC</span></span>
+<span id="cb272-2"><a href="genome-wide-association-studies.html#cb272-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="sc">!</span>mask.snps)</span></code></pre></div>
 <pre><code>[1] 11277</code></pre>
 </div>
 <div id="quality-control-of-individuals" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Quality control of individuals</h2>
-<p>QC of individuals, or biological samples, comprises four main steps <span class="citation">(Anderson et al. <a href="#ref-Anderson" role="doc-biblioref">2010</a>)</span>:</p>
+<p>QC of individuals, or biological samples, comprises four main steps <span class="citation">(<a href="#ref-Anderson" role="doc-biblioref">Anderson et al. 2010</a>)</span>:</p>
 <ul>
 <li>The identification of individuals with discordant reported and genomic sex,</li>
 <li>the identification of individuals with outlying missing genotype or heterozygosity rate,</li>
@@ -359,8 +384,8 @@ Col names:  MitoT9699C ... rs28562204 </code></pre>
 <li>the identification of individuals of divergent ancestry from the sample.</li>
 </ul>
 <p>We start by removing individuals with sex discrepancies, a large number of missing genotypes and outlying heterozygosity. The function <code>row.summary()</code> returns the call rate and the proportion of called SNPs which are heterozygous per individual.</p>
-<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="genome-wide-association-studies.html#cb274-1"></a>info.indv &lt;-<span class="st"> </span><span class="kw">row.summary</span>(geno.qc.snps)</span>
-<span id="cb274-2"><a href="genome-wide-association-studies.html#cb274-2"></a><span class="kw">head</span>(info.indv)</span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="genome-wide-association-studies.html#cb274-1" aria-hidden="true" tabindex="-1"></a>info.indv <span class="ot">&lt;-</span> <span class="fu">row.summary</span>(geno.qc.snps)</span>
+<span id="cb274-2"><a href="genome-wide-association-studies.html#cb274-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(info.indv)</span></code></pre></div>
 <pre><code>     Call.rate Certain.calls Heterozygosity
 100  0.9991547             1      0.3399851
 1001 0.9987151             1      0.3456195
@@ -369,33 +394,33 @@ Col names:  MitoT9699C ... rs28562204 </code></pre>
 1006 0.9990983             1      0.3482170
 1008 0.9995041             1      0.3435763</code></pre>
 <p>Gender is usually inferred from the heterozygosity of chromosome X. Males have an expected heterozygosity of 0 and females of 0.30. Chromosome X heterozygosity can be extracted using <code>row.summary()</code> function and then plotted</p>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="genome-wide-association-studies.html#cb276-1"></a>geno.X &lt;-<span class="st"> </span>geno.qc.snps[,annotation<span class="op">$</span>chromosome<span class="op">==</span><span class="st">&quot;23&quot;</span> <span class="op">&amp;</span><span class="st"> </span></span>
-<span id="cb276-2"><a href="genome-wide-association-studies.html#cb276-2"></a><span class="st">                         </span><span class="op">!</span><span class="kw">is.na</span>(annotation<span class="op">$</span>chromosome)]</span>
-<span id="cb276-3"><a href="genome-wide-association-studies.html#cb276-3"></a>info.X &lt;-<span class="st"> </span><span class="kw">row.summary</span>(geno.X)</span>
-<span id="cb276-4"><a href="genome-wide-association-studies.html#cb276-4"></a>mycol &lt;-<span class="st"> </span><span class="kw">ifelse</span>(ob<span class="op">$</span>gender<span class="op">==</span><span class="st">&quot;Male&quot;</span>, <span class="st">&quot;gray40&quot;</span>, <span class="st">&quot;gray80&quot;</span>)</span>
-<span id="cb276-5"><a href="genome-wide-association-studies.html#cb276-5"></a><span class="kw">plot</span>(info.X<span class="op">$</span>Heterozygosity, <span class="dt">col=</span>mycol, </span>
-<span id="cb276-6"><a href="genome-wide-association-studies.html#cb276-6"></a>     <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">xlab=</span><span class="st">&quot;Individuals&quot;</span>, </span>
-<span id="cb276-7"><a href="genome-wide-association-studies.html#cb276-7"></a>     <span class="dt">ylab=</span><span class="st">&quot;Heterozygosity in chromosome X&quot;</span>)</span>
-<span id="cb276-8"><a href="genome-wide-association-studies.html#cb276-8"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Males&quot;</span>, <span class="st">&quot;Females&quot;</span>), <span class="dt">col=</span>mycol,</span>
-<span id="cb276-9"><a href="genome-wide-association-studies.html#cb276-9"></a>       <span class="dt">pch=</span><span class="dv">16</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:HetX"></span>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="genome-wide-association-studies.html#cb276-1" aria-hidden="true" tabindex="-1"></a>geno.X <span class="ot">&lt;-</span> geno.qc.snps[,annotation<span class="sc">$</span>chromosome<span class="sc">==</span><span class="st">&quot;23&quot;</span> <span class="sc">&amp;</span> </span>
+<span id="cb276-2"><a href="genome-wide-association-studies.html#cb276-2" aria-hidden="true" tabindex="-1"></a>                         <span class="sc">!</span><span class="fu">is.na</span>(annotation<span class="sc">$</span>chromosome)]</span>
+<span id="cb276-3"><a href="genome-wide-association-studies.html#cb276-3" aria-hidden="true" tabindex="-1"></a>info.X <span class="ot">&lt;-</span> <span class="fu">row.summary</span>(geno.X)</span>
+<span id="cb276-4"><a href="genome-wide-association-studies.html#cb276-4" aria-hidden="true" tabindex="-1"></a>mycol <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(ob<span class="sc">$</span>gender<span class="sc">==</span><span class="st">&quot;Male&quot;</span>, <span class="st">&quot;gray40&quot;</span>, <span class="st">&quot;gray80&quot;</span>)</span>
+<span id="cb276-5"><a href="genome-wide-association-studies.html#cb276-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(info.X<span class="sc">$</span>Heterozygosity, <span class="at">col=</span>mycol, </span>
+<span id="cb276-6"><a href="genome-wide-association-studies.html#cb276-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch=</span><span class="dv">16</span>, <span class="at">xlab=</span><span class="st">&quot;Individuals&quot;</span>, </span>
+<span id="cb276-7"><a href="genome-wide-association-studies.html#cb276-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Heterozygosity in chromosome X&quot;</span>)</span>
+<span id="cb276-8"><a href="genome-wide-association-studies.html#cb276-8" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Males&quot;</span>, <span class="st">&quot;Females&quot;</span>), <span class="at">col=</span>mycol,</span>
+<span id="cb276-9"><a href="genome-wide-association-studies.html#cb276-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="dv">16</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:HetX"></span>
 <img src="fig/HetX-1.png" alt="Heterozygosity in chromosome X by gender provided in the phenotypic data." width="672" />
 <p class="caption">
 Figure 4.1: Heterozygosity in chromosome X by gender provided in the phenotypic data.
 </p>
 </div>
 <p>Figure <a href="genome-wide-association-studies.html#fig:HetX">4.1</a> shows that there are some reported males with non-zero X-heterozygosity and females with zero X-heterozygosity. These samples are located in <code>sex.discrep</code> for later removal</p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="genome-wide-association-studies.html#cb277-1"></a>sex.discrep &lt;-<span class="st"> </span>(ob<span class="op">$</span>gender<span class="op">==</span><span class="st">&quot;Male&quot;</span> <span class="op">&amp;</span><span class="st"> </span>info.X<span class="op">$</span>Heterozygosity <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.2</span>) <span class="op">|</span><span class="st">  </span></span>
-<span id="cb277-2"><a href="genome-wide-association-studies.html#cb277-2"></a><span class="st">               </span>(ob<span class="op">$</span>gender<span class="op">==</span><span class="st">&quot;Female&quot;</span> <span class="op">&amp;</span><span class="st"> </span>info.X<span class="op">$</span>Heterozygosity <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.2</span>)   </span></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="genome-wide-association-studies.html#cb277-1" aria-hidden="true" tabindex="-1"></a>sex.discrep <span class="ot">&lt;-</span> (ob<span class="sc">$</span>gender<span class="sc">==</span><span class="st">&quot;Male&quot;</span> <span class="sc">&amp;</span> info.X<span class="sc">$</span>Heterozygosity <span class="sc">&gt;</span> <span class="fl">0.2</span>) <span class="sc">|</span>  </span>
+<span id="cb277-2"><a href="genome-wide-association-studies.html#cb277-2" aria-hidden="true" tabindex="-1"></a>               (ob<span class="sc">$</span>gender<span class="sc">==</span><span class="st">&quot;Female&quot;</span> <span class="sc">&amp;</span> info.X<span class="sc">$</span>Heterozygosity <span class="sc">&lt;</span> <span class="fl">0.2</span>)   </span></code></pre></div>
 <p>Sex filtering based on X-heterozygosity is not sufficient to identify rare aneuploidies, like XXY in males. Alternatively, plots of the mean allelic intensities of SNPs on the X and Y chromosomes can identify mis-annotated sex as well as sex chromosome aneuploidies.</p>
 <p>Now, we identify individuals with outlying heterozygosity from the overall genomic heterozygosity rate that is computed by the function <code>row.summary()</code>. Heterozygosity, can also be computed from the statistic <span class="math inline">\(F = 1 - \frac{f(Aa)}{E(f(Aa))}\)</span>, where <span class="math inline">\(f(Aa)\)</span> is the observed proportion of heterozygous genotypes (Aa) of a given individual and <span class="math inline">\(E(f(Aa))\)</span> is the expected proportion of heterozygous genotypes. A subject’s <span class="math inline">\(E(f(Aa))\)</span> can be computed from the MAF across all the subjects’ non-missing SNPs</p>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="genome-wide-association-studies.html#cb278-1"></a>MAF &lt;-<span class="st"> </span><span class="kw">col.summary</span>(geno.qc.snps)<span class="op">$</span>MAF</span>
-<span id="cb278-2"><a href="genome-wide-association-studies.html#cb278-2"></a>callmatrix &lt;-<span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(geno.qc.snps)</span>
-<span id="cb278-3"><a href="genome-wide-association-studies.html#cb278-3"></a>hetExp &lt;-<span class="st"> </span>callmatrix <span class="op">%*%</span><span class="st"> </span>(<span class="dv">2</span><span class="op">*</span>MAF<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>MAF))</span>
-<span id="cb278-4"><a href="genome-wide-association-studies.html#cb278-4"></a>hetObs &lt;-<span class="st"> </span><span class="kw">with</span>(info.indv, Heterozygosity<span class="op">*</span>(<span class="kw">ncol</span>(geno.qc.snps))<span class="op">*</span>Call.rate)</span>
-<span id="cb278-5"><a href="genome-wide-association-studies.html#cb278-5"></a>info.indv<span class="op">$</span>hetF &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span>(hetObs<span class="op">/</span>hetExp)</span>
-<span id="cb278-6"><a href="genome-wide-association-studies.html#cb278-6"></a></span>
-<span id="cb278-7"><a href="genome-wide-association-studies.html#cb278-7"></a><span class="kw">head</span>(info.indv)</span></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="genome-wide-association-studies.html#cb278-1" aria-hidden="true" tabindex="-1"></a>MAF <span class="ot">&lt;-</span> <span class="fu">col.summary</span>(geno.qc.snps)<span class="sc">$</span>MAF</span>
+<span id="cb278-2"><a href="genome-wide-association-studies.html#cb278-2" aria-hidden="true" tabindex="-1"></a>callmatrix <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(geno.qc.snps)</span>
+<span id="cb278-3"><a href="genome-wide-association-studies.html#cb278-3" aria-hidden="true" tabindex="-1"></a>hetExp <span class="ot">&lt;-</span> callmatrix <span class="sc">%*%</span> (<span class="dv">2</span><span class="sc">*</span>MAF<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>MAF))</span>
+<span id="cb278-4"><a href="genome-wide-association-studies.html#cb278-4" aria-hidden="true" tabindex="-1"></a>hetObs <span class="ot">&lt;-</span> <span class="fu">with</span>(info.indv, Heterozygosity<span class="sc">*</span>(<span class="fu">ncol</span>(geno.qc.snps))<span class="sc">*</span>Call.rate)</span>
+<span id="cb278-5"><a href="genome-wide-association-studies.html#cb278-5" aria-hidden="true" tabindex="-1"></a>info.indv<span class="sc">$</span>hetF <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span>(hetObs<span class="sc">/</span>hetExp)</span>
+<span id="cb278-6"><a href="genome-wide-association-studies.html#cb278-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb278-7"><a href="genome-wide-association-studies.html#cb278-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(info.indv)</span></code></pre></div>
 <pre><code>     Call.rate Certain.calls Heterozygosity        hetF
 100  0.9991547             1      0.3399851 0.031007624
 1001 0.9987151             1      0.3456195 0.014898707
@@ -404,7 +429,7 @@ Figure 4.1: Heterozygosity in chromosome X by gender provided in the phenotypic 
 1006 0.9990983             1      0.3482170 0.007425401
 1008 0.9995041             1      0.3435763 0.020744532</code></pre>
 <p>In Figure <a href="genome-wide-association-studies.html#fig:Het2">4.2</a>, we compare <span class="math inline">\(F\)</span> statistic and the Heterozygosity obtained from <code>row.summary()</code></p>
-<div class="figure"><span id="fig:Het2"></span>
+<div class="figure"><span style="display:block;" id="fig:Het2"></span>
 <img src="fig/Het2-1.png" alt="Heterozygosity computed using F statistic (left panel) and using row.summary function (right panel). The horizontal dashed line shows a suggestive value to detect individuals with outlier heterozygosity values." width="672" />
 <p class="caption">
 Figure 4.2: Heterozygosity computed using F statistic (left panel) and using row.summary function (right panel). The horizontal dashed line shows a suggestive value to detect individuals with outlier heterozygosity values.
@@ -412,13 +437,13 @@ Figure 4.2: Heterozygosity computed using F statistic (left panel) and using row
 </div>
 <p>Individuals whose <span class="math inline">\(F\)</span> statistic is outside the band <span class="math inline">\(\pm 0.1\)</span> are considered sample outliers (left panel Figure <a href="genome-wide-association-studies.html#fig:Het2">4.2</a> and correspond to those having a heterozygosity rate lower than 0.32.</p>
 <p>GWASs are studies that are typically based on population samples. Therefore, close familial relatedness between individuals is not representative of the sample. We, therefore, remove individuals whose relatedness is higher than expected. The package <code>SNPRelate</code> is used to perform identity-by-descent (IBD) analysis, computing kinship within the sample. The package requires a data in a GDS format that is obtained with the function <code>snpgdsBED2GDS</code>. In addition, IBD analysis requires SNPs that are not in LD (uncorrelated). The function <code>snpgdsLDpruning</code> iteratively removes adjacent SNPs that exceed an LD threshold in a sliding window</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="genome-wide-association-studies.html#cb280-1"></a><span class="kw">library</span>(SNPRelate)</span>
-<span id="cb280-2"><a href="genome-wide-association-studies.html#cb280-2"></a></span>
-<span id="cb280-3"><a href="genome-wide-association-studies.html#cb280-3"></a><span class="co"># Transform PLINK data into GDS format</span></span>
-<span id="cb280-4"><a href="genome-wide-association-studies.html#cb280-4"></a><span class="kw">snpgdsBED2GDS</span>(<span class="st">&quot;data/obesity.bed&quot;</span>, </span>
-<span id="cb280-5"><a href="genome-wide-association-studies.html#cb280-5"></a>              <span class="st">&quot;data/obesity.fam&quot;</span>,</span>
-<span id="cb280-6"><a href="genome-wide-association-studies.html#cb280-6"></a>              <span class="st">&quot;data/obesity.bim&quot;</span>, </span>
-<span id="cb280-7"><a href="genome-wide-association-studies.html#cb280-7"></a>              <span class="dt">out=</span><span class="st">&quot;obGDS&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="genome-wide-association-studies.html#cb280-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SNPRelate)</span>
+<span id="cb280-2"><a href="genome-wide-association-studies.html#cb280-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb280-3"><a href="genome-wide-association-studies.html#cb280-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform PLINK data into GDS format</span></span>
+<span id="cb280-4"><a href="genome-wide-association-studies.html#cb280-4" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsBED2GDS</span>(<span class="st">&quot;data/obesity.bed&quot;</span>, </span>
+<span id="cb280-5"><a href="genome-wide-association-studies.html#cb280-5" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;data/obesity.fam&quot;</span>,</span>
+<span id="cb280-6"><a href="genome-wide-association-studies.html#cb280-6" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;data/obesity.bim&quot;</span>, </span>
+<span id="cb280-7"><a href="genome-wide-association-studies.html#cb280-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">out=</span><span class="st">&quot;obGDS&quot;</span>)</span></code></pre></div>
 <pre><code>Start file conversion from PLINK BED to SNP GDS ...
     BED file: &quot;data/obesity.bed&quot;
         SNP-major mode (Sample X SNP), 55.1M
@@ -429,7 +454,7 @@ Wed Nov 11 09:32:28 2020     (store sample id, snp id, position, and chromosome)
 
 [..................................................]  0%, ETC: ---        
 [==================================================] 100%, completed, 1s
-Wed Nov 11 09:32:29 2020 	Done.
+Wed Nov 11 09:32:29 2020    Done.
 Optimize the access efficiency ...
 Clean up the fragments of GDS file:
     open the file &#39;obGDS&#39; (55.7M)
@@ -437,13 +462,13 @@ Clean up the fragments of GDS file:
     save to &#39;obGDS.tmp&#39;
     rename &#39;obGDS.tmp&#39; (55.7M, reduced: 252B)
     # of fragments: 18</code></pre>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="genome-wide-association-studies.html#cb282-1"></a>genofile &lt;-<span class="st"> </span><span class="kw">snpgdsOpen</span>(<span class="st">&quot;obGDS&quot;</span>)</span>
-<span id="cb282-2"><a href="genome-wide-association-studies.html#cb282-2"></a></span>
-<span id="cb282-3"><a href="genome-wide-association-studies.html#cb282-3"></a><span class="co"># Prune SNPs for IBD analysis</span></span>
-<span id="cb282-4"><a href="genome-wide-association-studies.html#cb282-4"></a><span class="kw">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb282-5"><a href="genome-wide-association-studies.html#cb282-5"></a>snps.qc &lt;-<span class="st"> </span><span class="kw">colnames</span>(geno.qc.snps)</span>
-<span id="cb282-6"><a href="genome-wide-association-studies.html#cb282-6"></a>snp.prune &lt;-<span class="st"> </span><span class="kw">snpgdsLDpruning</span>(genofile, <span class="dt">ld.threshold =</span> <span class="fl">0.2</span>,</span>
-<span id="cb282-7"><a href="genome-wide-association-studies.html#cb282-7"></a>                          <span class="dt">snp.id =</span> snps.qc)</span></code></pre></div>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="genome-wide-association-studies.html#cb282-1" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="st">&quot;obGDS&quot;</span>)</span>
+<span id="cb282-2"><a href="genome-wide-association-studies.html#cb282-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb282-3"><a href="genome-wide-association-studies.html#cb282-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Prune SNPs for IBD analysis</span></span>
+<span id="cb282-4"><a href="genome-wide-association-studies.html#cb282-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb282-5"><a href="genome-wide-association-studies.html#cb282-5" aria-hidden="true" tabindex="-1"></a>snps.qc <span class="ot">&lt;-</span> <span class="fu">colnames</span>(geno.qc.snps)</span>
+<span id="cb282-6"><a href="genome-wide-association-studies.html#cb282-6" aria-hidden="true" tabindex="-1"></a>snp.prune <span class="ot">&lt;-</span> <span class="fu">snpgdsLDpruning</span>(genofile, <span class="at">ld.threshold =</span> <span class="fl">0.2</span>,</span>
+<span id="cb282-7"><a href="genome-wide-association-studies.html#cb282-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">snp.id =</span> snps.qc)</span></code></pre></div>
 <pre><code>SNP pruning based on LD:
 Excluding 13,410 SNPs (non-autosomes or non-selection)
 Excluding 0 SNP (monomorphic: TRUE, MAF: NaN, missing rate: NaN)
@@ -476,11 +501,11 @@ Chromosome 20: 35.66%, 859/2,409
 Chromosome 21: 34.83%, 488/1,401
 Chromosome 22: 34.61%, 552/1,595
 30,733 markers are selected in total.</code></pre>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="genome-wide-association-studies.html#cb284-1"></a>snps.ibd &lt;-<span class="st"> </span><span class="kw">unlist</span>(snp.prune, <span class="dt">use.names=</span><span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="genome-wide-association-studies.html#cb284-1" aria-hidden="true" tabindex="-1"></a>snps.ibd <span class="ot">&lt;-</span> <span class="fu">unlist</span>(snp.prune, <span class="at">use.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p>Note that this process is performed with SNPs that passed previous QC checks. IBD coefficients are then computed using the method of moments, implemented in the function <code>snpgdsIBDMoM()</code>. The result of the analysis is a table indicating kinship among pairs of individuals</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="genome-wide-association-studies.html#cb285-1"></a>ibd &lt;-<span class="st"> </span><span class="kw">snpgdsIBDMoM</span>(genofile, <span class="dt">kinship=</span><span class="ot">TRUE</span>,</span>
-<span id="cb285-2"><a href="genome-wide-association-studies.html#cb285-2"></a>                    <span class="dt">snp.id =</span> snps.ibd,</span>
-<span id="cb285-3"><a href="genome-wide-association-studies.html#cb285-3"></a>                    <span class="dt">num.thread =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="genome-wide-association-studies.html#cb285-1" aria-hidden="true" tabindex="-1"></a>ibd <span class="ot">&lt;-</span> <span class="fu">snpgdsIBDMoM</span>(genofile, <span class="at">kinship=</span><span class="cn">TRUE</span>,</span>
+<span id="cb285-2"><a href="genome-wide-association-studies.html#cb285-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">snp.id =</span> snps.ibd,</span>
+<span id="cb285-3"><a href="genome-wide-association-studies.html#cb285-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">num.thread =</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>IBD analysis (PLINK method of moment) on genotypes:
 Excluding 69,267 SNPs (non-autosomes or non-selection)
 Excluding 0 SNP (monomorphic: TRUE, MAF: NaN, missing rate: NaN)
@@ -493,8 +518,8 @@ Wed Nov 11 09:32:32 2020    (internal increment: 13952)
 [..................................................]  0%, ETC: ---        
 [==================================================] 100%, completed, 9s
 Wed Nov 11 09:32:41 2020    Done.</code></pre>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="genome-wide-association-studies.html#cb287-1"></a>ibd.kin &lt;-<span class="st"> </span><span class="kw">snpgdsIBDSelection</span>(ibd) </span>
-<span id="cb287-2"><a href="genome-wide-association-studies.html#cb287-2"></a><span class="kw">head</span>(ibd.kin)</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="genome-wide-association-studies.html#cb287-1" aria-hidden="true" tabindex="-1"></a>ibd.kin <span class="ot">&lt;-</span> <span class="fu">snpgdsIBDSelection</span>(ibd) </span>
+<span id="cb287-2"><a href="genome-wide-association-studies.html#cb287-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ibd.kin)</span></code></pre></div>
 <pre><code>  ID1  ID2 k0 k1 kinship
 1 100 1001  1  0       0
 2 100 1004  1  0       0
@@ -503,8 +528,8 @@ Wed Nov 11 09:32:41 2020    Done.</code></pre>
 5 100 1008  1  0       0
 6 100 1013  1  0       0</code></pre>
 <p>A pair of individuals with higher than expected relatedness are considered with kinship score <span class="math inline">\(&gt; 0.1\)</span></p>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="genome-wide-association-studies.html#cb289-1"></a>ibd.kin.thres &lt;-<span class="st"> </span><span class="kw">subset</span>(ibd.kin, kinship <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.1</span>)</span>
-<span id="cb289-2"><a href="genome-wide-association-studies.html#cb289-2"></a><span class="kw">head</span>(ibd.kin.thres)</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="genome-wide-association-studies.html#cb289-1" aria-hidden="true" tabindex="-1"></a>ibd.kin.thres <span class="ot">&lt;-</span> <span class="fu">subset</span>(ibd.kin, kinship <span class="sc">&gt;</span> <span class="fl">0.1</span>)</span>
+<span id="cb289-2"><a href="genome-wide-association-studies.html#cb289-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ibd.kin.thres)</span></code></pre></div>
 <pre><code>         ID1  ID2        k0        k1   kinship
 46484   1049  188 0.2759234 0.5337773 0.2285940
 232848  1202 1330 0.0000000 0.0000000 0.5000000
@@ -513,45 +538,45 @@ Wed Nov 11 09:32:41 2020    Done.</code></pre>
 806337   170 2015 0.2564809 0.5414546 0.2363959
 1158509 2055  825 0.0000000 0.0000000 0.5000000</code></pre>
 <p>The ids of the individuals with unusual kinship are located with <code>related()</code> function from the <code>SNPassoc</code> package</p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="genome-wide-association-studies.html#cb291-1"></a>ids.rel &lt;-<span class="st">  </span>SNPassoc<span class="op">::</span><span class="kw">related</span>(ibd.kin.thres) </span>
-<span id="cb291-2"><a href="genome-wide-association-studies.html#cb291-2"></a>ids.rel</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="genome-wide-association-studies.html#cb291-1" aria-hidden="true" tabindex="-1"></a>ids.rel <span class="ot">&lt;-</span>  SNPassoc<span class="sc">::</span><span class="fu">related</span>(ibd.kin.thres) </span>
+<span id="cb291-2"><a href="genome-wide-association-studies.html#cb291-2" aria-hidden="true" tabindex="-1"></a>ids.rel</span></code></pre></div>
 <pre><code> [1] &quot;4364&quot; &quot;3380&quot; &quot;2999&quot; &quot;2697&quot; &quot;2611&quot; &quot;2088&quot; &quot;1202&quot; &quot;872&quot;  &quot;825&quot; 
 [10] &quot;684&quot;  &quot;188&quot;  &quot;170&quot;  &quot;155&quot;  &quot;2071&quot;</code></pre>
-<p>Summing up, individuals with more than 5% missing genotypes <span class="citation">(Consortium and others <a href="#ref-wellcome2007genome" role="doc-biblioref">2007</a>, @silverberg2009ulcerative)</span>, with sex discrepancies, <span class="math inline">\(F\)</span> absolute value <span class="math inline">\(&gt;1\)</span> and kinship coefficient <span class="math inline">\(&gt;0.1\)</span> are removed from the genotype and phenotype data</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="genome-wide-association-studies.html#cb293-1"></a>use &lt;-<span class="st"> </span>info.indv<span class="op">$</span>Call.rate <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.95</span> <span class="op">&amp;</span></span>
-<span id="cb293-2"><a href="genome-wide-association-studies.html#cb293-2"></a><span class="st">       </span><span class="kw">abs</span>(info.indv<span class="op">$</span>hetF) <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.1</span> <span class="op">&amp;</span></span>
-<span id="cb293-3"><a href="genome-wide-association-studies.html#cb293-3"></a><span class="st">       </span><span class="op">!</span>sex.discrep <span class="op">&amp;</span></span>
-<span id="cb293-4"><a href="genome-wide-association-studies.html#cb293-4"></a><span class="st">       </span><span class="op">!</span><span class="kw">rownames</span>(info.indv)<span class="op">%in%</span>ids.rel</span>
-<span id="cb293-5"><a href="genome-wide-association-studies.html#cb293-5"></a>mask.indiv &lt;-<span class="st"> </span>use <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(use)</span>
-<span id="cb293-6"><a href="genome-wide-association-studies.html#cb293-6"></a>geno.qc &lt;-<span class="st"> </span>geno.qc.snps[mask.indiv, ]</span>
-<span id="cb293-7"><a href="genome-wide-association-studies.html#cb293-7"></a></span>
-<span id="cb293-8"><a href="genome-wide-association-studies.html#cb293-8"></a>ob.qc &lt;-<span class="st"> </span>ob.pheno[mask.indiv, ]</span>
-<span id="cb293-9"><a href="genome-wide-association-studies.html#cb293-9"></a><span class="kw">identical</span>(<span class="kw">rownames</span>(ob.qc), <span class="kw">rownames</span>(geno.qc))</span></code></pre></div>
+<p>Summing up, individuals with more than 5% missing genotypes <span class="citation"><a href="#ref-silverberg2009ulcerative" role="doc-biblioref">Silverberg et al.</a> (<a href="#ref-silverberg2009ulcerative" role="doc-biblioref">2009</a>)</span>, with sex discrepancies, <span class="math inline">\(F\)</span> absolute value <span class="math inline">\(&gt;1\)</span> and kinship coefficient <span class="math inline">\(&gt;0.1\)</span> are removed from the genotype and phenotype data</p>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="genome-wide-association-studies.html#cb293-1" aria-hidden="true" tabindex="-1"></a>use <span class="ot">&lt;-</span> info.indv<span class="sc">$</span>Call.rate <span class="sc">&gt;</span> <span class="fl">0.95</span> <span class="sc">&amp;</span></span>
+<span id="cb293-2"><a href="genome-wide-association-studies.html#cb293-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">abs</span>(info.indv<span class="sc">$</span>hetF) <span class="sc">&lt;</span> <span class="fl">0.1</span> <span class="sc">&amp;</span></span>
+<span id="cb293-3"><a href="genome-wide-association-studies.html#cb293-3" aria-hidden="true" tabindex="-1"></a>       <span class="sc">!</span>sex.discrep <span class="sc">&amp;</span></span>
+<span id="cb293-4"><a href="genome-wide-association-studies.html#cb293-4" aria-hidden="true" tabindex="-1"></a>       <span class="sc">!</span><span class="fu">rownames</span>(info.indv)<span class="sc">%in%</span>ids.rel</span>
+<span id="cb293-5"><a href="genome-wide-association-studies.html#cb293-5" aria-hidden="true" tabindex="-1"></a>mask.indiv <span class="ot">&lt;-</span> use <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(use)</span>
+<span id="cb293-6"><a href="genome-wide-association-studies.html#cb293-6" aria-hidden="true" tabindex="-1"></a>geno.qc <span class="ot">&lt;-</span> geno.qc.snps[mask.indiv, ]</span>
+<span id="cb293-7"><a href="genome-wide-association-studies.html#cb293-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb293-8"><a href="genome-wide-association-studies.html#cb293-8" aria-hidden="true" tabindex="-1"></a>ob.qc <span class="ot">&lt;-</span> ob.pheno[mask.indiv, ]</span>
+<span id="cb293-9"><a href="genome-wide-association-studies.html#cb293-9" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(<span class="fu">rownames</span>(ob.qc), <span class="fu">rownames</span>(geno.qc))</span></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
 <p>These QC measures are usually reported</p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="genome-wide-association-studies.html#cb295-1"></a><span class="co"># number of individuals removed to bad call rate</span></span>
-<span id="cb295-2"><a href="genome-wide-association-studies.html#cb295-2"></a><span class="kw">sum</span>(info.indv<span class="op">$</span>Call.rate <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="genome-wide-association-studies.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of individuals removed to bad call rate</span></span>
+<span id="cb295-2"><a href="genome-wide-association-studies.html#cb295-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(info.indv<span class="sc">$</span>Call.rate <span class="sc">&lt;</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>[1] 34</code></pre>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="genome-wide-association-studies.html#cb297-1"></a><span class="co"># number of individuals removed for heterozygosity problems</span></span>
-<span id="cb297-2"><a href="genome-wide-association-studies.html#cb297-2"></a><span class="kw">sum</span>(<span class="kw">abs</span>(info.indv<span class="op">$</span>hetF) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="genome-wide-association-studies.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of individuals removed for heterozygosity problems</span></span>
+<span id="cb297-2"><a href="genome-wide-association-studies.html#cb297-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">abs</span>(info.indv<span class="sc">$</span>hetF) <span class="sc">&gt;</span> <span class="fl">0.1</span>)</span></code></pre></div>
 <pre><code>[1] 15</code></pre>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="genome-wide-association-studies.html#cb299-1"></a><span class="co"># number of individuals removed for sex discrepancies</span></span>
-<span id="cb299-2"><a href="genome-wide-association-studies.html#cb299-2"></a><span class="kw">sum</span>(sex.discrep)</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="genome-wide-association-studies.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of individuals removed for sex discrepancies</span></span>
+<span id="cb299-2"><a href="genome-wide-association-studies.html#cb299-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(sex.discrep)</span></code></pre></div>
 <pre><code>[1] 8</code></pre>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="genome-wide-association-studies.html#cb301-1"></a><span class="co"># number of individuals removed to be related with others</span></span>
-<span id="cb301-2"><a href="genome-wide-association-studies.html#cb301-2"></a><span class="kw">length</span>(ids.rel)</span></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="genome-wide-association-studies.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of individuals removed to be related with others</span></span>
+<span id="cb301-2"><a href="genome-wide-association-studies.html#cb301-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(ids.rel)</span></code></pre></div>
 <pre><code>[1] 14</code></pre>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="genome-wide-association-studies.html#cb303-1"></a><span class="co"># The total number of individuals that do not pass QC</span></span>
-<span id="cb303-2"><a href="genome-wide-association-studies.html#cb303-2"></a><span class="kw">sum</span>(<span class="op">!</span>mask.indiv)</span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="genome-wide-association-studies.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The total number of individuals that do not pass QC</span></span>
+<span id="cb303-2"><a href="genome-wide-association-studies.html#cb303-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="sc">!</span>mask.indiv)</span></code></pre></div>
 <pre><code>[1] 70</code></pre>
 </div>
 <div id="population-ancestry" class="section level2" number="4.3">
 <h2><span class="header-section-number">4.3</span> Population ancestry</h2>
 <p>As GWAS are based on general population samples, individual genetic differences between individuals need to be also representative of the population at large. The main source of genetic differences between individuals is ancestry. Therefore, it is important to check that there are not individuals with unexpected genetic differences in the sample. Ancestral differences can be inferred with principal component analysis (PCA) on the genomic data. Individuals with outlying ancestry can be removed from the study while smaller differences in ancestry can be adjusted in the association models, including the first principal components as covariates.</p>
 <p>PCA on genomic data can be computed using the <code>SNPRelate</code> package with the <code>snpgdsPCA()</code> function. Efficiency can be improved by removing SNPs that are in LD before PCA, see <code>snps.ibd</code> object in the previous IBD analysis. In addition the functio <code>snpgdsPCA()</code> allows parallelization with the argument <code>num.thread</code> that determines the number of computing cores to be used</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="genome-wide-association-studies.html#cb305-1"></a>pca &lt;-<span class="st"> </span><span class="kw">snpgdsPCA</span>(genofile, <span class="dt">sample.id =</span> <span class="kw">rownames</span>(geno.qc),  </span>
-<span id="cb305-2"><a href="genome-wide-association-studies.html#cb305-2"></a>                           <span class="dt">snp.id =</span> snps.ibd, </span>
-<span id="cb305-3"><a href="genome-wide-association-studies.html#cb305-3"></a>                           <span class="dt">num.thread=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="genome-wide-association-studies.html#cb305-1" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">snpgdsPCA</span>(genofile, <span class="at">sample.id =</span> <span class="fu">rownames</span>(geno.qc),  </span>
+<span id="cb305-2"><a href="genome-wide-association-studies.html#cb305-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">snp.id =</span> snps.ibd, </span>
+<span id="cb305-3"><a href="genome-wide-association-studies.html#cb305-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">num.thread=</span><span class="dv">1</span>)</span></code></pre></div>
 <pre><code>Principal Component Analysis (PCA) on genotypes:
 Excluding 69,267 SNPs (non-autosomes or non-selection)
 Excluding 0 SNP (monomorphic: TRUE, MAF: NaN, missing rate: NaN)
@@ -568,11 +593,11 @@ Wed Nov 11 09:33:16 2020    (internal increment: 448)
 Wed Nov 11 09:33:47 2020    Begin (eigenvalues and eigenvectors)
 Wed Nov 11 09:33:52 2020    Done.</code></pre>
 <p>A PCA plot for the first two components can be obtained with</p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="genome-wide-association-studies.html#cb307-1"></a><span class="kw">with</span>(pca, <span class="kw">plot</span>(eigenvect[,<span class="dv">1</span>], eigenvect[,<span class="dv">2</span>], </span>
-<span id="cb307-2"><a href="genome-wide-association-studies.html#cb307-2"></a>               <span class="dt">xlab=</span><span class="st">&quot;1st Principal Component&quot;</span>, </span>
-<span id="cb307-3"><a href="genome-wide-association-studies.html#cb307-3"></a>               <span class="dt">ylab=</span><span class="st">&quot;2nd Principal Component&quot;</span>, </span>
-<span id="cb307-4"><a href="genome-wide-association-studies.html#cb307-4"></a>               <span class="dt">main =</span> <span class="st">&quot;Ancestry Plot&quot;</span>,</span>
-<span id="cb307-5"><a href="genome-wide-association-studies.html#cb307-5"></a>               <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">bg=</span><span class="st">&quot;gray90&quot;</span>, <span class="dt">cex=</span><span class="fl">0.8</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="genome-wide-association-studies.html#cb307-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(pca, <span class="fu">plot</span>(eigenvect[,<span class="dv">1</span>], eigenvect[,<span class="dv">2</span>], </span>
+<span id="cb307-2"><a href="genome-wide-association-studies.html#cb307-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab=</span><span class="st">&quot;1st Principal Component&quot;</span>, </span>
+<span id="cb307-3"><a href="genome-wide-association-studies.html#cb307-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab=</span><span class="st">&quot;2nd Principal Component&quot;</span>, </span>
+<span id="cb307-4"><a href="genome-wide-association-studies.html#cb307-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">main =</span> <span class="st">&quot;Ancestry Plot&quot;</span>,</span>
+<span id="cb307-5"><a href="genome-wide-association-studies.html#cb307-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">pch=</span><span class="dv">21</span>, <span class="at">bg=</span><span class="st">&quot;gray90&quot;</span>, <span class="at">cex=</span><span class="fl">0.8</span>))</span></code></pre></div>
 <div class="figure">
 <img src="fig/pca_plot-1.png" alt="1st and 2nd principal components of obesity GWAS data example." width="672" />
 <p class="caption">
@@ -580,16 +605,16 @@ Wed Nov 11 09:33:52 2020    Done.</code></pre>
 </p>
 </div>
 <p>Inspection of Figure @ref(fig:pca_plot) can be used to identify individuals with unusual ancestry and remove them. Individuals with outlying values in the principal components will be considered for QC. In our example, we can see outlying individuals on the right side of the plot with 1st PC <span class="math inline">\(&gt; 0.05\)</span>. Smaller differences in ancestry are an important source of bias in association tests, as explained later. Therefore, we keep the first five principal components and add it to the phenotypic information that will be used in the association analyses.</p>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="genome-wide-association-studies.html#cb308-1"></a>ob.qc &lt;-<span class="st"> </span><span class="kw">data.frame</span>(ob.qc, pca<span class="op">$</span>eigenvect[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="genome-wide-association-studies.html#cb308-1" aria-hidden="true" tabindex="-1"></a>ob.qc <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(ob.qc, pca<span class="sc">$</span>eigenvect[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div>
 <p>After performing QC, the GDS file can be closed</p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="genome-wide-association-studies.html#cb309-1"></a><span class="kw">closefn.gds</span>(genofile)</span></code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="genome-wide-association-studies.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="fu">closefn.gds</span>(genofile)</span></code></pre></div>
 </div>
 <div id="genome-wide-association-analysis" class="section level2" number="4.4">
 <h2><span class="header-section-number">4.4</span> Genome-wide association analysis</h2>
 <p>Genome-wide association analysis involves regressing each SNP separately on our trait of interest. The analyses should be adjusted for clinical, environmental, and/or demographic factors as well as ancestral differences between the subjects. The analysis can be performed with a range of functions in <code>snpStats</code> package. We first examine the unadjusted whole genome association of our obesity study</p>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="genome-wide-association-studies.html#cb310-1"></a>res &lt;-<span class="st"> </span><span class="kw">single.snp.tests</span>(obese, <span class="dt">data=</span>ob.qc, </span>
-<span id="cb310-2"><a href="genome-wide-association-studies.html#cb310-2"></a>                        <span class="dt">snp.data=</span>geno.qc)</span>
-<span id="cb310-3"><a href="genome-wide-association-studies.html#cb310-3"></a>res[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,]</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="genome-wide-association-studies.html#cb310-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">single.snp.tests</span>(obese, <span class="at">data=</span>ob.qc, </span>
+<span id="cb310-2"><a href="genome-wide-association-studies.html#cb310-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">snp.data=</span>geno.qc)</span>
+<span id="cb310-3"><a href="genome-wide-association-studies.html#cb310-3" aria-hidden="true" tabindex="-1"></a>res[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,]</span></code></pre></div>
 <pre><code>               N Chi.squared.1.df Chi.squared.2.df      P.1df
 MitoT9699C  2134        3.0263311               NA 0.08192307
 MitoA11252G 2090        0.3561812               NA 0.55063478
@@ -604,18 +629,18 @@ MitoG16130A 0.1388981
 rs28705211  0.6856820</code></pre>
 <p>This analysis is only available for the additive (<span class="math inline">\(\chi^2\)</span>(1.df)) and the codominant models (<span class="math inline">\(\chi^2\)</span>(2.df)). It requires the name variable phenotype (obese) in the <code>data</code> argument. Genomic data are given in the <code>snp.data</code> argument. It is important that the individuals in the rows of both datasets match. SNPs in the mitochondrial genome and gonosomes return NA for the <span class="math inline">\(\chi^2\)</span> estimates. These variants should be analyzed separately. A common interest is to analyze autosomes only, and therefore these SNPs can be removed in the QC process.</p>
 <p>A quantitative trait can also be analyzed setting the argument <code>family</code> equal to “Gaussian”</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="genome-wide-association-studies.html#cb312-1"></a>res.quant &lt;-<span class="st"> </span><span class="kw">snp.rhs.tests</span>(age <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,  <span class="dt">data=</span>ob.qc, </span>
-<span id="cb312-2"><a href="genome-wide-association-studies.html#cb312-2"></a>                           <span class="dt">snp.data=</span>geno.qc,</span>
-<span id="cb312-3"><a href="genome-wide-association-studies.html#cb312-3"></a>                           <span class="dt">family=</span><span class="st">&quot;Gaussian&quot;</span>)</span>
-<span id="cb312-4"><a href="genome-wide-association-studies.html#cb312-4"></a><span class="kw">head</span>(res.quant)</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="genome-wide-association-studies.html#cb312-1" aria-hidden="true" tabindex="-1"></a>res.quant <span class="ot">&lt;-</span> <span class="fu">snp.rhs.tests</span>(age <span class="sc">~</span> <span class="dv">1</span>,  <span class="at">data=</span>ob.qc, </span>
+<span id="cb312-2"><a href="genome-wide-association-studies.html#cb312-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">snp.data=</span>geno.qc,</span>
+<span id="cb312-3"><a href="genome-wide-association-studies.html#cb312-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">family=</span><span class="st">&quot;Gaussian&quot;</span>)</span>
+<span id="cb312-4"><a href="genome-wide-association-studies.html#cb312-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res.quant)</span></code></pre></div>
 <pre><code>           Chi.squared Df  p.value
 MitoT9699C 0.003422591  1 0.953348</code></pre>
 <p>Population stratificationinflates the estimates of the <span class="math inline">\(\chi^2\)</span> tests of association between the phenotype and the SNPs, and as a consequence the false positive rate increases. Figure @ref{fig:stratificationExample} illustrates why population stratification may lead to false associations. In the hypothetical study in the figure, we compare 20 cases and 20 controls where individuals carrying a susceptibility allele are denoted by a dot. The overall frequency of the susceptibility allele is much larger in cases (0.55 = 11/20) than in controls (0.35 = 7/20), the odds of being a case in allele carriers is $$2.3 times higher than the odds of being a case in non carriers (OR= 2.27 = (0.55/0.45) / (0.35/0.65)). However, the significant increase in susceptibility between the allele is misleading, as the OR in population A (light color) is 0.89 and in population B (dark color) is 1.08. The susceptibility allele strongly discriminates population A from B, and given the differences of the trait frequency between populations, it is likely that the association of the allele with the trait is through its links with population differences and not with the trait itself.</p>
 <p></p>
 <p>In genome-wide analyses, the inflation of the associations due to undetected latent variables is assessed by quantile-quantile (Q-Q) plots where observed <span class="math inline">\(\chi^2\)</span> values are plotted against the expected ones</p>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="genome-wide-association-studies.html#cb314-1"></a>chi2 &lt;-<span class="st"> </span><span class="kw">chi.squared</span>(res, <span class="dt">df=</span><span class="dv">1</span>)</span>
-<span id="cb314-2"><a href="genome-wide-association-studies.html#cb314-2"></a><span class="kw">qq.chisq</span>(chi2)</span></code></pre></div>
-<div class="figure"><span id="fig:qqPlot"></span>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="genome-wide-association-studies.html#cb314-1" aria-hidden="true" tabindex="-1"></a>chi2 <span class="ot">&lt;-</span> <span class="fu">chi.squared</span>(res, <span class="at">df=</span><span class="dv">1</span>)</span>
+<span id="cb314-2"><a href="genome-wide-association-studies.html#cb314-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qq.chisq</span>(chi2)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:qqPlot"></span>
 <img src="fig/qqPlot-1.png" alt="QQ-plot corresponding to obesity GWAS data example." width="336" />
 <p class="caption">
 Figure 4.3: QQ-plot corresponding to obesity GWAS data example.
@@ -624,68 +649,68 @@ Figure 4.3: QQ-plot corresponding to obesity GWAS data example.
 <pre><code>           N      omitted       lambda 
 88723.000000     0.000000     1.003853 </code></pre>
 <p>Figure @ref{fig:qqPlot} shows, in particular, that the <span class="math inline">\(\chi^2\)</span> estimates are not inflated (<span class="math inline">\(\lambda\)</span> is also close to 1), as all quantile values fall in the confidence bands, meaning that most SNPs are not associated with obesity. In addition, the Figure does not show any top SNP outside the confidence bands. A Q-Q plot with top SNPs outside the confidence bands indicates that those SNPs are truly associated with the disease and, hence, do not follow the null hypothesis. Therefore, the Q-Q plot of our examples reveals no significant SNP associations.</p>
-<p>Q-Q plots are used to inspect population stratification. In particular, when population stratification is present, most SNP Q-Q values will be found outside the confidence bands, suggesting that the overall genetic structure of the sample can discriminate differences between subject traits. The <span class="math inline">\(\lambda\)</span> value is a measure of the degree of inflation. The main source of population stratification that is derived from genomic data is ancestry. Therefore, in the cases of inflated Q-Q plots, it is ancestry differences and not individual SNP differences that explain the differences in the phenotype. Population stratification may be corrected by genomic control, mixed models or EIGENSTRAT method <span class="citation">Price et al. (<a href="#ref-price2010new" role="doc-biblioref">2010</a>)</span>. However, the most common approach is to use the inferred ancestry from genomic data as covariates in the association analyses <span class="citation">Price et al. (<a href="#ref-price2006principal" role="doc-biblioref">2006</a>)</span>. Genome-wide association analysis typically adjusts for population stratification using the PCs on genomic data to infer ancestral differences in the sample. Covariates are easily incorporated in the model of <code>snp.rhs.tests()</code> function.</p>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="genome-wide-association-studies.html#cb316-1"></a>res.adj &lt;-<span class="st"> </span><span class="kw">snp.rhs.tests</span>(obese <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2 <span class="op">+</span><span class="st"> </span>X3 <span class="op">+</span><span class="st"> </span>X4 <span class="op">+</span><span class="st"> </span>X5, </span>
-<span id="cb316-2"><a href="genome-wide-association-studies.html#cb316-2"></a>                         <span class="dt">data=</span>ob.qc, <span class="dt">snp.data=</span>geno.qc)</span>
-<span id="cb316-3"><a href="genome-wide-association-studies.html#cb316-3"></a><span class="kw">head</span>(res.adj)</span></code></pre></div>
+<p>Q-Q plots are used to inspect population stratification. In particular, when population stratification is present, most SNP Q-Q values will be found outside the confidence bands, suggesting that the overall genetic structure of the sample can discriminate differences between subject traits. The <span class="math inline">\(\lambda\)</span> value is a measure of the degree of inflation. The main source of population stratification that is derived from genomic data is ancestry. Therefore, in the cases of inflated Q-Q plots, it is ancestry differences and not individual SNP differences that explain the differences in the phenotype. Population stratification may be corrected by genomic control, mixed models or EIGENSTRAT method <span class="citation"><a href="#ref-price2010new" role="doc-biblioref">Price et al.</a> (<a href="#ref-price2010new" role="doc-biblioref">2010</a>)</span>. However, the most common approach is to use the inferred ancestry from genomic data as covariates in the association analyses <span class="citation"><a href="#ref-price2006principal" role="doc-biblioref">Price et al.</a> (<a href="#ref-price2006principal" role="doc-biblioref">2006</a>)</span>. Genome-wide association analysis typically adjusts for population stratification using the PCs on genomic data to infer ancestral differences in the sample. Covariates are easily incorporated in the model of <code>snp.rhs.tests()</code> function.</p>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="genome-wide-association-studies.html#cb316-1" aria-hidden="true" tabindex="-1"></a>res.adj <span class="ot">&lt;-</span> <span class="fu">snp.rhs.tests</span>(obese <span class="sc">~</span> X1 <span class="sc">+</span> X2 <span class="sc">+</span> X3 <span class="sc">+</span> X4 <span class="sc">+</span> X5, </span>
+<span id="cb316-2"><a href="genome-wide-association-studies.html#cb316-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data=</span>ob.qc, <span class="at">snp.data=</span>geno.qc)</span>
+<span id="cb316-3"><a href="genome-wide-association-studies.html#cb316-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res.adj)</span></code></pre></div>
 <pre><code>           Chi.squared Df   p.value
 MitoT9699C    2.660902  1 0.1028424</code></pre>
 <p>This function only computes the additive model, adjusting for the first five genomic PCs. The resulting <span class="math inline">\(-\log_{10}(P)\)</span>-values of association for each SNP are then extracted</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="genome-wide-association-studies.html#cb318-1"></a>pval.log10 &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">log10</span>(<span class="kw">p.value</span>(res.adj))</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="genome-wide-association-studies.html#cb318-1" aria-hidden="true" tabindex="-1"></a>pval.log10 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log10</span>(<span class="fu">p.value</span>(res.adj))</span></code></pre></div>
 <p>These transformed <span class="math inline">\(P\)</span>-values are used to create a Manhattan plot to visualize which SNPs are significantly associated with obesity. We use our function <code>manhattanPlot()</code>, although package <code>qqman</code> can also be used.</p>
 <p>The function <code>manhattanPlot()</code> can be downloaded as follows:</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="genome-wide-association-studies.html#cb319-1"></a><span class="kw">source</span>(<span class="st">&quot;https://raw.githubusercontent.com/isglobal-brge/book_omic_association/master/R/manhattanPlot.R&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="genome-wide-association-studies.html#cb320-1"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb320-2"><a href="genome-wide-association-studies.html#cb320-2"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb320-3"><a href="genome-wide-association-studies.html#cb320-3"></a><span class="kw">library</span>(ggrepel)</span>
-<span id="cb320-4"><a href="genome-wide-association-studies.html#cb320-4"></a><span class="co"># Create the required data frame</span></span>
-<span id="cb320-5"><a href="genome-wide-association-studies.html#cb320-5"></a>pvals &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">SNP=</span>annotation<span class="op">$</span>snp.name, </span>
-<span id="cb320-6"><a href="genome-wide-association-studies.html#cb320-6"></a>                    <span class="dt">CHR=</span>annotation<span class="op">$</span>chromosome,</span>
-<span id="cb320-7"><a href="genome-wide-association-studies.html#cb320-7"></a>                    <span class="dt">BP=</span>annotation<span class="op">$</span>position,</span>
-<span id="cb320-8"><a href="genome-wide-association-studies.html#cb320-8"></a>                    <span class="dt">P=</span><span class="kw">p.value</span>(res.adj))</span>
-<span id="cb320-9"><a href="genome-wide-association-studies.html#cb320-9"></a><span class="co"># missing data is not allowed</span></span>
-<span id="cb320-10"><a href="genome-wide-association-studies.html#cb320-10"></a>pvals &lt;-<span class="st"> </span><span class="kw">subset</span>(pvals, <span class="op">!</span><span class="kw">is.na</span>(CHR) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(P)) </span>
-<span id="cb320-11"><a href="genome-wide-association-studies.html#cb320-11"></a></span>
-<span id="cb320-12"><a href="genome-wide-association-studies.html#cb320-12"></a><span class="kw">manhattanPlot</span>(pvals, <span class="dt">color=</span><span class="kw">c</span>(<span class="st">&quot;gray90&quot;</span>, <span class="st">&quot;gray40&quot;</span>))</span></code></pre></div>
-<div class="figure"><span id="fig:manhattan"></span>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="genome-wide-association-studies.html#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;https://raw.githubusercontent.com/isglobal-brge/book_omic_association/master/R/manhattanPlot.R&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="genome-wide-association-studies.html#cb320-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb320-2"><a href="genome-wide-association-studies.html#cb320-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb320-3"><a href="genome-wide-association-studies.html#cb320-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb320-4"><a href="genome-wide-association-studies.html#cb320-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the required data frame</span></span>
+<span id="cb320-5"><a href="genome-wide-association-studies.html#cb320-5" aria-hidden="true" tabindex="-1"></a>pvals <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">SNP=</span>annotation<span class="sc">$</span>snp.name, </span>
+<span id="cb320-6"><a href="genome-wide-association-studies.html#cb320-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">CHR=</span>annotation<span class="sc">$</span>chromosome,</span>
+<span id="cb320-7"><a href="genome-wide-association-studies.html#cb320-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">BP=</span>annotation<span class="sc">$</span>position,</span>
+<span id="cb320-8"><a href="genome-wide-association-studies.html#cb320-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">P=</span><span class="fu">p.value</span>(res.adj))</span>
+<span id="cb320-9"><a href="genome-wide-association-studies.html#cb320-9" aria-hidden="true" tabindex="-1"></a><span class="co"># missing data is not allowed</span></span>
+<span id="cb320-10"><a href="genome-wide-association-studies.html#cb320-10" aria-hidden="true" tabindex="-1"></a>pvals <span class="ot">&lt;-</span> <span class="fu">subset</span>(pvals, <span class="sc">!</span><span class="fu">is.na</span>(CHR) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(P)) </span>
+<span id="cb320-11"><a href="genome-wide-association-studies.html#cb320-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb320-12"><a href="genome-wide-association-studies.html#cb320-12" aria-hidden="true" tabindex="-1"></a><span class="fu">manhattanPlot</span>(pvals, <span class="at">color=</span><span class="fu">c</span>(<span class="st">&quot;gray90&quot;</span>, <span class="st">&quot;gray40&quot;</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:manhattan"></span>
 <img src="fig/manhattan-1.png" alt="Manhattan plot of obesity GWAS data example." width="864" />
 <p class="caption">
 Figure 4.4: Manhattan plot of obesity GWAS data example.
 </p>
 </div>
-<p>Significance at Bonferroni level is set at <span class="math inline">\(10^{-7}=0.05/10^5\)</span>, as we are testing 100,000 SNPs. The level corresponds to <span class="math inline">\(-\log_{10}(P)=6.30\)</span>. Therefore, we confirm, as expected form the Q-Q plot, that no SNP in our study is significantly associated with obesity, as observed in Figure @ref{fig:manhattan}. It should be noticed that the standard Bonferroni significant level in GWASs is considered as <span class="math inline">\(5 \times 10^{-8}\)</span> since SNParray data use to contain 500K-1M SNPs <span class="citation">(Pe’er et al. <a href="#ref-pe2008estimation" role="doc-biblioref">2008</a>)</span>.</p>
+<p>Significance at Bonferroni level is set at <span class="math inline">\(10^{-7}=0.05/10^5\)</span>, as we are testing 100,000 SNPs. The level corresponds to <span class="math inline">\(-\log_{10}(P)=6.30\)</span>. Therefore, we confirm, as expected form the Q-Q plot, that no SNP in our study is significantly associated with obesity, as observed in Figure @ref{fig:manhattan}. It should be noticed that the standard Bonferroni significant level in GWASs is considered as <span class="math inline">\(5 \times 10^{-8}\)</span> since SNParray data use to contain 500K-1M SNPs <span class="citation">(<a href="#ref-pe2008estimation" role="doc-biblioref">Pe’er et al. 2008</a>)</span>.</p>
 <p>With our obesity example, we illustrate the common situation of finding no significant associations in small studies (thousands of subjects) with small genomic data (100,000 SNPs). This situation motivates multi-center studies with larger samples sizes, where small effects can be inferred with sufficient power and consistency.</p>
 <p>The <code>snpStats</code> package performs association analyses using either codominant or additive models and only provides their p-values. Let us imagine we are interested in using <code>SNPassoc</code> to create the tables with the different genetic models for the most significant SNPs. This can be performed as following. We first select the SNPs that pass a p-value threshold. For instance, <span class="math inline">\(10^{-5}\)</span> (in real situations it should be the GWAS level <span class="math inline">\(5 \times 10^{-8}\)</span>)</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="genome-wide-association-studies.html#cb321-1"></a>topPvals &lt;-<span class="st"> </span><span class="kw">subset</span>(pvals, P<span class="op">&lt;</span><span class="fl">10e-5</span>)</span>
-<span id="cb321-2"><a href="genome-wide-association-studies.html#cb321-2"></a>topSNPs &lt;-<span class="st"> </span><span class="kw">as.character</span>(topPvals<span class="op">$</span>SNP)</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="genome-wide-association-studies.html#cb321-1" aria-hidden="true" tabindex="-1"></a>topPvals <span class="ot">&lt;-</span> <span class="fu">subset</span>(pvals, P<span class="sc">&lt;</span><span class="fl">10e-5</span>)</span>
+<span id="cb321-2"><a href="genome-wide-association-studies.html#cb321-2" aria-hidden="true" tabindex="-1"></a>topSNPs <span class="ot">&lt;-</span> <span class="fu">as.character</span>(topPvals<span class="sc">$</span>SNP)</span></code></pre></div>
 <p>We then export the data into a text file that can be imported into R as a data.frame that can be analyzed using <code>SNPassoc</code></p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="genome-wide-association-studies.html#cb322-1"></a><span class="co"># subset top SNPs</span></span>
-<span id="cb322-2"><a href="genome-wide-association-studies.html#cb322-2"></a>geno.topSNPs &lt;-<span class="st"> </span>geno.qc[, topSNPs]</span>
-<span id="cb322-3"><a href="genome-wide-association-studies.html#cb322-3"></a>geno.topSNPs</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="genome-wide-association-studies.html#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset top SNPs</span></span>
+<span id="cb322-2"><a href="genome-wide-association-studies.html#cb322-2" aria-hidden="true" tabindex="-1"></a>geno.topSNPs <span class="ot">&lt;-</span> geno.qc[, topSNPs]</span>
+<span id="cb322-3"><a href="genome-wide-association-studies.html#cb322-3" aria-hidden="true" tabindex="-1"></a>geno.topSNPs</span></code></pre></div>
 <pre><code>A SnpMatrix with  2242 rows and  5 columns
 Row names:  100 ... 998 
 Col names:  rs10193241 ... rs1935960 </code></pre>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="genome-wide-association-studies.html#cb324-1"></a><span class="co"># export top SNPs</span></span>
-<span id="cb324-2"><a href="genome-wide-association-studies.html#cb324-2"></a><span class="kw">write.SnpMatrix</span>(geno.topSNPs, <span class="dt">file=</span><span class="st">&quot;topSNPs.txt&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="genome-wide-association-studies.html#cb324-1" aria-hidden="true" tabindex="-1"></a><span class="co"># export top SNPs</span></span>
+<span id="cb324-2"><a href="genome-wide-association-studies.html#cb324-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.SnpMatrix</span>(geno.topSNPs, <span class="at">file=</span><span class="st">&quot;topSNPs.txt&quot;</span>)</span></code></pre></div>
 <pre><code>[1] 2242    5</code></pre>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="genome-wide-association-studies.html#cb326-1"></a><span class="co"># import top SNPs</span></span>
-<span id="cb326-2"><a href="genome-wide-association-studies.html#cb326-2"></a>ob.top &lt;-<span class="st"> </span><span class="kw">read.delim</span>(<span class="st">&quot;topSNPs.txt&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb326-3"><a href="genome-wide-association-studies.html#cb326-3"></a><span class="co"># add phenotypic information(ids are in the same order)</span></span>
-<span id="cb326-4"><a href="genome-wide-association-studies.html#cb326-4"></a>ob.top &lt;-<span class="st"> </span><span class="kw">cbind</span>(ob.top, ob.qc)</span>
-<span id="cb326-5"><a href="genome-wide-association-studies.html#cb326-5"></a><span class="co"># prepare data for SNPassoc (SNPs are coded as 0,1,2)</span></span>
-<span id="cb326-6"><a href="genome-wide-association-studies.html#cb326-6"></a>ii &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;^rs&quot;</span>, <span class="kw">names</span>(ob.top))</span>
-<span id="cb326-7"><a href="genome-wide-association-studies.html#cb326-7"></a>ob.top.s &lt;-<span class="st"> </span><span class="kw">setupSNP</span>(ob.top, <span class="dt">colSNPs =</span> ii, </span>
-<span id="cb326-8"><a href="genome-wide-association-studies.html#cb326-8"></a>                     <span class="dt">name.genotypes=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb326-9"><a href="genome-wide-association-studies.html#cb326-9"></a><span class="co"># run association (all)</span></span>
-<span id="cb326-10"><a href="genome-wide-association-studies.html#cb326-10"></a><span class="kw">WGassociation</span>(obese, ob.top.s)</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="genome-wide-association-studies.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import top SNPs</span></span>
+<span id="cb326-2"><a href="genome-wide-association-studies.html#cb326-2" aria-hidden="true" tabindex="-1"></a>ob.top <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;topSNPs.txt&quot;</span>, <span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb326-3"><a href="genome-wide-association-studies.html#cb326-3" aria-hidden="true" tabindex="-1"></a><span class="co"># add phenotypic information(ids are in the same order)</span></span>
+<span id="cb326-4"><a href="genome-wide-association-studies.html#cb326-4" aria-hidden="true" tabindex="-1"></a>ob.top <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ob.top, ob.qc)</span>
+<span id="cb326-5"><a href="genome-wide-association-studies.html#cb326-5" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare data for SNPassoc (SNPs are coded as 0,1,2)</span></span>
+<span id="cb326-6"><a href="genome-wide-association-studies.html#cb326-6" aria-hidden="true" tabindex="-1"></a>ii <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;^rs&quot;</span>, <span class="fu">names</span>(ob.top))</span>
+<span id="cb326-7"><a href="genome-wide-association-studies.html#cb326-7" aria-hidden="true" tabindex="-1"></a>ob.top.s <span class="ot">&lt;-</span> <span class="fu">setupSNP</span>(ob.top, <span class="at">colSNPs =</span> ii, </span>
+<span id="cb326-8"><a href="genome-wide-association-studies.html#cb326-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">name.genotypes=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb326-9"><a href="genome-wide-association-studies.html#cb326-9" aria-hidden="true" tabindex="-1"></a><span class="co"># run association (all)</span></span>
+<span id="cb326-10"><a href="genome-wide-association-studies.html#cb326-10" aria-hidden="true" tabindex="-1"></a><span class="fu">WGassociation</span>(obese, ob.top.s)</span></code></pre></div>
 <pre><code>           comments codominant dominant recessive overdominant log-additive
 rs10193241        -    0.00026  0.19355   0.00005      0.00044      0.00013
 rs7349742         -    0.00009  0.01839   0.00004      0.00182      0.00002
 rs12201995        -    0.00006  0.00185   0.00011      0.01271      0.00001
 rs6931936         -    0.00001  0.00078   0.00002      0.00368      0.00000
 rs1935960         -    0.00006  0.74717   0.00001      0.00001      0.00009</code></pre>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="genome-wide-association-studies.html#cb328-1"></a><span class="co"># run association (one)</span></span>
-<span id="cb328-2"><a href="genome-wide-association-studies.html#cb328-2"></a><span class="kw">association</span>(obese <span class="op">~</span><span class="st"> </span>rs10193241, ob.top.s)</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="genome-wide-association-studies.html#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run association (one)</span></span>
+<span id="cb328-2"><a href="genome-wide-association-studies.html#cb328-2" aria-hidden="true" tabindex="-1"></a><span class="fu">association</span>(obese <span class="sc">~</span> rs10193241, ob.top.s)</span></code></pre></div>
 <pre><code>
 SNP: rs10193241  adjusted by: 
                 0    %   1    %   OR lower upper   p-value  AIC
@@ -708,27 +733,27 @@ log-Additive
 </div>
 </div>
 <h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-Anderson">
-<p>Anderson, Carl A, Fredrik H Pettersson, Geraldine M Clarke, Lon R Cardon, Andrew P Morris, and Krina T Zondervan. 2010. “Data Quality Control in Genetic Case-Control Association Studies.” <em>Nature Protocols</em> 5 (9): 1564.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Anderson" class="csl-entry">
+Anderson, Carl A, Fredrik H Pettersson, Geraldine M Clarke, Lon R Cardon, Andrew P Morris, and Krina T Zondervan. 2010. <span>“Data Quality Control in Genetic Case-Control Association Studies.”</span> <em>Nature Protocols</em> 5 (9): 1564.
 </div>
-<div id="ref-clayton2005population">
-<p>Clayton, David G, Neil M Walker, Deborah J Smyth, Rebecca Pask, Jason D Cooper, Lisa M Maier, Luc J Smink, et al. 2005. “Population Structure, Differential Bias and Genomic Control in a Large-Scale, Case-Control Association Study.” <em>Nature Genetics</em> 37 (11): 1243.</p>
+<div id="ref-clayton2005population" class="csl-entry">
+Clayton, David G, Neil M Walker, Deborah J Smyth, Rebecca Pask, Jason D Cooper, Lisa M Maier, Luc J Smink, et al. 2005. <span>“Population Structure, Differential Bias and Genomic Control in a Large-Scale, Case-Control Association Study.”</span> <em>Nature Genetics</em> 37 (11): 1243.
 </div>
-<div id="ref-wellcome2007genome">
-<p>Consortium, Wellcome Trust Case Control, and others. 2007. “Genome-Wide Association Study of 14,000 Cases of Seven Common Diseases and 3,000 Shared Controls.” <em>Nature</em> 447 (7145): 661.</p>
+<div id="ref-macarthur2016new" class="csl-entry">
+MacArthur, Jacqueline, Emily Bowler, Maria Cerezo, Laurent Gil, Peggy Hall, Emma Hastings, Heather Junkins, et al. 2016. <span>“The New <span>NHGRI-EBI</span> Catalog of Published Genome-Wide Association Studies (<span>GWAS</span> Catalog).”</span> <em>Nucleic Acids Research</em> 45 (D1): D896–901.
 </div>
-<div id="ref-macarthur2016new">
-<p>MacArthur, Jacqueline, Emily Bowler, Maria Cerezo, Laurent Gil, Peggy Hall, Emma Hastings, Heather Junkins, et al. 2016. “The New NHGRI-EBI Catalog of Published Genome-Wide Association Studies (GWAS Catalog).” <em>Nucleic Acids Research</em> 45 (D1): D896–D901.</p>
+<div id="ref-pe2008estimation" class="csl-entry">
+Pe’er, Itsik, Roman Yelensky, David Altshuler, and Mark J Daly. 2008. <span>“Estimation of the Multiple Testing Burden for Genomewide Association Studies of Nearly All Common Variants.”</span> <em>Genetic Epidemiology</em> 32 (4): 381–85.
 </div>
-<div id="ref-pe2008estimation">
-<p>Pe’er, Itsik, Roman Yelensky, David Altshuler, and Mark J Daly. 2008. “Estimation of the Multiple Testing Burden for Genomewide Association Studies of Nearly All Common Variants.” <em>Genetic Epidemiology</em> 32 (4): 381–85.</p>
+<div id="ref-price2006principal" class="csl-entry">
+Price, Alkes L, Nick J Patterson, Robert M Plenge, Michael E Weinblatt, Nancy A Shadick, and David Reich. 2006. <span>“Principal Components Analysis Corrects for Stratification in Genome-Wide Association Studies.”</span> <em>Nature Genetics</em> 38 (8): 904.
 </div>
-<div id="ref-price2006principal">
-<p>Price, Alkes L, Nick J Patterson, Robert M Plenge, Michael E Weinblatt, Nancy A Shadick, and David Reich. 2006. “Principal Components Analysis Corrects for Stratification in Genome-Wide Association Studies.” <em>Nature Genetics</em> 38 (8): 904.</p>
+<div id="ref-price2010new" class="csl-entry">
+Price, Alkes L, Noah A Zaitlen, David Reich, and Nick Patterson. 2010. <span>“New Approaches to Population Stratification in Genome-Wide Association Studies.”</span> <em>Nature Reviews Genetics</em> 11 (7): 459.
 </div>
-<div id="ref-price2010new">
-<p>Price, Alkes L, Noah A Zaitlen, David Reich, and Nick Patterson. 2010. “New Approaches to Population Stratification in Genome-Wide Association Studies.” <em>Nature Reviews Genetics</em> 11 (7): 459.</p>
+<div id="ref-silverberg2009ulcerative" class="csl-entry">
+Silverberg, Mark S, Judy H Cho, John D Rioux, Dermot PB McGovern, Jing Wu, Vito Annese, Jean-Paul Achkar, et al. 2009. <span>“Ulcerative Colitis–Risk Loci on Chromosomes 1p36 and 12q15 Found by Genome-Wide Association Study.”</span> <em>Nature Genetics</em> 41 (2): 216.
 </div>
 </div>
             </section>
@@ -760,6 +785,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -780,6 +806,10 @@ gitbook.start({
 "text": null
 },
 "download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

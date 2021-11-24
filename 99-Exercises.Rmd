@@ -6,7 +6,7 @@
 # Exercises
 
 
-Here we propose several exercises whose answers will have to be deliver through the Moodle. The data are in a folder called `data_for_exercises`. The answers will also be available in the Moodle site. 
+Here we propose several exercises whose answers will have to be delivered through the Moodle site. The data are in a folder called `data_for_exercises`. The answers will also be available in the Moodle site. 
 
 
 ## Bioconductor {#BioCEx}
@@ -29,10 +29,9 @@ library(airway)
 data(airway)
 ```
 >
->    1. Print the object {\tt airway} and interpret the output.
-     2. Get the table of counts (use {\tt asssays} data) and the variables of the experiment (use {\tt colData} function).
-     3. Verify that {\tt SummarizedExperiment} objects check the dimension of the tables (think about the dimensions that should match).
-     4. Compare the number of counts of the gene ENSG00000000419 between treated and untreated cells (variable 'dex') using {\tt t.test} function.
+>    1. Print the object `airway` and interpret the output.
+     2. Get the table of counts (use `asssays()` function) and the variables of the experiment (use `colData()` function).
+     4. Compare the number of counts of the gene ENSG00000000419 between treated and untreated cells (variable `dex`) using `t.test` function.
 >
 
 
