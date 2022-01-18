@@ -117,19 +117,19 @@ data(airway)
 >
 >**EXERICSE 10**: Download the data SRP029880 from recount2: http://duffel.rail.bio/recount/v2/SRP029880/rse_gene.Rdata. This file contains a `RangedSummarizedExperiment` object. Do the following tasks:
 >
->0. Get the `counts` and `colData` tables.
->1. Normalize the counts using CPM, RPKM, TPM and TMM methods.
->2. Create the RLE and PCA plots for each method as well as for the raw data (do not forget to log-transform the data).
+0. Get the `counts` and `colData` tables. (NOTE: `counts` can be retrieved by `assay(rse_gene, 1)` or `assays(rse_gene)$counts`)
+1. Normalize the counts using CPM, RPKM, TPM and TMM methods and create MA-plots for two individuals.
 3. Using TPM normalized data:
      - Plot a heatmap of the top 500 most variable genes. Compare with the heatmap obtained using the 100 most variable genes.
      - Re-do the heatmaps setting the scale argument to `none`, and `column`. Compare the results with `scale = 'row'`.
-4. Create a new variable called **group** by renaming the variable **title** as: `normal`, `primary` and `metastasis`. 
-5. Perform a differential expression analysis using the variable `group` and get the list of differentially expressed genes comparing `metastasis vs normal` and `primary vs normal`. 
-5. Create two MA and volcano plots to describe the previous comparisons. 
-6. Examine the distribution of counts for a single gene (most associated with `metastasis`). Hint: use `DESeq2::plotCounts ()`
-7. Do the same plot for the top-10 genes (this tries to mimic your supplementary material in your paper!)
-8. Investigate whether the analysis should be adjusted for other covariates.
-9. Repeat differential expression analysis accounting for unwanted variability using `sva` package.  
+4. Create some RLE and PCA plots for each method as well as for the raw data (do not forget to log-transform the data).
+5. Create a new variable called **group** by renaming the variable **title** as: `normal`, `primary` and `metastasis`. 
+6. Perform a differential expression analysis using the variable `group` and get the list of differentially expressed genes comparing `metastasis vs normal` and `primary vs normal`. 
+7. Create two MA and volcano plots to describe the previous comparisons. 
+8. Examine the distribution of counts for a single gene (most associated with `metastasis`). Hint: use `DESeq2::plotCounts ()`
+9. Do the same plot for the top-10 genes (this tries to mimic your supplementary material in your paper!)
+10. Investigate whether the analysis should be adjusted for other covariates.
+11. Repeat differential expression analysis accounting for unwanted variability using `sva` package.  
 >
 
 ## Enrichment Analysis {#enrichment-exerc}

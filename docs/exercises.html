@@ -24,7 +24,7 @@
 <meta name="author" content="Juan R González" />
 
 
-<meta name="date" content="2021-11-24" />
+<meta name="date" content="2022-01-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -368,9 +368,8 @@ div.csl-indent {
 <blockquote>
 <p><strong>EXERICSE 10</strong>: Download the data SRP029880 from recount2: <a href="http://duffel.rail.bio/recount/v2/SRP029880/rse_gene.Rdata" class="uri">http://duffel.rail.bio/recount/v2/SRP029880/rse_gene.Rdata</a>. This file contains a <code>RangedSummarizedExperiment</code> object. Do the following tasks:</p>
 <ol start="0" style="list-style-type: decimal">
-<li>Get the <code>counts</code> and <code>colData</code> tables.</li>
-<li>Normalize the counts using CPM, RPKM, TPM and TMM methods.</li>
-<li>Create the RLE and PCA plots for each method as well as for the raw data (do not forget to log-transform the data).</li>
+<li>Get the <code>counts</code> and <code>colData</code> tables. (NOTE: <code>counts</code> can be retrieved by <code>assay(rse_gene, 1)</code> or <code>assays(rse_gene)$counts</code>)</li>
+<li>Normalize the counts using CPM, RPKM, TPM and TMM methods and create MA-plots for two individuals.</li>
 <li>Using TPM normalized data:</li>
 </ol>
 <ul>
@@ -378,6 +377,7 @@ div.csl-indent {
 <li>Re-do the heatmaps setting the scale argument to <code>none</code>, and <code>column</code>. Compare the results with <code>scale = 'row'</code>.</li>
 </ul>
 <ol start="4" style="list-style-type: decimal">
+<li>Create some RLE and PCA plots for each method as well as for the raw data (do not forget to log-transform the data).</li>
 <li>Create a new variable called <strong>group</strong> by renaming the variable <strong>title</strong> as: <code>normal</code>, <code>primary</code> and <code>metastasis</code>.</li>
 <li>Perform a differential expression analysis using the variable <code>group</code> and get the list of differentially expressed genes comparing <code>metastasis vs normal</code> and <code>primary vs normal</code>.</li>
 <li>Create two MA and volcano plots to describe the previous comparisons.</li>
